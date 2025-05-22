@@ -1,5 +1,4 @@
 use ic_secp256k1::{DerivationIndex, DerivationPath};
-use icrc_ledger_types::icrc1::account::Account;
 
 
 #[derive(Debug, PartialEq, Eq)]
@@ -59,7 +58,7 @@ pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
 }
 
 pub fn derive_public_key(ecdsa_public_key: &ECDSAPublicKey, simple_derivation_path: &Vec<Vec<u8>>) -> ECDSAPublicKey {
-    use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
+    use ic_secp256k1::PublicKey;
 
     let path = derivation_path(simple_derivation_path);
 
