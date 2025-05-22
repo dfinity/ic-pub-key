@@ -1,3 +1,4 @@
+#[derive(Debug, PartialEq, Eq)]
 pub struct Response {
     chain_code: Vec<u8>,
     public_key: Vec<u8>,
@@ -37,4 +38,5 @@ fn derivation_works() {
             222, 90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217,
         ],
     };
+    assert_eq!(derive_pub_key(pub_key_without_derivation_path, derivation_path), pub_key_with_derivation_path);
 }
