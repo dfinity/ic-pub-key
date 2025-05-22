@@ -1,18 +1,16 @@
 use ic_secp256k1::{DerivationIndex, DerivationPath};
 
-
 #[derive(Debug, PartialEq, Eq)]
 pub struct ECDSAPublicKey {
     chain_code: Vec<u8>,
     public_key: Vec<u8>,
 }
 
-
 #[cfg(test)]
 mod tests {
 
-    use pretty_assertions::assert_eq;
     use super::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn derivation_works() {
@@ -49,15 +47,13 @@ mod tests {
 }
 
 pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
-    DerivationPath::new(
-        simple
-            .iter()
-            .map(|x| DerivationIndex(x.to_vec()))
-            .collect(),
-    )
+    DerivationPath::new(simple.iter().map(|x| DerivationIndex(x.to_vec())).collect())
 }
 
-pub fn derive_public_key(ecdsa_public_key: &ECDSAPublicKey, simple_derivation_path: &Vec<Vec<u8>>) -> ECDSAPublicKey {
+pub fn derive_public_key(
+    ecdsa_public_key: &ECDSAPublicKey,
+    simple_derivation_path: &Vec<Vec<u8>>,
+) -> ECDSAPublicKey {
     use ic_secp256k1::PublicKey;
 
     let path = derivation_path(simple_derivation_path);
