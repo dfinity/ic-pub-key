@@ -12,9 +12,15 @@ program
 program
   .command("greet <name>")
   .description("Greet a user")
-  .action((name: string) => {
-    console.log(`Hello, ${name}!`);
-  });
+  .action(say_hello);
 
 program.parse(process.argv);
 
+function say_hello(name: string) {
+    console.log(`Hello, ${name}!`);
+}
+
+
+function derive_key() {
+
+}

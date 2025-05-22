@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+# npm run build
+# npm link
+# mkpubkey greet Bob
+npx ts-node src/index.ts greet Alice
