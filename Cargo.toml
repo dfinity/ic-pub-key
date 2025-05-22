@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ic-secp256k1 = "0.1.0"
 pretty_assertions = "1.4.1"
