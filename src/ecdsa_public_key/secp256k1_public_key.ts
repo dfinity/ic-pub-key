@@ -48,6 +48,12 @@ class Sec1EncodedPublicKey {
         return new Sec1EncodedPublicKey(new Uint8Array(array));
     }
 
+    static fromProjectivePoint(point: ProjectivePoint): Sec1EncodedPublicKey {
+        const hex = point.toHex();
+        const bytes = new TextEncoder().encode(hex);
+        return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+    }
+
     asHex(): string {
         return Buffer.from(this.bytes).toString('hex');
     }
