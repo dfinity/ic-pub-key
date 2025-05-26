@@ -1,5 +1,6 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
+import { createHmac } from 'crypto';
 
 class PublicKeyWithChainCode {
 	constructor(
@@ -217,6 +218,16 @@ class DerivationPath {
         }
     }
         */
+        let hmac = createHmac('sha512', chain_code.bytes);
+        hmac.update(ckd_input);
+        hmac.update(idx);
+        let hmac_output = hmac.digest();
+        assert.equal(hmac_output.length, 64);
+
+        //let fb = hmac_output.slice(0, 32);
+        //let next_offset = reduce(fb);
+
+
 		throw new Error('Not implemented: DerivationPath.ckd');
 	}
 }
