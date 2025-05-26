@@ -10,6 +10,7 @@ pub struct ECDSAPublicKey {
 mod tests {
 
     use super::*;
+    use ic_secp256k1::PublicKey;
     use pretty_assertions::assert_eq;
 
     #[test]
@@ -24,7 +25,14 @@ mod tests {
                 118, 1, 229, 209, 165, 53, 214, 254, 125, 66, 227, 127, 121, 244, 10,
             ],
         };
-        let derivation_path: Vec<Vec<u8>> = vec![
+        {
+            // Print point of the public key:
+            let public_key_point = PublicKey::deserialize_sec1(&pub_key_without_derivation_path.public_key)
+                .expect("Failed to parse ECDSA public key");
+            println!("Public key point: {:?}", public_key_point);
+        }
+
+            let derivation_path: Vec<Vec<u8>> = vec![
             "2".repeat(1).as_bytes().to_vec(),
             "4".repeat(3).as_bytes().to_vec(),
             "6".repeat(5).as_bytes().to_vec(),
