@@ -5,4 +5,4 @@ set -euxo pipefail
 # npm link
 # mkpubkey greet Bob
 npx ts-node src/index.ts greet Alice
-npx ts-node src/index.ts pubkey
+npx ts-node src/index.ts test-secp256k1
