@@ -1,3 +1,5 @@
+use std::io::Read;
+
 use ic_secp256k1::{DerivationIndex, DerivationPath};
 
 #[derive(Debug, PartialEq, Eq)]
@@ -58,6 +60,14 @@ pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
     DerivationPath::new(simple.iter().map(|x| DerivationIndex(x.to_vec())).collect())
 }
 
+fn public_key_as_affine_hex(pk: &ic_secp256k1::PublicKey) -> String {
+    use elliptic_curve::point::AffineCoordinates;
+    let affine = pk.as_affine();
+    let x = affine.x();
+    let x_bytes = x.bytes().map(|x| x.unwrap()).collect::<Vec<u8>>();
+    format!("x: {}", hex::encode(x_bytes))
+}
+
 pub fn derive_public_key(
     ecdsa_public_key: &ECDSAPublicKey,
     simple_derivation_path: &Vec<Vec<u8>>,
@@ -68,6 +78,11 @@ pub fn derive_public_key(
 
     let pk = PublicKey::deserialize_sec1(&ecdsa_public_key.public_key)
         .expect("Failed to parse ECDSA public key");
+
+        {
+            println!("pk x: {}", public_key_as_affine_hex(&pk));
+
+        }
 
     let chain_code: [u8; 32] = ecdsa_public_key
         .chain_code

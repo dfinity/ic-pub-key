@@ -42,6 +42,21 @@ class Sec1EncodedPublicKey {
     asHex(): string {
         return Buffer.from(this.bytes).toString('hex');
     }
+
+    asProjectivePoint(): ProjectivePoint {
+        return ProjectivePoint.fromHex(this.asHex());
+    }
+
+    asAffinePoint(): AffinePoint {
+        return this.asProjectivePoint().toAffine();
+    }
+
+    asAffineHex(): string {
+        let affine_point = this.asAffinePoint();
+        const x = affine_point.x;
+        const y = affine_point.y;
+        return "x: " + x.toString(16) + " y: " + y.toString(16);
+    }
 }
 /**
  * A chain code is a 32 byte array
@@ -127,18 +142,46 @@ export function derive_public_key(
     ecdsa_public_key: PublicKeyWithChainCode,
     simple_derivation_path: DerivationPath,
 ) : PublicKeyWithChainCode {
+/*
+pub fn derive_public_key(
+    ecdsa_public_key: &ECDSAPublicKey,
+    simple_derivation_path: &Vec<Vec<u8>>,
+) -> ECDSAPublicKey {
+    use ic_secp256k1::PublicKey;
 
+    let path = derivation_path(simple_derivation_path);
+
+    let pk = PublicKey::deserialize_sec1(&ecdsa_public_key.public_key)
+        .expect("Failed to parse ECDSA public key");
+
+    let chain_code: [u8; 32] = ecdsa_public_key
+        .chain_code
+        .clone()
+        .try_into()
+        .expect("Incorrect chain code size");
+
+    let (derived_public_key, derived_chain_code) =
+        pk.derive_subkey_with_chain_code(&path, &chain_code);
+
+    ECDSAPublicKey {
+        public_key: derived_public_key.serialize_sec1(true),
+        chain_code: derived_chain_code.to_vec(),
+    }
+}
+
+*/
 
     const hex_public_key = ecdsa_public_key.public_key.asHex();
     console.log("Hex public key: ", hex_public_key);
-    const projective_point = ProjectivePoint.fromHex(hex_public_key);
+    const projective_point = ecdsa_public_key.public_key.asProjectivePoint();
     console.log("Projective point: ", projective_point);
-    const affine_point = projective_point.toAffine();
+    const affine_point = ecdsa_public_key.public_key.asAffinePoint();
     console.log("Affine point: ", affine_point);
-
+    console.log("Affine hex: ", ecdsa_public_key.public_key.asAffineHex());
 
     throw new Error("Not implemented");
 }
+
 
 // TODO: Test error thrown on invalid chain code
 // TODO: Test error thrown on invalid derivation path

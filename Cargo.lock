@@ -523,6 +523,8 @@ dependencies = [
 name = "mkpubkey"
 version = "0.1.0"
 dependencies = [
+ "elliptic-curve",
+ "hex",
  "ic-secp256k1",
  "icrc-ledger-types",
  "pretty_assertions",
