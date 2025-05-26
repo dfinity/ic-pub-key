@@ -1,4 +1,4 @@
-import { ProjectivePoint } from "@noble/secp256k1";
+import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 
 type ECDSAPublicKey = {
     chain_code: Uint8Array;
@@ -25,12 +25,26 @@ function public_key_derive_subkey_with_chain_code(
 
 
 type DerivationPath = Uint8Array[];
-function derivation_path_derive_offset(derivation_path: DerivationPath, public_key: ProjectivePoint): ProjectivePoint {
+function derivation_path_derive_offset(derivation_path: DerivationPath, pt: AffinePoint, chain_code: Uint8Array): ProjectivePoint {
     /*
-    const projective_point = ProjectivePoint.fromHex(hex_public_key);
-    console.log("Projective point: ", projective_point);
-    const affine_point = projective_point.toAffine();
-    console.log("Affine point: ", affine_point);
+        fn derive_offset(
+        &self,
+        pt: AffinePoint,
+        chain_code: &[u8; 32],
+    ) -> (AffinePoint, Scalar, [u8; 32]) {
+        let mut offset = Scalar::ZERO;
+        let mut pt = pt;
+        let mut chain_code = *chain_code;
+
+        for idx in self.path() {
+            let (next_chain_code, next_offset, next_pt) = Self::ckd_pub(&idx.0, pt, &chain_code);
+            chain_code = next_chain_code;
+            pt = next_pt;
+            offset = offset.add(&next_offset);
+        }
+
+        (pt, offset, chain_code)
+    }
     */
     throw new Error("Not implemented");
 }
