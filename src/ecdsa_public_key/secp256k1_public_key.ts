@@ -50,7 +50,7 @@ class Sec1EncodedPublicKey {
 
     static fromProjectivePoint(point: ProjectivePoint): Sec1EncodedPublicKey {
         const hex = point.toHex();
-        const bytes = new TextEncoder().encode(hex);
+        const bytes = Buffer.from(hex, 'hex');
         return new Sec1EncodedPublicKey(new Uint8Array(bytes));
     }
 
@@ -216,10 +216,16 @@ export function test_derive_public_key() {
         ]
     );
 
-    console.log("Public key without derivation path: ");
-    console.log(pub_key_without_derivation_path);
+    {
+      console.log("Public key without derivation path: ");
+      console.log(pub_key_without_derivation_path);
+      assert.equal(pub_key_without_derivation_path.public_key.x_as_hex(), "b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a");
+      // Check that conversion to/from projective point is identity
+      const projective_point = pub_key_without_derivation_path.public_key.asProjectivePoint();
+      const converted_back = Sec1EncodedPublicKey.fromProjectivePoint(projective_point);
+      assert.equal(converted_back, pub_key_without_derivation_path.public_key, "Conversion to/from projective point is not identity");
+    }
 
-    assert.equal(pub_key_without_derivation_path.public_key.x_as_hex(), "b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a");
 
     const derivation_path: DerivationPath = [ "2", "444", "66666"].map(s => new TextEncoder().encode(s));
 
