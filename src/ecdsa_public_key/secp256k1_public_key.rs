@@ -65,7 +65,8 @@ fn public_key_as_affine_hex(pk: &ic_secp256k1::PublicKey) -> String {
     let affine = pk.as_affine();
     let x = affine.x();
     let x_bytes = x.bytes().map(|x| x.unwrap()).collect::<Vec<u8>>();
-    format!("x: {}", hex::encode(x_bytes))
+    let y = affine.y_is_odd();
+    format!("\n  x: {}\n  y is odd: {:?}", hex::encode(x_bytes), y)
 }
 
 pub fn derive_public_key(
@@ -80,7 +81,7 @@ pub fn derive_public_key(
         .expect("Failed to parse ECDSA public key");
 
         {
-            println!("pk x: {}", public_key_as_affine_hex(&pk));
+            println!("pk: {}", public_key_as_affine_hex(&pk));
 
         }
 
