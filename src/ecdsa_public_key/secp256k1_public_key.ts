@@ -223,7 +223,7 @@ export function test_derive_public_key() {
       // Check that conversion to/from projective point is identity
       const projective_point = pub_key_without_derivation_path.public_key.asProjectivePoint();
       const converted_back = Sec1EncodedPublicKey.fromProjectivePoint(projective_point);
-      assert.equal(converted_back, pub_key_without_derivation_path.public_key, "Conversion to/from projective point is not identity");
+      assert.deepEqual(converted_back, pub_key_without_derivation_path.public_key, "Conversion to/from projective point is not identity");
     }
 
 
