@@ -1,13 +1,13 @@
 import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 
-type ECDSAPublicKey = {
+type PublicKeyWithChainCode = {
     chain_code: ChainCode;
     public_key: Sec1EncodedPublicKey;
 }
 function public_key_derive_subkey_with_chain_code(
-    public_key_with_chain_code: ECDSAPublicKey,
+    public_key_with_chain_code: PublicKeyWithChainCode,
     derivation_path: DerivationPath,
-) : ECDSAPublicKey {
+) : PublicKeyWithChainCode {
     /*
     let public_key: AffinePoint = *self.key.as_affine();
     let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
@@ -124,9 +124,9 @@ function derivation_path_ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: C
 
 
 export function derive_public_key(
-    ecdsa_public_key: ECDSAPublicKey,
+    ecdsa_public_key: PublicKeyWithChainCode,
     simple_derivation_path: DerivationPath,
-) : ECDSAPublicKey {
+) : PublicKeyWithChainCode {
 
 
     const hex_public_key = ecdsa_public_key.public_key.asHex();
