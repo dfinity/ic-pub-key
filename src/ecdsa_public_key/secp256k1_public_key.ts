@@ -161,10 +161,51 @@ class DerivationPath {
         }
     
     */
+        let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
+        let projective_point = ProjectivePoint.fromAffine(pt);
+
+        while (true) {
+            let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
+
+            //let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
+
+        }
+
+
         throw new Error("Not implemented: DerivationPath.ckd_pub");
     }
-    
 
+    static ckd(idx: Uint8Array, ckd_input: Uint8Array, chain_code: ChainCode): [ChainCode, bigint] {
+        /*
+            fn ckd(idx: &[u8], input: &[u8], chain_code: &[u8; 32]) -> ([u8; 32], Scalar) {
+        use hmac::{Hmac, Mac};
+        use k256::{elliptic_curve::ops::Reduce, sha2::Sha512};
+
+        let mut hmac = Hmac::<Sha512>::new_from_slice(chain_code)
+            .expect("HMAC-SHA-512 should accept 256 bit key");
+
+        hmac.update(input);
+        hmac.update(idx);
+
+        let hmac_output: [u8; 64] = hmac.finalize().into_bytes().into();
+
+        let fb = k256::FieldBytes::from_slice(&hmac_output[..32]);
+        let next_offset = <k256::Scalar as Reduce<k256::U256>>::reduce_bytes(fb);
+        let next_chain_key: [u8; 32] = hmac_output[32..].to_vec().try_into().expect("Correct size");
+
+        // If iL >= order, try again with the "next" index as described in SLIP-10
+        if next_offset.to_bytes().to_vec() != hmac_output[..32] {
+            let mut next_input = [0u8; 33];
+            next_input[0] = 0x01;
+            next_input[1..].copy_from_slice(&next_chain_key);
+            Self::ckd(idx, &next_input, chain_code)
+        } else {
+            (next_chain_key, next_offset)
+        }
+    }
+        */
+        throw new Error("Not implemented: DerivationPath.ckd");
+    }
 }
 
 
