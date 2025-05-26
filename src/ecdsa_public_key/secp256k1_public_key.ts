@@ -120,45 +120,51 @@ class DerivationPath {
         (pt, offset, chain_code)
     }
     */
+   let offset = BigInt(0);
+
+   for (let idx of this.path) {
+    let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
+   }
     throw new Error("Not implemented: DerivationPath.derive_offset");
     }
-}
 
-
-function derivation_path_ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
-    /*
-        fn ckd_pub(
-        idx: &[u8],
-        pt: AffinePoint,
-        chain_code: &[u8; 32],
-    ) -> ([u8; 32], Scalar, AffinePoint) {
-        use k256::elliptic_curve::{
-            group::prime::PrimeCurveAffine, group::GroupEncoding, ops::MulByGenerator,
-        };
-        use k256::ProjectivePoint;
-
-        let mut ckd_input = pt.to_bytes();
-
-        let pt: ProjectivePoint = pt.into();
-
-        loop {
-            let (next_chain_code, next_offset) = Self::ckd(idx, &ckd_input, chain_code);
-
-            let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
-
-            // If the new key is not infinity, we're done: return the new key
-            if !bool::from(next_pt.is_identity()) {
-                return (next_chain_code, next_offset, next_pt);
+    static ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: ChainCode): [ChainCode, bigint, AffinePoint] {
+        /*
+            fn ckd_pub(
+            idx: &[u8],
+            pt: AffinePoint,
+            chain_code: &[u8; 32],
+        ) -> ([u8; 32], Scalar, AffinePoint) {
+            use k256::elliptic_curve::{
+                group::prime::PrimeCurveAffine, group::GroupEncoding, ops::MulByGenerator,
+            };
+            use k256::ProjectivePoint;
+    
+            let mut ckd_input = pt.to_bytes();
+    
+            let pt: ProjectivePoint = pt.into();
+    
+            loop {
+                let (next_chain_code, next_offset) = Self::ckd(idx, &ckd_input, chain_code);
+    
+                let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
+    
+                // If the new key is not infinity, we're done: return the new key
+                if !bool::from(next_pt.is_identity()) {
+                    return (next_chain_code, next_offset, next_pt);
+                }
+    
+                // Otherwise set up the next input as defined by SLIP-0010
+                ckd_input[0] = 0x01;
+                ckd_input[1..].copy_from_slice(&next_chain_code);
             }
-
-            // Otherwise set up the next input as defined by SLIP-0010
-            ckd_input[0] = 0x01;
-            ckd_input[1..].copy_from_slice(&next_chain_code);
         }
+    
+    */
+        throw new Error("Not implemented: DerivationPath.ckd_pub");
     }
+    
 
-*/
-    throw new Error("Not implemented");
 }
 
 
