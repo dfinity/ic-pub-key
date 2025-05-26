@@ -29,7 +29,9 @@ class PublicKeyWithChainCode {
     
         (derived_key, chain_code)
         */
-        throw new Error("Not implemented");
+        let public_key = this.public_key.asAffinePoint();
+        let todo = derivation_path.derive_offset(public_key, this.chain_code);
+        throw new Error("Not finished: derive_subkey_with_chain_code");
     }    
 }
 /**
@@ -94,8 +96,10 @@ class ChainCode {
     }
 }
 
-type DerivationPath = Uint8Array[];
-function derivation_path_derive_offset(derivation_path: DerivationPath, pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
+class DerivationPath {
+    constructor(public readonly path: Uint8Array[]) {}
+
+    derive_offset(pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
     /*
         fn derive_offset(
         &self,
@@ -116,8 +120,10 @@ function derivation_path_derive_offset(derivation_path: DerivationPath, pt: Affi
         (pt, offset, chain_code)
     }
     */
-    throw new Error("Not implemented");
+    throw new Error("Not implemented: DerivationPath.derive_offset");
+    }
 }
+
 
 function derivation_path_ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
     /*
@@ -227,7 +233,7 @@ export function test_derive_public_key() {
     }
 
 
-    const derivation_path: DerivationPath = [ "2", "444", "66666"].map(s => new TextEncoder().encode(s));
+    const derivation_path = new DerivationPath(["2", "444", "66666"].map(s => new TextEncoder().encode(s)));
 
     console.log("Derivation path: ");
     console.log(derivation_path);
