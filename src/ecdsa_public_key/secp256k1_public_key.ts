@@ -1,7 +1,7 @@
 import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 
 type ECDSAPublicKey = {
-    chain_code: Uint8Array;
+    chain_code: ChainCode;
     public_key: Uint8Array;
 }
 function public_key_derive_subkey_with_chain_code(
@@ -24,8 +24,25 @@ function public_key_derive_subkey_with_chain_code(
 }
 
 
+/**
+ * A chain code is a 32 byte array
+ */
+class ChainCode {
+    static readonly LENGTH = 32;
+  
+    constructor(public readonly bytes: Uint8Array) {
+      if (bytes.length !== ChainCode.LENGTH) {
+        throw new Error(`Invalid ChainCode length: expected ${ChainCode.LENGTH} bytes, got ${bytes.length}`);
+      }
+    }
+
+    static fromArray(array: number[]): ChainCode {
+        return new ChainCode(new Uint8Array(array));
+    }
+}
+
 type DerivationPath = Uint8Array[];
-function derivation_path_derive_offset(derivation_path: DerivationPath, pt: AffinePoint, chain_code: Uint8Array): ProjectivePoint {
+function derivation_path_derive_offset(derivation_path: DerivationPath, pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
     /*
         fn derive_offset(
         &self,
@@ -49,6 +66,42 @@ function derivation_path_derive_offset(derivation_path: DerivationPath, pt: Affi
     throw new Error("Not implemented");
 }
 
+function derivation_path_ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
+    /*
+        fn ckd_pub(
+        idx: &[u8],
+        pt: AffinePoint,
+        chain_code: &[u8; 32],
+    ) -> ([u8; 32], Scalar, AffinePoint) {
+        use k256::elliptic_curve::{
+            group::prime::PrimeCurveAffine, group::GroupEncoding, ops::MulByGenerator,
+        };
+        use k256::ProjectivePoint;
+
+        let mut ckd_input = pt.to_bytes();
+
+        let pt: ProjectivePoint = pt.into();
+
+        loop {
+            let (next_chain_code, next_offset) = Self::ckd(idx, &ckd_input, chain_code);
+
+            let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
+
+            // If the new key is not infinity, we're done: return the new key
+            if !bool::from(next_pt.is_identity()) {
+                return (next_chain_code, next_offset, next_pt);
+            }
+
+            // Otherwise set up the next input as defined by SLIP-0010
+            ckd_input[0] = 0x01;
+            ckd_input[1..].copy_from_slice(&next_chain_code);
+        }
+    }
+
+*/
+    throw new Error("Not implemented");
+}
+
 
 
 export function derive_public_key(
@@ -64,17 +117,8 @@ export function derive_public_key(
     const affine_point = projective_point.toAffine();
     console.log("Affine point: ", affine_point);
 
-    // Verify that eth chain code has the correct length
-    if (ecdsa_public_key.chain_code.length !== 32) {
-        throw new Error("Invalid chain code length");
-    }
 
-
-
-    return {
-        chain_code: new Uint8Array(),
-        public_key: new Uint8Array(),
-    }
+    throw new Error("Not implemented");
 }
 
 // TODO: Test error thrown on invalid chain code
@@ -85,7 +129,7 @@ export function derive_public_key(
 // Tests the public key derivation
 export function test_derive_public_key() {
     const pub_key_without_derivation_path = {
-        chain_code: new Uint8Array([
+        chain_code: ChainCode.fromArray([
             33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110,
             206, 217, 163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209,
         ]),
