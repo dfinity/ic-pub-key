@@ -1,29 +1,37 @@
 import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 import { strict as assert } from 'assert';
 
-type PublicKeyWithChainCode = {
-    chain_code: ChainCode;
-    public_key: Sec1EncodedPublicKey;
+class PublicKeyWithChainCode {
+    constructor(
+        public readonly chain_code: ChainCode,
+        public readonly public_key: Sec1EncodedPublicKey
+    ) {}
+
+    static fromArray(chain_code_array: number[], public_key_array: number[]): PublicKeyWithChainCode {
+        return new PublicKeyWithChainCode(
+            ChainCode.fromArray(chain_code_array),
+            Sec1EncodedPublicKey.fromArray(public_key_array)
+        );
+    }
+
+    derive_subkey_with_chain_code(
+        derivation_path: DerivationPath,
+    ) : PublicKeyWithChainCode {
+        /*
+        let public_key: AffinePoint = *self.key.as_affine();
+        let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
+    
+        let derived_key = Self {
+            key: k256::PublicKey::from(
+                k256::PublicKey::from_affine(pt).expect("Derived point is valid"),
+            ),
+        };
+    
+        (derived_key, chain_code)
+        */
+        throw new Error("Not implemented");
+    }    
 }
-function public_key_derive_subkey_with_chain_code(
-    public_key_with_chain_code: PublicKeyWithChainCode,
-    derivation_path: DerivationPath,
-) : PublicKeyWithChainCode {
-    /*
-    let public_key: AffinePoint = *self.key.as_affine();
-    let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
-
-    let derived_key = Self {
-        key: k256::PublicKey::from(
-            k256::PublicKey::from_affine(pt).expect("Derived point is valid"),
-        ),
-    };
-
-    (derived_key, chain_code)
-    */
-    throw new Error("Not implemented");
-}
-
 /**
  * A public key, represented as a 33 byte array using sec1 encoding.
  */
@@ -142,7 +150,7 @@ function derivation_path_ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: C
 }
 
 
-
+// Translated from Rust: mkpubkey::ecdsa_public_key::secp256k1_public_key
 export function derive_public_key(
     ecdsa_public_key: PublicKeyWithChainCode,
     simple_derivation_path: DerivationPath,
@@ -178,7 +186,9 @@ pub fn derive_public_key(
 
     console.log("Affine hex: ", ecdsa_public_key.public_key.asAffineHex());
 
-    throw new Error("Not implemented");
+    let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
+
+    return derived_key;
 }
 
 
@@ -189,16 +199,16 @@ pub fn derive_public_key(
 
 // Tests the public key derivation
 export function test_derive_public_key() {
-    const pub_key_without_derivation_path = {
-        chain_code: ChainCode.fromArray([
+    const pub_key_without_derivation_path = PublicKeyWithChainCode.fromArray(
+        [
             33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110,
             206, 217, 163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209,
-        ]),
-        public_key: Sec1EncodedPublicKey.fromArray([
+        ],
+        [
             2, 184, 79, 243, 248, 131, 41, 168, 135, 101, 125, 3, 9, 189, 26, 26, 249, 227,
             118, 1, 229, 209, 165, 53, 214, 254, 125, 66, 227, 127, 121, 244, 10,
-        ]),
-    };
+        ]
+    );
 
     console.log("Public key without derivation path: ");
     console.log(pub_key_without_derivation_path);
@@ -210,16 +220,16 @@ export function test_derive_public_key() {
     console.log("Derivation path: ");
     console.log(derivation_path);
 
-    const expected_pub_key_with_derivation_path = {
-        chain_code: new Uint8Array([
+    const expected_pub_key_with_derivation_path = new PublicKeyWithChainCode(
+        new ChainCode(new Uint8Array([
             188, 53, 184, 81, 95, 3, 170, 21, 67, 8, 30, 42, 244, 232, 120, 242, 139, 39, 243,
             206, 0, 192, 53, 244, 6, 135, 2, 211, 62, 232, 133, 134,
-        ]),
-        public_key: new Uint8Array([
+        ])),
+        new Sec1EncodedPublicKey(new Uint8Array([
             2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151,
             65, 222, 90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217,
-        ]),
-    };
+        ]))
+    );
 
     const pub_key_with_derivation_path = derive_public_key(pub_key_without_derivation_path, derivation_path);
 
