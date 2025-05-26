@@ -99,7 +99,7 @@ class ChainCode {
 class DerivationPath {
     constructor(public readonly path: Uint8Array[]) {}
 
-    derive_offset(pt: AffinePoint, chain_code: ChainCode): ProjectivePoint {
+    derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
     /*
         fn derive_offset(
         &self,
