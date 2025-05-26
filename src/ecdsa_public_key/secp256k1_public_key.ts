@@ -2,7 +2,7 @@ import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 
 type ECDSAPublicKey = {
     chain_code: ChainCode;
-    public_key: PublicKey;
+    public_key: Sec1EncodedPublicKey;
 }
 function public_key_derive_subkey_with_chain_code(
     public_key_with_chain_code: ECDSAPublicKey,
@@ -26,17 +26,17 @@ function public_key_derive_subkey_with_chain_code(
 /**
  * A public key, represented as a 33 byte array using sec1 encoding.
  */
-class PublicKey {
+class Sec1EncodedPublicKey {
     static readonly LENGTH = 33;
 
     constructor(public readonly bytes: Uint8Array) {
-        if (bytes.length !== PublicKey.LENGTH) {
-            throw new Error(`Invalid PublicKey length: expected ${PublicKey.LENGTH} bytes, got ${bytes.length}`);
+        if (bytes.length !== Sec1EncodedPublicKey.LENGTH) {
+            throw new Error(`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH} bytes, got ${bytes.length}`);
         }
     }
 
-    static fromArray(array: number[]): PublicKey {
-        return new PublicKey(new Uint8Array(array));
+    static fromArray(array: number[]): Sec1EncodedPublicKey {
+        return new Sec1EncodedPublicKey(new Uint8Array(array));
     }
 
     asHex(): string {
@@ -152,7 +152,7 @@ export function test_derive_public_key() {
             33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110,
             206, 217, 163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209,
         ]),
-        public_key: PublicKey.fromArray([
+        public_key: Sec1EncodedPublicKey.fromArray([
             2, 184, 79, 243, 248, 131, 41, 168, 135, 101, 125, 3, 9, 189, 26, 26, 249, 227,
             118, 1, 229, 209, 165, 53, 214, 254, 125, 66, 227, 127, 121, 244, 10,
         ]),
