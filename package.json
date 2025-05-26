@@ -1,26 +1,28 @@
 {
-  "name": "mkpubkey",
-  "version": "1.0.0",
-  "main": "index.js",
-  "bin": {
-    "mycli": "./dist/index.js"
-  },
-  "scripts": {
-    "build": "tsc && chmod +x dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@types/commander": "^2.12.0",
-    "@types/node": "^22.15.21",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "@noble/secp256k1": "^2.2.3",
-    "commander": "^14.0.0"
-  }
+	"name": "mkpubkey",
+	"version": "1.0.0",
+	"main": "index.js",
+	"bin": {
+		"mycli": "./dist/index.js"
+	},
+	"scripts": {
+		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
+		"build": "tsc && chmod +x dist/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"prettier": "^3.5.3",
+		"@types/commander": "^2.12.0",
+		"@types/node": "^22.15.21",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@noble/secp256k1": "^2.2.3",
+		"commander": "^14.0.0"
+	}
 }
