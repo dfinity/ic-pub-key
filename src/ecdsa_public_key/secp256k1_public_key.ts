@@ -1,4 +1,5 @@
 import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
+import { strict as assert } from 'assert';
 
 type PublicKeyWithChainCode = {
     chain_code: ChainCode;
@@ -56,6 +57,10 @@ class Sec1EncodedPublicKey {
         const x = affine_point.x;
         const y = affine_point.y;
         return "x: " + x.toString(16) + " y: " + y.toString(16);
+    }
+    x_as_hex(): string {
+        const x = this.asAffinePoint().x;
+        return x.toString(16);
     }
 }
 /**
@@ -171,12 +176,6 @@ pub fn derive_public_key(
 
 */
 
-    const hex_public_key = ecdsa_public_key.public_key.asHex();
-    console.log("Hex public key: ", hex_public_key);
-    const projective_point = ecdsa_public_key.public_key.asProjectivePoint();
-    console.log("Projective point: ", projective_point);
-    const affine_point = ecdsa_public_key.public_key.asAffinePoint();
-    console.log("Affine point: ", affine_point);
     console.log("Affine hex: ", ecdsa_public_key.public_key.asAffineHex());
 
     throw new Error("Not implemented");
@@ -204,6 +203,7 @@ export function test_derive_public_key() {
     console.log("Public key without derivation path: ");
     console.log(pub_key_without_derivation_path);
 
+    assert.equal(pub_key_without_derivation_path.public_key.x_as_hex(), "b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a");
 
     const derivation_path: DerivationPath = [ "2", "444", "66666"].map(s => new TextEncoder().encode(s));
 
