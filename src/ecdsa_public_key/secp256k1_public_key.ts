@@ -1,10 +1,40 @@
+import { ProjectivePoint } from "@noble/secp256k1";
 
 type ECDSAPublicKey = {
     chain_code: Uint8Array;
     public_key: Uint8Array;
 }
+function public_key_derive_subkey_with_chain_code(
+    public_key_with_chain_code: ECDSAPublicKey,
+    derivation_path: DerivationPath,
+) : ECDSAPublicKey {
+    /*
+    let public_key: AffinePoint = *self.key.as_affine();
+    let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
+
+    let derived_key = Self {
+        key: k256::PublicKey::from(
+            k256::PublicKey::from_affine(pt).expect("Derived point is valid"),
+        ),
+    };
+
+    (derived_key, chain_code)
+    */
+    throw new Error("Not implemented");
+}
+
 
 type DerivationPath = Uint8Array[];
+function derivation_path_derive_offset(derivation_path: DerivationPath, public_key: ProjectivePoint): ProjectivePoint {
+    /*
+    const projective_point = ProjectivePoint.fromHex(hex_public_key);
+    console.log("Projective point: ", projective_point);
+    const affine_point = projective_point.toAffine();
+    console.log("Affine point: ", affine_point);
+    */
+    throw new Error("Not implemented");
+}
+
 
 
 export function derive_public_key(
@@ -13,10 +43,19 @@ export function derive_public_key(
 ) : ECDSAPublicKey {
 
 
+    const hex_public_key = Buffer.from(ecdsa_public_key.public_key).toString('hex');
+    console.log("Hex public key: ", hex_public_key);
+    const projective_point = ProjectivePoint.fromHex(hex_public_key);
+    console.log("Projective point: ", projective_point);
+    const affine_point = projective_point.toAffine();
+    console.log("Affine point: ", affine_point);
+
     // Verify that eth chain code has the correct length
     if (ecdsa_public_key.chain_code.length !== 32) {
         throw new Error("Invalid chain code length");
     }
+
+
 
     return {
         chain_code: new Uint8Array(),
