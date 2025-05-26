@@ -2,7 +2,7 @@ import { AffinePoint, ProjectivePoint } from "@noble/secp256k1";
 
 type ECDSAPublicKey = {
     chain_code: ChainCode;
-    public_key: Uint8Array;
+    public_key: PublicKey;
 }
 function public_key_derive_subkey_with_chain_code(
     public_key_with_chain_code: ECDSAPublicKey,
@@ -23,7 +23,26 @@ function public_key_derive_subkey_with_chain_code(
     throw new Error("Not implemented");
 }
 
+/**
+ * A public key, represented as a 33 byte array using sec1 encoding.
+ */
+class PublicKey {
+    static readonly LENGTH = 33;
 
+    constructor(public readonly bytes: Uint8Array) {
+        if (bytes.length !== PublicKey.LENGTH) {
+            throw new Error(`Invalid PublicKey length: expected ${PublicKey.LENGTH} bytes, got ${bytes.length}`);
+        }
+    }
+
+    static fromArray(array: number[]): PublicKey {
+        return new PublicKey(new Uint8Array(array));
+    }
+
+    asHex(): string {
+        return Buffer.from(this.bytes).toString('hex');
+    }
+}
 /**
  * A chain code is a 32 byte array
  */
@@ -110,7 +129,7 @@ export function derive_public_key(
 ) : ECDSAPublicKey {
 
 
-    const hex_public_key = Buffer.from(ecdsa_public_key.public_key).toString('hex');
+    const hex_public_key = ecdsa_public_key.public_key.asHex();
     console.log("Hex public key: ", hex_public_key);
     const projective_point = ProjectivePoint.fromHex(hex_public_key);
     console.log("Projective point: ", projective_point);
@@ -133,7 +152,7 @@ export function test_derive_public_key() {
             33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110,
             206, 217, 163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209,
         ]),
-        public_key: new Uint8Array([
+        public_key: PublicKey.fromArray([
             2, 184, 79, 243, 248, 131, 41, 168, 135, 101, 125, 3, 9, 189, 26, 26, 249, 227,
             118, 1, 229, 209, 165, 53, 214, 254, 125, 66, 227, 127, 121, 244, 10,
         ]),
