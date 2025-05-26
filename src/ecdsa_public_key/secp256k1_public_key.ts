@@ -96,8 +96,13 @@ class ChainCode {
     }
 }
 
+/**
+ * One part of a derivation path.
+ */
+type PathComponent = Uint8Array;
+
 class DerivationPath {
-    constructor(public readonly path: Uint8Array[]) {}
+    constructor(public readonly path: PathComponent[]) {}
 
     derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
     /*
@@ -128,7 +133,7 @@ class DerivationPath {
     throw new Error("Not implemented: DerivationPath.derive_offset");
     }
 
-    static ckd_pub(idx: Uint8Array, pt: AffinePoint, chain_code: ChainCode): [ChainCode, bigint, AffinePoint] {
+    static ckd_pub(idx: PathComponent, pt: AffinePoint, chain_code: ChainCode): [ChainCode, bigint, AffinePoint] {
         /*
             fn ckd_pub(
             idx: &[u8],
@@ -175,7 +180,7 @@ class DerivationPath {
         throw new Error("Not implemented: DerivationPath.ckd_pub");
     }
 
-    static ckd(idx: Uint8Array, ckd_input: Uint8Array, chain_code: ChainCode): [ChainCode, bigint] {
+    static ckd(idx: PathComponent, ckd_input: Uint8Array, chain_code: ChainCode): [ChainCode, bigint] {
         /*
             fn ckd(idx: &[u8], input: &[u8], chain_code: &[u8; 32]) -> ([u8; 32], Scalar) {
         use hmac::{Hmac, Mac};
