@@ -166,7 +166,7 @@ class DerivationPath {
 
 			console.log("derive_offset: after applying idx:", Buffer.from(idx).toString('hex'));
 			console.log("derive_offset: after applying idx: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
-			console.log("derive_offset: after applying idx: offset:", offset);
+			console.log("derive_offset: after applying idx: offset:", offset.toString(16));
 			console.log("derive_offset: after applying idx: chain_code:", chain_code.asHex());
 
 		}
