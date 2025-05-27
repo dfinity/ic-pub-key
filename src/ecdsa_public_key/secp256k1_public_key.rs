@@ -85,16 +85,17 @@ pub fn derive_public_key(
 
     let pk = PublicKey::deserialize_sec1(&ecdsa_public_key.public_key)
         .expect("Failed to parse ECDSA public key");
-
-    println!("derive_public_key:");
-    println!("derive_public_key: arg1: {}", public_key_as_affine_hex(&pk));
-    println!("derive_public_key: arg2: {:?}", &simple_derivation_path);
-    
     let chain_code: [u8; 32] = ecdsa_public_key
         .chain_code
         .clone()
         .try_into()
         .expect("Incorrect chain code size");
+
+    println!("derive_public_key:");
+    println!("derive_public_key: arg1: pubkey: {}", public_key_as_affine_hex(&pk));
+    println!("derive_public_key: arg1: chain code: {:?}", hex::encode(&ecdsa_public_key.chain_code));
+    println!("derive_public_key: arg2: {:?}", &simple_derivation_path);
+    
 
     println!("Modulus: {}", k256::Scalar::MODULUS);
 

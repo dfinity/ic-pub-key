@@ -98,6 +98,10 @@ class ChainCode {
 	static fromArray(array: number[]): ChainCode {
 		return new ChainCode(new Uint8Array(array));
 	}
+
+	asHex(): string {
+		return Buffer.from(this.bytes).toString('hex');
+	}
 }
 
 /**
@@ -285,8 +289,9 @@ pub fn derive_public_key(
 
 */
     console.log("derive_public_key:");
-    console.log("derive_public_key: arg1:", ecdsa_public_key.public_key.asAffineHex());
-    console.log("derive_public_key: arg2:", simple_derivation_path.path.map(p => Buffer.from(p).toString('hex')).join('/'));
+    console.log("derive_public_key: arg1: pubkey:", ecdsa_public_key.public_key.asAffineHex());
+    console.log("derive_public_key: arg1: chain code:", ecdsa_public_key.chain_code.asHex());
+    console.log("derive_public_key: arg2: derivation path:", simple_derivation_path.path.map(p => Buffer.from(p).toString('hex')).join('/'));
 
 	let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
 
