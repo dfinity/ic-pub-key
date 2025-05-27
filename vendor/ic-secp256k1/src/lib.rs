@@ -163,7 +163,7 @@ impl DerivationPath {
 
             let base_mul = k256::ProjectivePoint::mul_by_generator(&next_offset);
             let next_pt = (pt + base_mul).to_affine();
-            println!("ckd_pub: base_mul: {:?}", base_mul);
+            println!("ckd_pub: base_mul: {}", base_mul);
             println!("ckd_pub: next_pt: {}", next_pt);
 
             // If the new key is not infinity, we're done: return the new key
