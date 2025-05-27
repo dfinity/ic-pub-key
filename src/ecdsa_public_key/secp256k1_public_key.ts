@@ -110,30 +110,6 @@ class DerivationPath {
     }
 
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
-		console.log("");
-		console.log("derive_offset: arg: derivation_path:", this.toString());
-		console.log("derive_offset: arg: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
-		console.log("derive_offset: arg: chain_code:", chain_code.asHex());
-		/*
-        fn derive_offset(
-        &self,
-        pt: AffinePoint,
-        chain_code: &[u8; 32],
-    ) -> (AffinePoint, Scalar, [u8; 32]) {
-        let mut offset = Scalar::ZERO;
-        let mut pt = pt;
-        let mut chain_code = *chain_code;
-
-        for idx in self.path() {
-            let (next_chain_code, next_offset, next_pt) = Self::ckd_pub(&idx.0, pt, &chain_code);
-            chain_code = next_chain_code;
-            pt = next_pt;
-            offset = offset.add(&next_offset);
-        }
-
-        (pt, offset, chain_code)
-    }
-    */
 		let offset = BigInt(0);
 
 		for (let idx of this.path) {
@@ -141,12 +117,6 @@ class DerivationPath {
 			chain_code = next_chain_code;
 			pt = next_pt;
 			offset += next_offset;
-
-			console.log("derive_offset: after applying idx:", Buffer.from(idx).toString('hex'));
-			console.log("derive_offset: after applying idx: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
-			console.log("derive_offset: after applying idx: offset:", offset.toString(16));
-			console.log("derive_offset: after applying idx: chain_code:", chain_code.asHex());
-
 		}
 		return [pt, offset, chain_code];
 	}
