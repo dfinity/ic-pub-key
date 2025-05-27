@@ -80,16 +80,16 @@ pub fn derive_public_key(
 ) -> ECDSAPublicKey {
     use ic_secp256k1::PublicKey;
 
+
     let path = derivation_path(simple_derivation_path);
 
     let pk = PublicKey::deserialize_sec1(&ecdsa_public_key.public_key)
         .expect("Failed to parse ECDSA public key");
 
-        {
-            println!("pk: {}", public_key_as_affine_hex(&pk));
-
-        }
-
+    println!("derive_public_key:");
+    println!("derive_public_key: arg1: {}", public_key_as_affine_hex(&pk));
+    println!("derive_public_key: arg2: {:?}", &simple_derivation_path);
+    
     let chain_code: [u8; 32] = ecdsa_public_key
         .chain_code
         .clone()
