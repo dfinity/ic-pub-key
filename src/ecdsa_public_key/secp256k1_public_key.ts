@@ -132,6 +132,10 @@ class DerivationPath {
     }
 
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
+		console.log("");
+		console.log("derive_offset: arg: derivation_path:", this.toString());
+		console.log("derive_offset: arg: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
+		console.log("derive_offset: arg: chain_code:", chain_code.asHex());
 		/*
         fn derive_offset(
         &self,
@@ -159,6 +163,12 @@ class DerivationPath {
 			chain_code = next_chain_code;
 			pt = next_pt;
 			offset += next_offset;
+
+			console.log("derive_offset: after applying idx:", Buffer.from(idx).toString('hex'));
+			console.log("derive_offset: after applying idx: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
+			console.log("derive_offset: after applying idx: offset:", offset);
+			console.log("derive_offset: after applying idx: chain_code:", chain_code.asHex());
+
 		}
 		return [pt, offset, chain_code];
 	}

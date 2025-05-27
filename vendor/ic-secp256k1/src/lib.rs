@@ -178,6 +178,12 @@ impl DerivationPath {
         pt: AffinePoint,
         chain_code: &[u8; 32],
     ) -> (AffinePoint, Scalar, [u8; 32]) {
+        println!("");
+        println!("derive_offset: arg: derivation_path: {}", self);
+        println!("derive_offset: arg: pt: {}", pt);
+        println!("derive_offset: arg: chain_code: {}", hex::encode(chain_code));
+
+
         let mut offset = Scalar::ZERO;
         let mut pt = pt;
         let mut chain_code = *chain_code;
