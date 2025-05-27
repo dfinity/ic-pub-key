@@ -105,10 +105,19 @@ type PathComponent = Uint8Array;
 class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
+	/**
+	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
+	 */
     toString(): string {
         return this.path.map(p => Buffer.from(p).toString('hex')).join('/');
     }
 
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived public key, the offset, and the chain code.
+	 */
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
 		let offset = BigInt(0);
 
@@ -121,6 +130,13 @@ class DerivationPath {
 		return [pt, offset, chain_code];
 	}
 
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd_pub](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L138)
+	 * @param idx A part of the derivation path.
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived chain code, the offset, and the derived public key.
+	 */
 	static ckd_pub(
 		idx: PathComponent,
 		pt: AffinePoint,
@@ -145,6 +161,13 @@ class DerivationPath {
 		}
 	}
 
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L111)
+	 * @param idx A part of the derivation path.
+	 * @param ckd_input The input to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived chain code and the offset.
+	 */
 	static ckd(
 		idx: PathComponent,
 		ckd_input: Uint8Array,
