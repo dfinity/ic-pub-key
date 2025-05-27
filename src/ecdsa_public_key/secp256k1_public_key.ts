@@ -216,7 +216,12 @@ class DerivationPath {
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-            let next_pt = ProjectivePoint.BASE.mul(next_offset);
+            let base_mul = ProjectivePoint.BASE.mul(next_offset);
+            let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+			console.log("ckd_pub: base_mul:", base_mul.toHex());
+			console.log("ckd_pub: next_pt:", next_pt.toHex());
+
+
             if (!next_pt.equals(ProjectivePoint.ZERO)) {
                 return [next_chain_code, next_offset, next_pt.toAffine()];
             }
