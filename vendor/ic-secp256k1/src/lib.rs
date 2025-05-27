@@ -1048,8 +1048,8 @@ impl PublicKey {
     ) -> (Self, [u8; 32]) {
 
         println!("derive_subkey_with_chain_code: public_key: {}", self);
-        println!("derive_subkey_with_chain_code: derivation_path: {}", derivation_path);
         println!("derive_subkey_with_chain_code: chain_code: {}", hex::encode(chain_code));
+        println!("derive_subkey_with_chain_code: derivation_path: {}", derivation_path);
         let public_key: AffinePoint = *self.key.as_affine();
         let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
 
