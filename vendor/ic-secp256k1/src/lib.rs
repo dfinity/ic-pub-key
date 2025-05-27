@@ -193,6 +193,10 @@ impl DerivationPath {
             chain_code = next_chain_code;
             pt = next_pt;
             offset = offset.add(&next_offset);
+            println!("derive_offset: after applying idx: {:02x?}", idx);
+            println!("derive_offset: after applying idx: pt: {}", pt);
+            println!("derive_offset: after applying idx: offset: {:?}", offset);
+            println!("derive_offset: after applying idx: chain_code: {}", hex::encode(chain_code));
         }
 
         (pt, offset, chain_code)
