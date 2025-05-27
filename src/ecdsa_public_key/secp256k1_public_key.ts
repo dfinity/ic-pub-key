@@ -16,30 +16,8 @@ class PublicKeyWithChainCode {
 	}
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
-		/*
-        let public_key: AffinePoint = *self.key.as_affine();
-        let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
-    
-        let derived_key = Self {
-            key: k256::PublicKey::from(
-                k256::PublicKey::from_affine(pt).expect("Derived point is valid"),
-            ),
-        };
-    
-        (derived_key, chain_code)
-        */
-        console.log("derive_subkey_with_chain_code: arg: public_key:", this.public_key.asAffineHex());
-        console.log("derive_subkey_with_chain_code: arg: chain_code:", this.chain_code.asHex());
-        console.log("derive_subkey_with_chain_code: arg: derivation_path:", derivation_path.toString());
-
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
-
-
-        console.log("derive_subkey_with_chain_code: derive_offset: pt:", ProjectivePoint.fromAffine(affine_pt).toHex());
-        console.log("derive_subkey_with_chain_code: derive_offset: offset:", _offset.toString(16));
-        console.log("derive_subkey_with_chain_code: derive_offset: chain_code:", chain_code.asHex());
-
         let pt = ProjectivePoint.fromAffine(affine_pt);
         return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
 	}
