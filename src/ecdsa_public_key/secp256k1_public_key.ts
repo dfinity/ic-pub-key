@@ -386,10 +386,10 @@ export function test_derive_public_key() {
 			])
 		),
 		new Sec1EncodedPublicKey(
-			new Uint8Array([
+			Buffer.from(new Uint8Array([
 				2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151, 65, 222,
 				90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
-			])
+			]))
 		)
 	);
 
