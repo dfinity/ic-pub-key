@@ -1,5 +1,6 @@
 use std::io::Read;
 
+use elliptic_curve::PrimeField;
 use ic_secp256k1::{DerivationIndex, DerivationPath};
 
 #[derive(Debug, PartialEq, Eq)]
@@ -90,6 +91,8 @@ pub fn derive_public_key(
         .clone()
         .try_into()
         .expect("Incorrect chain code size");
+
+    println!("Modulus: {}", k256::Scalar::MODULUS);
 
     let (derived_public_key, derived_chain_code) =
         pk.derive_subkey_with_chain_code(&path, &chain_code);

@@ -10,3 +10,4 @@ pretty_assertions = "1.4.1"
 
 elliptic-curve = { version = "0.13.8" }
 hex = "0.4"
+k256 = { version = "0.13.4" }

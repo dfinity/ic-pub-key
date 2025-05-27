@@ -527,6 +527,7 @@ dependencies = [
  "hex",
  "ic-secp256k1",
  "icrc-ledger-types",
+ "k256",
  "pretty_assertions",
 ]
 

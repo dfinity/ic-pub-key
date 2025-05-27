@@ -179,10 +179,15 @@ class DerivationPath {
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-			//let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
-		}
+            let next_pt = ProjectivePoint.BASE.mul(next_offset);
+            if (!next_pt.equals(ProjectivePoint.ZERO)) {
+                return [next_chain_code, next_offset, next_pt.toAffine()];
+            }
 
-		throw new Error('Not implemented: DerivationPath.ckd_pub');
+            // Otherwise set up the next input as defined by SLIP-0010
+            ckd_input[0] = 0x01;
+            ckd_input.set(next_chain_code.bytes, 1);
+		}
 	}
 
 	static ckd(
@@ -224,11 +229,21 @@ class DerivationPath {
         let hmac_output = hmac.digest();
         assert.equal(hmac_output.length, 64);
 
-        //let fb = hmac_output.slice(0, 32);
-        //let next_offset = reduce(fb);
+        let fb = hmac_output.subarray(0, 32);
+        let next_chain_key = hmac_output.subarray(32, 64);
+        // Treat the bytes as an integer
+        let next_offset = BigInt(fb.readBigUInt64BE(0)); // Note: Do NOT reduce here; the reduction is handled below.
+        // The k256 modulus:
+        const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
+        // If iL >= order, try again with the "next" index as described in SLIP-10
+        if (next_offset >= MODULUS) { // One subtraction is enough, so no need to get fancy.
+            let next_input = new Uint8Array(33);
+            next_input[0] = 0x01;
+            next_input.set(next_chain_key, 1);
+            return DerivationPath.ckd(idx, next_input, chain_code)
+        }
 
-
-		throw new Error('Not implemented: DerivationPath.ckd');
+        return [new ChainCode(next_chain_key), next_offset];
 	}
 }
 
