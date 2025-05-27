@@ -28,6 +28,10 @@ class PublicKeyWithChainCode {
     
         (derived_key, chain_code)
         */
+        console.log("derive_subkey_with_chain_code: derive_offset in: public_key:", this.public_key.asAffineHex());
+        console.log("derive_subkey_with_chain_code: derive_offset in: chain_code:", this.chain_code.asHex());
+        console.log("derive_subkey_with_chain_code: derive_offset in: derivation_path:", derivation_path.toString());
+
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
 
