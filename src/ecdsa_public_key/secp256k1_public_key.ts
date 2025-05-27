@@ -30,6 +30,12 @@ class PublicKeyWithChainCode {
         */
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
+
+
+        console.log("derive_subkey_with_chain_code: derive_offset out: pt:", ProjectivePoint.fromAffine(affine_pt).toHex());
+        console.log("derive_subkey_with_chain_code: derive_offset offset:", _offset);
+        console.log("derive_subkey_with_chain_code: derive_offset chain_code:", chain_code.asHex());
+
         let pt = ProjectivePoint.fromAffine(affine_pt);
         return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
 	}
