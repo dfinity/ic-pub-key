@@ -37,6 +37,9 @@ repository = "https://github.com/dfinity/ic"
 name = "ic_secp256k1"
 path = "src/lib.rs"
 
+[dependencies]
+hex = "0.4.3"
+
 [dependencies.hmac]
 version = "0.12"
 

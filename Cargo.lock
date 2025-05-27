@@ -367,6 +367,7 @@ dependencies = [
 name = "ic-secp256k1"
 version = "0.1.0"
 dependencies = [
+ "hex",
  "hmac",
  "k256",
  "lazy_static",
