@@ -126,38 +126,6 @@ class DerivationPath {
 		pt: AffinePoint,
 		chain_code: ChainCode
 	): [ChainCode, bigint, AffinePoint] {
-		/*
-            fn ckd_pub(
-            idx: &[u8],
-            pt: AffinePoint,
-            chain_code: &[u8; 32],
-        ) -> ([u8; 32], Scalar, AffinePoint) {
-            use k256::elliptic_curve::{
-                group::prime::PrimeCurveAffine, group::GroupEncoding, ops::MulByGenerator,
-            };
-            use k256::ProjectivePoint;
-    
-            let mut ckd_input = pt.to_bytes();
-    
-            let pt: ProjectivePoint = pt.into();
-    
-            loop {
-                let (next_chain_code, next_offset) = Self::ckd(idx, &ckd_input, chain_code);
-    
-                let next_pt = (pt + k256::ProjectivePoint::mul_by_generator(&next_offset)).to_affine();
-    
-                // If the new key is not infinity, we're done: return the new key
-                if !bool::from(next_pt.is_identity()) {
-                    return (next_chain_code, next_offset, next_pt);
-                }
-    
-                // Otherwise set up the next input as defined by SLIP-0010
-                ckd_input[0] = 0x01;
-                ckd_input[1..].copy_from_slice(&next_chain_code);
-            }
-        }
-    
-    */
 		let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
 		let projective_point = ProjectivePoint.fromAffine(pt);
 
@@ -166,10 +134,6 @@ class DerivationPath {
 
             let base_mul = ProjectivePoint.BASE.mul(next_offset);
             let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
-			console.log("ckd_pub: next_offset:", next_offset.toString(16));
-			console.log("ckd_pub: base_mul:", base_mul.toHex());
-			console.log("ckd_pub: next_pt:", next_pt.toHex());
-
 
             if (!next_pt.equals(ProjectivePoint.ZERO)) {
                 return [next_chain_code, next_offset, next_pt.toAffine()];
@@ -186,34 +150,6 @@ class DerivationPath {
 		ckd_input: Uint8Array,
 		chain_code: ChainCode
 	): [ChainCode, bigint] {
-		/*
-            fn ckd(idx: &[u8], input: &[u8], chain_code: &[u8; 32]) -> ([u8; 32], Scalar) {
-        use hmac::{Hmac, Mac};
-        use k256::{elliptic_curve::ops::Reduce, sha2::Sha512};
-
-        let mut hmac = Hmac::<Sha512>::new_from_slice(chain_code)
-            .expect("HMAC-SHA-512 should accept 256 bit key");
-
-        hmac.update(input);
-        hmac.update(idx);
-
-        let hmac_output: [u8; 64] = hmac.finalize().into_bytes().into();
-
-        let fb = k256::FieldBytes::from_slice(&hmac_output[..32]);
-        let next_offset = <k256::Scalar as Reduce<k256::U256>>::reduce_bytes(fb);
-        let next_chain_key: [u8; 32] = hmac_output[32..].to_vec().try_into().expect("Correct size");
-
-        // If iL >= order, try again with the "next" index as described in SLIP-10
-        if next_offset.to_bytes().to_vec() != hmac_output[..32] {
-            let mut next_input = [0u8; 33];
-            next_input[0] = 0x01;
-            next_input[1..].copy_from_slice(&next_chain_key);
-            Self::ckd(idx, &next_input, chain_code)
-        } else {
-            (next_chain_key, next_offset)
-        }
-    }
-        */
         let hmac = createHmac('sha512', chain_code.bytes);
         hmac.update(ckd_input);
         hmac.update(idx);
@@ -222,12 +158,10 @@ class DerivationPath {
 
         let fb = hmac_output.subarray(0, 32);
 		let fb_hex = Buffer.from(fb).toString('hex');
-        console.log("ckd: fb:         ", fb_hex);
         let next_chain_key = hmac_output.subarray(32, 64);
         let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
         // Treat the bytes as an integer
         let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
-		console.log("ckd: next_offset:", next_offset.toString(16));
         // The k256 modulus:
         const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
         // If iL >= order, try again with the "next" index as described in SLIP-10
@@ -247,41 +181,7 @@ export function derive_public_key(
 	ecdsa_public_key: PublicKeyWithChainCode,
 	simple_derivation_path: DerivationPath
 ): PublicKeyWithChainCode {
-	/*
-pub fn derive_public_key(
-    ecdsa_public_key: &ECDSAPublicKey,
-    simple_derivation_path: &Vec<Vec<u8>>,
-) -> ECDSAPublicKey {
-    use ic_secp256k1::PublicKey;
-
-    let path = derivation_path(simple_derivation_path);
-
-    let pk = PublicKey::deserialize_sec1(&ecdsa_public_key.public_key)
-        .expect("Failed to parse ECDSA public key");
-
-    let chain_code: [u8; 32] = ecdsa_public_key
-        .chain_code
-        .clone()
-        .try_into()
-        .expect("Incorrect chain code size");
-
-    let (derived_public_key, derived_chain_code) =
-        pk.derive_subkey_with_chain_code(&path, &chain_code);
-
-    ECDSAPublicKey {
-        public_key: derived_public_key.serialize_sec1(true),
-        chain_code: derived_chain_code.to_vec(),
-    }
-}
-
-*/
-    console.log("derive_public_key:");
-    console.log("derive_public_key: arg1: pubkey:", ecdsa_public_key.public_key.asAffineHex());
-    console.log("derive_public_key: arg1: chain code:", ecdsa_public_key.chain_code.asHex());
-    console.log("derive_public_key: arg2: derivation path:", simple_derivation_path.toString());
-
 	let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
-
 	return derived_key;
 }
 
