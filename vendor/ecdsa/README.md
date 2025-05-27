@@ -61,8 +61,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/ecdsa
 [crate-link]: https://crates.io/crates/ecdsa
 [docs-image]: https://docs.rs/ecdsa/badge.svg
@@ -73,18 +72,12 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.65+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260048-signatures
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/RustCrypto
-
-[//]: # (footnotes)
-
+[//]: # 'footnotes'
 [1]: https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
 [2]: https://csrc.nist.gov/publications/detail/fips/186/4/final
-
-[//]: # (docs.rs definitions)
-
+[//]: # 'docs.rs definitions'
 [`ecdsa::Signature`]: https://docs.rs/ecdsa/latest/ecdsa/struct.Signature.html
 [`k256`]: https://docs.rs/k256
 [`p256`]: https://docs.rs/p256

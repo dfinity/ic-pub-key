@@ -3,7 +3,7 @@
 **Pure-Rust traits and utilities for constant-time cryptographic implementations.**
 
 It consists of a `Choice` type, and a collection of traits using `Choice`
-instead of `bool` which are intended to execute in constant-time.  The `Choice`
+instead of `bool` which are intended to execute in constant-time. The `Choice`
 type is a wrapper around a `u8` that holds a `0` or `1`.
 
 ```toml
@@ -63,8 +63,8 @@ From version `2.2`, it was based on Diane Hosfelt and Amber Sprenkels' work on
 ## Warning
 
 This code is a low-level library, intended for specific use-cases implementing
-cryptographic protocols.  It represents a best-effort attempt to protect
-against some software side-channels.  Because side-channel resistance is not a
+cryptographic protocols. It represents a best-effort attempt to protect
+against some software side-channels. Because side-channel resistance is not a
 property of software alone, but of software together with hardware, any such
 effort is fundamentally limited.
 

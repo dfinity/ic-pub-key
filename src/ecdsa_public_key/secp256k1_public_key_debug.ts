@@ -28,20 +28,25 @@ class PublicKeyWithChainCode {
     
         (derived_key, chain_code)
         */
-        console.log("derive_subkey_with_chain_code: arg: public_key:", this.public_key.asAffineHex());
-        console.log("derive_subkey_with_chain_code: arg: chain_code:", this.chain_code.asHex());
-        console.log("derive_subkey_with_chain_code: arg: derivation_path:", derivation_path.toString());
+		console.log('derive_subkey_with_chain_code: arg: public_key:', this.public_key.asAffineHex());
+		console.log('derive_subkey_with_chain_code: arg: chain_code:', this.chain_code.asHex());
+		console.log('derive_subkey_with_chain_code: arg: derivation_path:', derivation_path.toString());
 
 		let public_key = this.public_key.asAffinePoint();
-		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
+		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(
+			public_key,
+			this.chain_code
+		);
 
+		console.log(
+			'derive_subkey_with_chain_code: derive_offset: pt:',
+			ProjectivePoint.fromAffine(affine_pt).toHex()
+		);
+		console.log('derive_subkey_with_chain_code: derive_offset: offset:', _offset.toString(16));
+		console.log('derive_subkey_with_chain_code: derive_offset: chain_code:', chain_code.asHex());
 
-        console.log("derive_subkey_with_chain_code: derive_offset: pt:", ProjectivePoint.fromAffine(affine_pt).toHex());
-        console.log("derive_subkey_with_chain_code: derive_offset: offset:", _offset.toString(16));
-        console.log("derive_subkey_with_chain_code: derive_offset: chain_code:", chain_code.asHex());
-
-        let pt = ProjectivePoint.fromAffine(affine_pt);
-        return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
+		let pt = ProjectivePoint.fromAffine(affine_pt);
+		return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
 	}
 }
 /**
@@ -127,15 +132,15 @@ type PathComponent = Uint8Array;
 class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
-    toString(): string {
-        return this.path.map(p => Buffer.from(p).toString('hex')).join('/');
-    }
+	toString(): string {
+		return this.path.map((p) => Buffer.from(p).toString('hex')).join('/');
+	}
 
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
-		console.log("");
-		console.log("derive_offset: arg: derivation_path:", this.toString());
-		console.log("derive_offset: arg: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
-		console.log("derive_offset: arg: chain_code:", chain_code.asHex());
+		console.log('');
+		console.log('derive_offset: arg: derivation_path:', this.toString());
+		console.log('derive_offset: arg: pt:', Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
+		console.log('derive_offset: arg: chain_code:', chain_code.asHex());
 		/*
         fn derive_offset(
         &self,
@@ -164,11 +169,13 @@ class DerivationPath {
 			pt = next_pt;
 			offset += next_offset;
 
-			console.log("derive_offset: after applying idx:", Buffer.from(idx).toString('hex'));
-			console.log("derive_offset: after applying idx: pt:", Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex());
-			console.log("derive_offset: after applying idx: offset:", offset.toString(16));
-			console.log("derive_offset: after applying idx: chain_code:", chain_code.asHex());
-
+			console.log('derive_offset: after applying idx:', Buffer.from(idx).toString('hex'));
+			console.log(
+				'derive_offset: after applying idx: pt:',
+				Sec1EncodedPublicKey.fromAffinePoint(pt).asAffineHex()
+			);
+			console.log('derive_offset: after applying idx: offset:', offset.toString(16));
+			console.log('derive_offset: after applying idx: chain_code:', chain_code.asHex());
 		}
 		return [pt, offset, chain_code];
 	}
@@ -216,20 +223,19 @@ class DerivationPath {
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-            let base_mul = ProjectivePoint.BASE.mul(next_offset);
-            let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
-			console.log("ckd_pub: next_offset:", next_offset.toString(16));
-			console.log("ckd_pub: base_mul:", base_mul.toHex());
-			console.log("ckd_pub: next_pt:", next_pt.toHex());
+			let base_mul = ProjectivePoint.BASE.mul(next_offset);
+			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+			console.log('ckd_pub: next_offset:', next_offset.toString(16));
+			console.log('ckd_pub: base_mul:', base_mul.toHex());
+			console.log('ckd_pub: next_pt:', next_pt.toHex());
 
+			if (!next_pt.equals(ProjectivePoint.ZERO)) {
+				return [next_chain_code, next_offset, next_pt.toAffine()];
+			}
 
-            if (!next_pt.equals(ProjectivePoint.ZERO)) {
-                return [next_chain_code, next_offset, next_pt.toAffine()];
-            }
-
-            // Otherwise set up the next input as defined by SLIP-0010
-            ckd_input[0] = 0x01;
-            ckd_input.set(next_chain_code.bytes, 1);
+			// Otherwise set up the next input as defined by SLIP-0010
+			ckd_input[0] = 0x01;
+			ckd_input.set(next_chain_code.bytes, 1);
 		}
 	}
 
@@ -266,31 +272,32 @@ class DerivationPath {
         }
     }
         */
-        let hmac = createHmac('sha512', chain_code.bytes);
-        hmac.update(ckd_input);
-        hmac.update(idx);
-        let hmac_output = hmac.digest();
-        assert.equal(hmac_output.length, 64);
+		let hmac = createHmac('sha512', chain_code.bytes);
+		hmac.update(ckd_input);
+		hmac.update(idx);
+		let hmac_output = hmac.digest();
+		assert.equal(hmac_output.length, 64);
 
-        let fb = hmac_output.subarray(0, 32);
+		let fb = hmac_output.subarray(0, 32);
 		let fb_hex = Buffer.from(fb).toString('hex');
-        console.log("ckd: fb:         ", fb_hex);
-        let next_chain_key = hmac_output.subarray(32, 64);
-        let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
-        // Treat the bytes as an integer
-        let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
-		console.log("ckd: next_offset:", next_offset.toString(16));
-        // The k256 modulus:
-        const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
-        // If iL >= order, try again with the "next" index as described in SLIP-10
-        if (next_offset >= MODULUS) { // One subtraction is enough, so no need to get fancy.
-            let next_input = new Uint8Array(33);
-            next_input[0] = 0x01;
-            next_input.set(next_chain_key, 1);
-            return DerivationPath.ckd(idx, next_input, chain_code)
-        }
+		console.log('ckd: fb:         ', fb_hex);
+		let next_chain_key = hmac_output.subarray(32, 64);
+		let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
+		// Treat the bytes as an integer
+		let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
+		console.log('ckd: next_offset:', next_offset.toString(16));
+		// The k256 modulus:
+		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
+		// If iL >= order, try again with the "next" index as described in SLIP-10
+		if (next_offset >= MODULUS) {
+			// One subtraction is enough, so no need to get fancy.
+			let next_input = new Uint8Array(33);
+			next_input[0] = 0x01;
+			next_input.set(next_chain_key, 1);
+			return DerivationPath.ckd(idx, next_input, chain_code);
+		}
 
-        return [new ChainCode(next_chain_key), next_offset];
+		return [new ChainCode(next_chain_key), next_offset];
 	}
 }
 
@@ -327,10 +334,10 @@ pub fn derive_public_key(
 }
 
 */
-    console.log("derive_public_key:");
-    console.log("derive_public_key: arg1: pubkey:", ecdsa_public_key.public_key.asAffineHex());
-    console.log("derive_public_key: arg1: chain code:", ecdsa_public_key.chain_code.asHex());
-    console.log("derive_public_key: arg2: derivation path:", simple_derivation_path.toString());
+	console.log('derive_public_key:');
+	console.log('derive_public_key: arg1: pubkey:', ecdsa_public_key.public_key.asAffineHex());
+	console.log('derive_public_key: arg1: chain code:', ecdsa_public_key.chain_code.asHex());
+	console.log('derive_public_key: arg2: derivation path:', simple_derivation_path.toString());
 
 	let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
 
@@ -386,10 +393,12 @@ export function test_derive_public_key() {
 			])
 		),
 		new Sec1EncodedPublicKey(
-			Buffer.from(new Uint8Array([
-				2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151, 65, 222,
-				90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
-			]))
+			Buffer.from(
+				new Uint8Array([
+					2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151, 65, 222,
+					90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
+				])
+			)
 		)
 	);
 

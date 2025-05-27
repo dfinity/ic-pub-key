@@ -18,7 +18,7 @@ macro.
 
 # Supported target architectures
 
-*NOTE: target features with an asterisk are unstable (nightly-only) and subject
+\*NOTE: target features with an asterisk are unstable (nightly-only) and subject
 to change to match upstream name changes in the Rust standard library.
 
 ## `aarch64`
@@ -27,9 +27,9 @@ Linux, iOS, and macOS/ARM only (ARM64 does not support OS-independent feature de
 
 Target features:
 
-- `aes`*
-- `sha2`*
-- `sha3`*
+- `aes`\*
+- `sha2`\*
+- `sha3`\*
 
 ## `loongarch64`
 
@@ -37,19 +37,19 @@ Linux only (LoongArch64 does not support OS-independent feature detection)
 
 Target features:
 
-- `lam`*
-- `ual`*
-- `fpu`*
-- `lsx`*
-- `lasx`*
-- `crc32`*
-- `complex`*
-- `crypto`*
-- `lvz`*
-- `lbt.x86`*
-- `lbt.arm`*
-- `lbt.mips`*
-- `ptw`*
+- `lam`\*
+- `ual`\*
+- `fpu`\*
+- `lsx`\*
+- `lasx`\*
+- `crc32`\*
+- `complex`\*
+- `crypto`\*
+- `lvz`\*
+- `lbt.x86`\*
+- `lbt.arm`\*
+- `lbt.mips`\*
+- `ptw`\*
 
 ## `x86`/`x86_64`
 
@@ -61,16 +61,16 @@ Target features:
 - `aes`
 - `avx`
 - `avx2`
-- `avx512bw`*
-- `avx512cd`*
-- `avx512dq`*
-- `avx512er`*
-- `avx512f`*
-- `avx512ifma`*
-- `avx512pf`*
-- `avx512vl`*
-- `avx512vbmi`*
-- `avx512vbmi2`*
+- `avx512bw`\*
+- `avx512cd`\*
+- `avx512dq`\*
+- `avx512er`\*
+- `avx512f`\*
+- `avx512ifma`\*
+- `avx512pf`\*
+- `avx512vl`\*
+- `avx512vbmi`\*
+- `avx512vbmi2`\*
 - `bmi1`
 - `bmi2`
 - `fma`,
@@ -95,8 +95,8 @@ this list, please [open a GitHub issue].
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -106,8 +106,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://img.shields.io/crates/v/cpufeatures.svg?logo=rust
 [crate-link]: https://crates.io/crates/cpufeatures
 [docs-image]: https://docs.rs/cpufeatures/badge.svg
@@ -118,9 +117,7 @@ dual licensed as above, without any additional terms or conditions.
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260052-utils
 [build-image]: https://github.com/RustCrypto/utils/actions/workflows/cpufeatures.yml/badge.svg
 [build-link]: https://github.com/RustCrypto/utils/actions/workflows/cpufeatures.yml
-
-[//]: # (general links)
-
+[//]: # 'general links'
 [RustCrypto]: https://github.com/rustcrypto
 [RustCrypto/utils#378]: https://github.com/RustCrypto/utils/issues/378
 [open a GitHub issue]: https://github.com/RustCrypto/utils/issues/new?title=cpufeatures:%20requesting%20support%20for%20CHANGEME%20target%20feature

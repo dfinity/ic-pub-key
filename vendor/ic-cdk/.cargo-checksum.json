@@ -1,1 +1,30 @@
-{"files":{"Cargo.lock":"25d3463f77e079ec100b980bf345868ce18513643f62da332185b0850444eaba","Cargo.toml":"e45d414ad32aca1abb7269f30faaccb4dc669a9e0e82e0311e3357624d206773","LICENSE":"3ec7531366b7e2440aa35dd675edc479f7690099821ce68b64c5548ba4849daa","README.md":"3d25e63b26c91253417f47ce97fc3b8e9269d4c8ac4b47c78fce45d7bc2c01ba","src/api/call.rs":"d24ef5e7297d2543f3ec5d8c1ecc02323cd9ab383b827d778847c8dceb6d6168","src/api/management_canister/bitcoin/mod.rs":"09ba928fc0bf145a4334682e221537f13313ca8db98bdfbb496d9701e01047ee","src/api/management_canister/bitcoin/types.rs":"d111383f3fa2cde14b914f78e6e4e74eac9694f77a825263a6c5c57a56ce0fce","src/api/management_canister/ecdsa/mod.rs":"98ac2f7446822f997ed1c0b027683ec378e902f21bbb5bb8e309aecea423d652","src/api/management_canister/ecdsa/types.rs":"f500d6aa447e94cf97133ff31e57fecda232f91c1bfc46f776de0a9c4fa8adc2","src/api/management_canister/http_request/mod.rs":"ac5be48ddbb74f5a21d0f17d30ce48a464bc5514a65e75d8750cddaaf24cadd7","src/api/management_canister/http_request/types.rs":"85187e56d08cff129fd2ba9efda300391e2af2e58f253571058e106e743d3dc4","src/api/management_canister/main/mod.rs":"905f72e4fe38450860d8689a884b2bdbe1444f2bfd750a46b0c255c2555b5ced","src/api/management_canister/main/types.rs":"429ff020626be0d02ef98da0ba1485b53b718a36ced9d63ce0bb8e3fbcfc5f26","src/api/management_canister/mod.rs":"333fef2f40f40f1e008ebf74e7568742f595b47750dc8b9a37ef7aa24e124248","src/api/management_canister/provisional.rs":"8c5ed605f14e2f95253af602c7a496f5440377eedea3f44cec56cffef7b970f3","src/api/management_canister/schnorr/mod.rs":"956014f32f7ad055cfb8a8d06baa6046de3849b7b72e3425479287600af53fe4","src/api/management_canister/schnorr/types.rs":"81754b81d0de2282ea8741e062a0af0ac6db4ed500d668cf0f9ef28e1eb085c3","src/api/mod.rs":"fa3d5b67cdfa6de88e3d4d92126199590bf7db31d12b3249a30d000cf07de264","src/api/stable/canister.rs":"8c781248a30e1d7bc223119894d604d91c8da34e1142b9a592bd4db0784dbffd","src/api/stable/mod.rs":"6628f76b3a40cbbdf3e36c3dd71d1abe1fd419ba5db771589fa04d1ba88c6775","src/api/stable/tests.rs":"83e910e05736e31fce1aeb730245ef570d54a228ea1e072d2f8f9619fbe6c831","src/lib.rs":"72d67c44d9fefa8b25469b6b98a7d5af389a34815a1f82a1ea0d94b0fb5ec8d1","src/macros.rs":"3fd7f78db675f7f53237049c548da4dc402cd91447ee80989efdd5e8ccdb8952","src/printer.rs":"dcb5d38e36abaa1c32d1f8e5067c32e629114b19b05071badda4320558f8fd80","src/storage.rs":"76afcefc489a417fbc21d40a511ece495f28fd25d26e2ff9381391dd18859b9d"},"package":"95a7344f41493cbf591f13ae9f90181076f808a83af799815c3074b19c693d2e"}
+{
+	"files": {
+		"Cargo.lock": "25d3463f77e079ec100b980bf345868ce18513643f62da332185b0850444eaba",
+		"Cargo.toml": "e45d414ad32aca1abb7269f30faaccb4dc669a9e0e82e0311e3357624d206773",
+		"LICENSE": "3ec7531366b7e2440aa35dd675edc479f7690099821ce68b64c5548ba4849daa",
+		"README.md": "3d25e63b26c91253417f47ce97fc3b8e9269d4c8ac4b47c78fce45d7bc2c01ba",
+		"src/api/call.rs": "d24ef5e7297d2543f3ec5d8c1ecc02323cd9ab383b827d778847c8dceb6d6168",
+		"src/api/management_canister/bitcoin/mod.rs": "09ba928fc0bf145a4334682e221537f13313ca8db98bdfbb496d9701e01047ee",
+		"src/api/management_canister/bitcoin/types.rs": "d111383f3fa2cde14b914f78e6e4e74eac9694f77a825263a6c5c57a56ce0fce",
+		"src/api/management_canister/ecdsa/mod.rs": "98ac2f7446822f997ed1c0b027683ec378e902f21bbb5bb8e309aecea423d652",
+		"src/api/management_canister/ecdsa/types.rs": "f500d6aa447e94cf97133ff31e57fecda232f91c1bfc46f776de0a9c4fa8adc2",
+		"src/api/management_canister/http_request/mod.rs": "ac5be48ddbb74f5a21d0f17d30ce48a464bc5514a65e75d8750cddaaf24cadd7",
+		"src/api/management_canister/http_request/types.rs": "85187e56d08cff129fd2ba9efda300391e2af2e58f253571058e106e743d3dc4",
+		"src/api/management_canister/main/mod.rs": "905f72e4fe38450860d8689a884b2bdbe1444f2bfd750a46b0c255c2555b5ced",
+		"src/api/management_canister/main/types.rs": "429ff020626be0d02ef98da0ba1485b53b718a36ced9d63ce0bb8e3fbcfc5f26",
+		"src/api/management_canister/mod.rs": "333fef2f40f40f1e008ebf74e7568742f595b47750dc8b9a37ef7aa24e124248",
+		"src/api/management_canister/provisional.rs": "8c5ed605f14e2f95253af602c7a496f5440377eedea3f44cec56cffef7b970f3",
+		"src/api/management_canister/schnorr/mod.rs": "956014f32f7ad055cfb8a8d06baa6046de3849b7b72e3425479287600af53fe4",
+		"src/api/management_canister/schnorr/types.rs": "81754b81d0de2282ea8741e062a0af0ac6db4ed500d668cf0f9ef28e1eb085c3",
+		"src/api/mod.rs": "fa3d5b67cdfa6de88e3d4d92126199590bf7db31d12b3249a30d000cf07de264",
+		"src/api/stable/canister.rs": "8c781248a30e1d7bc223119894d604d91c8da34e1142b9a592bd4db0784dbffd",
+		"src/api/stable/mod.rs": "6628f76b3a40cbbdf3e36c3dd71d1abe1fd419ba5db771589fa04d1ba88c6775",
+		"src/api/stable/tests.rs": "83e910e05736e31fce1aeb730245ef570d54a228ea1e072d2f8f9619fbe6c831",
+		"src/lib.rs": "72d67c44d9fefa8b25469b6b98a7d5af389a34815a1f82a1ea0d94b0fb5ec8d1",
+		"src/macros.rs": "3fd7f78db675f7f53237049c548da4dc402cd91447ee80989efdd5e8ccdb8952",
+		"src/printer.rs": "dcb5d38e36abaa1c32d1f8e5067c32e629114b19b05071badda4320558f8fd80",
+		"src/storage.rs": "76afcefc489a417fbc21d40a511ece495f28fd25d26e2ff9381391dd18859b9d"
+	},
+	"package": "95a7344f41493cbf591f13ae9f90181076f808a83af799815c3074b19c693d2e"
+}

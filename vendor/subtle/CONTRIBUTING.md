@@ -1,10 +1,10 @@
 # Contributing to subtle
 
 If you have questions or comments, please feel free to email the
-authors. 
+authors.
 
 For feature requests, suggestions, and bug reports, please open an
-issue on [our Github](https://github.com/dalek-cryptography/subtle).  (Or,
+issue on [our Github](https://github.com/dalek-cryptography/subtle). (Or,
 send us an email if you're opposed to using Github for whatever reason.)
 
 Patches are welcomed as pull requests on
@@ -28,6 +28,6 @@ can assign it to you!
 We follow the [Rust Code of Conduct](http://www.rust-lang.org/conduct.html),
 with the following additional clauses:
 
-* We respect the rights to privacy and anonymity for contributors and people in
-  the community.  If someone wishes to contribute under a pseudonym different to
+- We respect the rights to privacy and anonymity for contributors and people in
+  the community. If someone wishes to contribute under a pseudonym different to
   their primary identity, that wish is to be respected by all contributors.

@@ -1,17 +1,22 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 0.7.10 (2024-04-18)
+
 ### Fixed
+
 - append in `Encode::encode_to_vec` (backport [#1760])
 
 [#1760]: https://github.com/RustCrypto/formats/pull/1760
 
 ## 0.7.9 (2024-04-01)
+
 ### Changed
+
 - ignore RUSTSEC-2023-0071 (backport [#1276])
 - make sure der is comptatible with potential language breaking changed (backport [#1374])
 
@@ -19,12 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#1374]: https://github.com/RustCrypto/formats/pull/1374
 
 ## 0.7.8 (2023-08-07)
+
 ### Added
+
 - `bytes` feature ([#1156])
 - impl `RefToOwned`/`OwnedToRef` for `&[u8]`/`Box<[u8]>` ([#1188])
 - `BmpString` ([#1164])
 
 ### Changed
+
 - no-panic cleanup ([#1169])
 - Bump `der_derive` dependency to v0.7.2 ([#1192])
 
@@ -35,20 +43,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#1192]: https://github.com/RustCrypto/formats/pull/1192
 
 ## 0.7.7 (2023-06-29)
+
 ### Added
+
 - `TryFrom<String>` impl for strings based on `StrOwned` ([#1064])
 
 [#1064]: https://github.com/RustCrypto/formats/pull/1064
 
 ## 0.7.6 (2023-05-16)
+
 ### Added
+
 - `SetOfVec::{extend, from_iter}` methods ([#1065])
 - `SetOf(Vec)::{insert, insert_ordered}` methods ([#1067])
 
 ### Changed
+
 - Deprecate `SetOf(Vec)::add` ([#1067])
 
 ### Fixed
+
 - Off-by-one error in `BMPString` tag ([#1037])
 - Handling of non-unique items in `SetOf`(Vec) ([#1066])
 
@@ -58,17 +72,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#1067]: https://github.com/RustCrypto/formats/pull/1067
 
 ## 0.7.5 (2023-04-24)
+
 ### Added
+
 - adds support for `DateTime::INFINITY` ([#1026])
 
 [#1026]: https://github.com/RustCrypto/formats/pull/1026
 
 ## 0.7.4 (2023-04-19)
+
 ### Added
+
 - `Decode` and `Encode` impls for `PhantomData` ([#1009])
 - `ValueOrd` and `DerOrd` impls for `PhantomData` ([#1012])
 
 ### Changed
+
 - Bump `hex-literal` dependency to v0.4.1 ([#999])
 - Bump `der_derive` dependency to v0.7.1 ([#1016])
 
@@ -77,13 +96,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#1016]: https://github.com/RustCrypto/formats/pull/1016
 
 ## 0.7.3 (2023-04-06)
+
 ### Added
+
 - `UtcTime::MAX_YEAR` associated constant ([#989])
 
 [#989]: https://github.com/RustCrypto/formats/pull/989
 
 ## 0.7.2 (2023-04-04)
+
 ### Added
+
 - Expose `NestedReader ([#925])
 - `From<ObjectIdentifier>` impl for `Any` ([#965])
 - `Any::null` helper ([#969])
@@ -95,13 +118,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#976]: https://github.com/RustCrypto/formats/pull/976
 
 ## 0.7.1 (2023-03-07)
+
 ### Changed
+
 - Make `zeroize`'s `alloc` feature conditional ([#920])
 
 [#920]: https://github.com/RustCrypto/formats/pull/920
 
 ## 0.7.0 (2023-02-26) [YANKED]
+
 ### Added
+
 - `OwnedtoRef`/`RefToOwned` traits; MSRV 1.65 ([#797])
 - `OctetStringRef::decode_into` ([#817])
 - `Int` and `IntRef` types ([#823])
@@ -112,6 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Blanket impls on `Box<T>` for `DecodeValue`, `EncodeValue`, and `Sequence` ([#860])
 
 ### Changed
+
 - Rename `UIntRef` => `UintRef` ([#786])
 - Replace use of `dyn Writer` with `impl Writer` ([#828])
 - Rename `AnyRef::decode_into` -> `::decode_as` ([#829])
@@ -119,6 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename `Encode::to_vec` => `::to_der` ([#898])
 
 ### Removed
+
 - `Sequence::fields` method ([#828])
 - Inherent `AnyRef` decoding methods ([#829])
 
@@ -137,11 +166,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#898]: https://github.com/RustCrypto/formats/pull/898
 
 ## 0.6.1 (2022-12-05)
+
 ### Added
+
 - Rudimentary implementation of `TeletexString` and `VideotexString` ([#691])
 - Impl `ValueOrd` for `FlagSet<T>` and `UIntRef` ([#723])
 
 ### Changed
+
 - Eliminate some boilerplate code by using `Deref` ([#697])
 
 [#691]: https://github.com/RustCrypto/formats/pull/691
@@ -149,7 +181,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#723]: https://github.com/RustCrypto/formats/pull/723
 
 ## 0.6.0 (2022-05-08)
+
 ### Added
+
 - Impl `ValueOrd` for `SetOf` and `SetOfVec` ([#362])
 - `SequenceRef` type ([#374])
 - Support for `SetOf` sorting on heapless `no_std` targets ([#401])
@@ -166,6 +200,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Owned `Any` and `OctetString` types ([#640])
 
 ### Changed
+
 - Pass `Header` to `DecodeValue` ([#392])
 - Bump `const-oid` dependency to v0.9 ([#507])
 - Renamed `Decodable`/`Encodable` => `Decode`/`Encode` ([#523])
@@ -184,9 +219,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed `Encoder` => `SliceWriter` ([#651])
 
 ### Fixed
+
 - Handling of oversized unsigned `INTEGER` inputs ([#447])
 
 ### Removed
+
 - `bigint` feature ([#344])
 - `OrdIsValueOrd` trait ([#359])
 - `Document` trait ([#571])
@@ -222,13 +259,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#651]: https://github.com/RustCrypto/formats/pull/651
 
 ## 0.5.1 (2021-11-17)
+
 ### Added
+
 - `Any::NULL` constant ([#226])
 
 [#226]: https://github.com/RustCrypto/formats/pull/226
 
 ## 0.5.0 (2021-11-15) [YANKED]
+
 ### Added
+
 - Support for `IMPLICIT` mode `CONTEXT-SPECIFIC` fields ([#61])
 - `DecodeValue`/`EncodeValue` traits ([#63])
 - Expose `DateTime` through public API ([#75])
@@ -249,6 +290,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ContextSpecificRef` type ([#199])
 
 ### Changed
+
 - Make `ContextSpecific` generic around an inner type ([#60])
 - Removed `SetOf` trait; rename `SetOfArray` => `SetOf` ([#97])
 - Rename `Message` trait to `Sequence` ([#99])
@@ -268,6 +310,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump `der_derive` dependency to v0.5 ([#221])
 
 ### Removed
+
 - `Sequence` struct ([#98])
 - `Tagged` bound on `ContextSpecific::decode_implicit` ([#161])
 - `ErrorKind::DuplicateField` ([#162])
@@ -310,36 +353,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#221]: https://github.com/RustCrypto/formats/pull/221
 
 ## 0.4.5 (2021-12-01)
+
 ### Fixed
+
 - Backport [#147] type hint fix for WASM platforms to 0.4.x
 
 ## 0.4.4 (2021-10-06)
+
 ### Removed
+
 - Accidentally checked-in `target/` directory ([#66])
 
 [#66]: https://github.com/RustCrypto/formats/pull/66
 
 ## 0.4.3 (2021-09-15)
+
 ### Added
+
 - `Tag::unexpected_error` ([#33])
 
 [#33]: https://github.com/RustCrypto/formats/pull/33
 
 ## 0.4.2 (2021-09-14)
+
 ### Changed
+
 - Moved to `formats` repo ([#2])
 
 ### Fixed
+
 - ASN.1 `SET` type now flagged with the constructed bit
 
 [#2]: https://github.com/RustCrypto/formats/pull/2
 
 ## 0.4.1 (2021-08-08)
+
 ### Fixed
+
 - Encoding `UTCTime` for dates with `20xx` years
 
 ## 0.4.0 (2021-06-07)
+
 ### Added
+
 - `TagNumber` type
 - Const generic integer de/encoders with support for all of Rust's integer
   primitives
@@ -350,6 +406,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SequenceIter`
 
 ### Changed
+
 - Bump `const-oid` crate dependency to v0.6
 - Make `Tag` structured
 - Namespace ASN.1 types in `asn1` module
@@ -358,45 +415,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename `big-uint` crate feature to `bigint`
 - Rename `BigUInt` to `UIntBytes`
 - Have `Decoder::error()` return an `Error`
-  
+
 ### Removed
+
 - Deprecated methods replaced by associated constants
 
 ## 0.3.5 (2021-05-24)
+
 ### Added
+
 - Helper methods for context-specific fields
 - `ContextSpecific` field wrapper
 - Decoder position tracking for errors during `Any<'a>` decoding
 
 ### Fixed
+
 - `From` conversion for `BitString` into `Any`
 
 ## 0.3.4 (2021-05-16)
+
 ### Changed
+
 - Support `Length` of up to 1 MiB
 
 ## 0.3.3 (2021-04-15)
+
 ### Added
+
 - `Length` constants
 
 ### Changed
+
 - Deprecate `const fn` methods replaced by `Length` constants
 
 ## 0.3.2 (2021-04-15)
+
 ### Fixed
+
 - Non-critical bug allowing `Length` to exceed the max invariant
 
 ## 0.3.1 (2021-04-01) [YANKED]
+
 ### Added
+
 - `PartialOrd` + `Ord` impls to all ASN.1 types
 
 ## 0.3.0 (2021-03-22) [YANKED]
+
 ### Added
+
 - Impl `Decode`/`Encoded`/`Tagged` for `String`
 - `Length::one` and `Length::for_tlv`
 - `SET OF` support with `SetOf` trait and `SetOfRef`
 
 ### Changed
+
 - Rename `Decodable::from_bytes` => `Decodable::from_der`
 - Separate `sequence` and `message`
 - Rename `ErrorKind::Oid` => `ErrorKind::MalformedOid`
@@ -407,65 +480,92 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump `der_derive` to v0.3
 
 ### Removed
+
 - Deprecated methods
 - `BigUIntSize`
 
 ## 0.2.10 (2021-02-28)
+
 ### Added
+
 - Impl `From<ObjectIdentifier>` for `Any`
 
 ### Changed
+
 - Bump minimum `const-oid` dependency to v0.4.4
 
 ## 0.2.9 (2021-02-24)
+
 ### Added
+
 - Support for `IA5String`
 
 ## 0.2.8 (2021-02-22)
+
 ### Added
+
 - `Choice` trait
 
 ## 0.2.7 (2021-02-20)
+
 ### Added
+
 - Export `Header` publicly
 - Make `Encoder::reserve` public
 
 ## 0.2.6 (2021-02-19)
+
 ### Added
+
 - Make the unit type an encoding of `NULL`
 
 ## 0.2.5 (2021-02-18)
+
 ### Added
+
 - `ErrorKind::UnknownOid` variant
 
 ## 0.2.4 (2021-02-16)
+
 ### Added
+
 - `Any::is_null` method
 
 ### Changed
+
 - Deprecate `Any::null` method
 
 ## 0.2.3 (2021-02-15)
+
 ### Added
+
 - Additional `rustdoc` documentation
 
 ## 0.2.2 (2021-02-12)
+
 ### Added
+
 - Support for `UTCTime` and `GeneralizedTime`
 
 ## 0.2.1 (2021-02-02)
+
 ### Added
+
 - Support for `PrintableString` and `Utf8String`
 
 ## 0.2.0 (2021-01-22)
+
 ### Added
+
 - `BigUInt` type
 - `i16` support
 - `u8` and `u16` support
 - Integer decoder helper methods
 
 ### Fixed
+
 - Handle leading byte of `BIT STRING`s
 
 ## 0.1.0 (2020-12-21)
+
 - Initial release

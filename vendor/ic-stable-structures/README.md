@@ -54,11 +54,9 @@ This includes stable memory, a vector ([VectorMemory]), or even a flat file ([Fi
 
 The example above initializes a [BTreeMap] with a [DefaultMemoryImpl], which maps to stable memory when used in a canister and to a [VectorMemory] otherwise.
 
-
 Note that **stable structures cannot share memories.**
 Each memory must belong to only one stable structure.
 For example, this fails when run in a canister:
-
 
 ```no_run
 use ic_stable_structures::{BTreeMap, DefaultMemoryImpl};
@@ -154,7 +152,8 @@ However, it's important to note that if you also intend to perform serialization
 
 Stable structures requires strong guarantees to work reliably and scale over millions of operations. To that extent, we use fuzzing to emulate such operations on the available data structures.
 
-To run a fuzzer locally, 
+To run a fuzzer locally,
+
 ```sh
 rustup toolchain install nightly
 cargo install cargo-fuzz
@@ -162,6 +161,6 @@ cargo install cargo-fuzz
 # To list available fuzzer targets
 cargo +nightly fuzz list
 
-# To run a target 
+# To run a target
 cargo +nightly fuzz run <TARGET_NAME>
 ```

@@ -17,8 +17,8 @@ Releases](https://github.com/google/zerocopy/releases).
 
 ### 0.2.2 through 0.2.8, 0.3.0 through 0.3.1, 0.4.0, 0.5.0, 0.6.0 through 0.6.5, 0.7.0 through 0.7.30
 
-*Security advisories for this bug have been published as
-[RUSTSEC-2023-0074][rustsec-advisory] and [GHSA-3mv5-343c-w2qg][github-advisory].*
+_Security advisories for this bug have been published as
+[RUSTSEC-2023-0074][rustsec-advisory] and [GHSA-3mv5-343c-w2qg][github-advisory]._
 
 In these versions, the `Ref` methods `into_ref`, `into_mut`, `into_slice`, and
 `into_mut_slice` were permitted in combination with the standard library

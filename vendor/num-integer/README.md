@@ -19,7 +19,7 @@ num-integer = "0.1"
 ## Features
 
 This crate can be used without the standard library (`#![no_std]`) by disabling
-the default `std` feature.  Use this in `Cargo.toml`:
+the default `std` feature. Use this in `Cargo.toml`:
 
 ```toml
 [dependencies.num-integer]
@@ -42,8 +42,8 @@ The `num-integer` crate is tested for rustc 1.31 and greater.
 
 Licensed under either of
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 

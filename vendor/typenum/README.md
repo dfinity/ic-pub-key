@@ -1,8 +1,7 @@
 [![crates.io](https://img.shields.io/crates/v/typenum.svg)](https://crates.io/crates/typenum)
 [![Build Status](https://github.com/paholg/typenum/actions/workflows/check.yml/badge.svg)](https://github.com/paholg/typenum/actions/workflows/check.yml)
 
-Typenum
-=====
+# Typenum
 
 Typenum is a Rust library for type-level numbers evaluated at compile time. It
 currently supports bits, unsigned integers, and signed integers.
@@ -44,7 +43,6 @@ whose length you can generically refer to.
 
 ### Error messages
 
-
 Typenum's error messages aren't great, and can be difficult to parse. The good
 news is that the fine folks at Auxon have written a tool to help with it. Please
 take a look at [tnfilt](https://github.com/auxoncorp/tnfilt).
@@ -53,10 +51,10 @@ take a look at [tnfilt](https://github.com/auxoncorp/tnfilt).
 
 Licensed under either of
 
- * Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
-   http://www.apache.org/licenses/LICENSE-2.0)
- * MIT license
-   ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
+  http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license
+  ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
 

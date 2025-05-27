@@ -34,6 +34,7 @@ section are designed to help ensure that we live up to this goal.
 Each non-test `unsafe` block must be annotated with a "safety comment" which
 provides a rationale for its soundness. In order to ensure that our soundness is
 forwards-compatible, safety comments must satisfy the following criteria:
+
 - Safety comments must constitute a (possibly informal) proof that all of Rust's
   soundness rules are upheld.
 - Safety comments must only rely for their correctness on statements which
@@ -67,8 +68,9 @@ semantics which are widely agreed upon but not formally guaranteed. In order to
 avoid slowing down zerocopy's development to an unreasonable degree, a safety
 comment may violate our safety comment policy so long as all of the following
 hold:
+
 - The safety comment's correctness may rely on semantics which are not
-  guaranteed in official Rust documentation *so long as* a member of the Rust
+  guaranteed in official Rust documentation _so long as_ a member of the Rust
   team has articulated in an official communication (e.g. a comment on a Rust
   GitHub repo) that Rust intends to guarantee particular semantics.
 - There exists an active effort to formalize the guarantee in Rust's official
@@ -101,7 +103,7 @@ will only increase our MSRV during semver-breaking version changes (e.g., 0.1 ->
 
 For zerocopy with the `derive` feature enabled, and for the zerocopy-derive
 crate, we inherit the maximum MSRV any of our dependencies. As of this writing
-(2024-10-03), at least one dependency (syn) does *not* consider MSRV increases
+(2024-10-03), at least one dependency (syn) does _not_ consider MSRV increases
 to be semver-breaking changes. Thus, using the `derive` feature may result in
 the effective MSRV increasing within a semver version train.
 
@@ -110,7 +112,7 @@ the effective MSRV increasing within a semver version train.
 Whenever a bug or regression is identified, we will yank any affected versions
 which are part of the current version train. For example, if the most recent
 version is 0.10.20 and a bug is uncovered, we will release a fix in 0.10.21 and
-yank all 0.10.X versions which are affected. We *may* also yank versions in
+yank all 0.10.X versions which are affected. We _may_ also yank versions in
 previous version trains on a case-by-case basis, but we don't guarantee it.
 
 For information about a particular yanked or un-yanked version, see our [yank

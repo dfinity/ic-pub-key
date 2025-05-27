@@ -1,6 +1,5 @@
+# arrayvec
 
-arrayvec
-========
 [![Crates.io: arrayvec](https://img.shields.io/crates/v/arrayvec.svg)](https://crates.io/crates/arrayvec)
 [![Crates.io: nodrop](https://img.shields.io/crates/v/nodrop.svg)](https://crates.io/crates/nodrop)
 [![Documentation](https://docs.rs/arrayvec/badge.svg)](https://docs.rs/arrayvec)

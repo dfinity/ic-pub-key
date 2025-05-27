@@ -28,10 +28,10 @@ use itertools::Itertools;
 
 For new features, please first consider filing a PR to [rust-lang/rust](https://github.com/rust-lang/rust),
 adding your new feature to the `Iterator` trait of the standard library, if you believe it is reasonable.
-If it isn't accepted there, proposing it for inclusion in ``itertools`` is a good idea.
-The reason for doing is this is so that we avoid future breakage as with ``.flatten()``.
-However, if your feature involves heap allocation, such as storing elements in a ``Vec<T>``,
-then it can't be accepted into ``libcore``, and you should propose it for ``itertools`` directly instead.
+If it isn't accepted there, proposing it for inclusion in `itertools` is a good idea.
+The reason for doing is this is so that we avoid future breakage as with `.flatten()`.
+However, if your feature involves heap allocation, such as storing elements in a `Vec<T>`,
+then it can't be accepted into `libcore`, and you should propose it for `itertools` directly instead.
 
 ## License
 

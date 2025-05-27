@@ -1,5 +1,6 @@
 [![Crates.io](https://img.shields.io/crates/v/generic-array.svg)](https://crates.io/crates/generic-array)
 [![Build Status](https://travis-ci.org/fizyk20/generic-array.svg?branch=master)](https://travis-ci.org/fizyk20/generic-array)
+
 # generic-array
 
 This crate implements generic array types for Rust.

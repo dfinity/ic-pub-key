@@ -1,11 +1,11 @@
-pem
-===
+# pem
 
 A Rust library for parsing and encoding PEM-encoded data.
 
 [![Build Status](https://travis-ci.org/jcreekmore/pem-rs.svg?branch=master)](https://travis-ci.org/jcreekmore/pem-rs)
 
 ### Documentation
+
 [Module documentation with examples](https://docs.rs/pem/)
 
 ### Usage

@@ -1,1 +1,34 @@
-{"files":{"CHANGELOG.md":"48ced48c3f1163b64b6ada02636d33f5bd93b24ef0c8a83daa6cd2ccc58f07f5","Cargo.lock":"747a3a7f3de3f9a7db5e866ae66a381d5050ccf34d4da786b287f454839fcd1e","Cargo.toml":"ae076512d034daf835dbcd85d4171c98f7011c37ac5a6a2c5e1d24878c9b7c89","LICENSE":"6f44e3f228570e343cdb96bd929d1e8c6057ac33b411e47d77427f824e5a96ac","README.md":"da9f72c8ef7c49a5cf7f6b7a69a606da097d616aa6f5968df005365e18c7a3cb","src/icrc/generic_metadata_value.rs":"a59a5142c9f5ef30c38add5b013fa7de7862e5fa22f7de8a9cb6e22a61e340d0","src/icrc/generic_value.rs":"5822e643bd670d6e68722623608f44f7236b1fb209e01f86275ac67fd09e8f09","src/icrc/generic_value_predicate.rs":"815d5ac2bfae31d04b2ba5ebf10f7331842a2aaeee07cafbc8cd2fa328299ee9","src/icrc/mod.rs":"e15deb1c735ed51416c4df116d72b793ccaba00b7e988f7c22cceca73b915faa","src/icrc1/account.rs":"a2c9e037f9e957d4b9b1ec2a259d083aea95e089979ad1312bbcecc3a88dd7ed","src/icrc1/mod.rs":"c83b781fdc8748d8464518bca0c1a350affb1c687bfb201a8fd583940885ebdd","src/icrc1/transfer.rs":"c1bbe43ec1f7d0fcf7e22ab5c4507c3a43098beacb266e016b07360bfbc01938","src/icrc103/get_allowances.rs":"39c4a8d3f9983309afe8d9b3af96ebb212af354adc825f338e4644b4a2352b6a","src/icrc103/mod.rs":"3e5e82649bdb64a9459d94c1acc98f5803666c7f268eb58d13daf4c4b823b585","src/icrc2/allowance.rs":"ed4f09e09228c6fdcc49a829ee6d981232cc9928c499d9fce1072f761a27c317","src/icrc2/approve.rs":"798177f5984ec08cf62872f63b7daf32373d0a395864fd0a098cebf3e9b739e9","src/icrc2/mod.rs":"8fbd5b792114a469223576e711ba82850d9c0deda404ca63fa78c50ec87b8100","src/icrc2/transfer_from.rs":"87d2f828c0e4078782201c53ed6c02c827471d57b314409d47eca6b1d4c342e4","src/icrc21/errors.rs":"1f94cc4642cf64059f07fa7e3103f12218bf90144601b5d2578b5c68956eee40","src/icrc21/lib.rs":"bfa245259dcc825b6a852878f5bba406a9774ea3e6d4d35148588fba18c9d986","src/icrc21/mod.rs":"db6ab7092c489bcd606db96294406dd89ea6de985fa38570dcaf17c1207ec4e2","src/icrc21/requests.rs":"d98f855ff4e283d6b1d10cab82b4318a74812c68da4466bad7754f8d60e008e2","src/icrc21/responses.rs":"efa6a08c862ac7541203170bbfb291c42dba31104e7e207937a562227cef91a0","src/icrc3/archive.rs":"36968615f9c38c3db592b01d726cfb6599dd94e8900ff3faaa706d9b417ed4fc","src/icrc3/blocks.rs":"9cb05980ae001724eb9dde9010a7a8e5b599ce4862a008df6355de9231342ffc","src/icrc3/mod.rs":"74b6117b56f3e004d658b179bf61a31d555d982c30937791a6a27ff348969469","src/icrc3/schema.rs":"094f1534a71f7d72c1537ac5845c14dd37f9976afd75f25dd2e6fe99e918cbb8","src/icrc3/transactions.rs":"75890eee613be76d443bcc0e77b21837c1e6212c2cae9bb4259fab8e8709c939","src/lib.rs":"d53b9389187e7a5dd8e049ca28b28f7642b49877161a392c640fc8475a140904"},"package":"d6b8263cab9c48ecf70ee6a33600143612d515e581df410b3767a66e43004fc6"}
+{
+	"files": {
+		"CHANGELOG.md": "48ced48c3f1163b64b6ada02636d33f5bd93b24ef0c8a83daa6cd2ccc58f07f5",
+		"Cargo.lock": "747a3a7f3de3f9a7db5e866ae66a381d5050ccf34d4da786b287f454839fcd1e",
+		"Cargo.toml": "ae076512d034daf835dbcd85d4171c98f7011c37ac5a6a2c5e1d24878c9b7c89",
+		"LICENSE": "6f44e3f228570e343cdb96bd929d1e8c6057ac33b411e47d77427f824e5a96ac",
+		"README.md": "da9f72c8ef7c49a5cf7f6b7a69a606da097d616aa6f5968df005365e18c7a3cb",
+		"src/icrc/generic_metadata_value.rs": "a59a5142c9f5ef30c38add5b013fa7de7862e5fa22f7de8a9cb6e22a61e340d0",
+		"src/icrc/generic_value.rs": "5822e643bd670d6e68722623608f44f7236b1fb209e01f86275ac67fd09e8f09",
+		"src/icrc/generic_value_predicate.rs": "815d5ac2bfae31d04b2ba5ebf10f7331842a2aaeee07cafbc8cd2fa328299ee9",
+		"src/icrc/mod.rs": "e15deb1c735ed51416c4df116d72b793ccaba00b7e988f7c22cceca73b915faa",
+		"src/icrc1/account.rs": "a2c9e037f9e957d4b9b1ec2a259d083aea95e089979ad1312bbcecc3a88dd7ed",
+		"src/icrc1/mod.rs": "c83b781fdc8748d8464518bca0c1a350affb1c687bfb201a8fd583940885ebdd",
+		"src/icrc1/transfer.rs": "c1bbe43ec1f7d0fcf7e22ab5c4507c3a43098beacb266e016b07360bfbc01938",
+		"src/icrc103/get_allowances.rs": "39c4a8d3f9983309afe8d9b3af96ebb212af354adc825f338e4644b4a2352b6a",
+		"src/icrc103/mod.rs": "3e5e82649bdb64a9459d94c1acc98f5803666c7f268eb58d13daf4c4b823b585",
+		"src/icrc2/allowance.rs": "ed4f09e09228c6fdcc49a829ee6d981232cc9928c499d9fce1072f761a27c317",
+		"src/icrc2/approve.rs": "798177f5984ec08cf62872f63b7daf32373d0a395864fd0a098cebf3e9b739e9",
+		"src/icrc2/mod.rs": "8fbd5b792114a469223576e711ba82850d9c0deda404ca63fa78c50ec87b8100",
+		"src/icrc2/transfer_from.rs": "87d2f828c0e4078782201c53ed6c02c827471d57b314409d47eca6b1d4c342e4",
+		"src/icrc21/errors.rs": "1f94cc4642cf64059f07fa7e3103f12218bf90144601b5d2578b5c68956eee40",
+		"src/icrc21/lib.rs": "bfa245259dcc825b6a852878f5bba406a9774ea3e6d4d35148588fba18c9d986",
+		"src/icrc21/mod.rs": "db6ab7092c489bcd606db96294406dd89ea6de985fa38570dcaf17c1207ec4e2",
+		"src/icrc21/requests.rs": "d98f855ff4e283d6b1d10cab82b4318a74812c68da4466bad7754f8d60e008e2",
+		"src/icrc21/responses.rs": "efa6a08c862ac7541203170bbfb291c42dba31104e7e207937a562227cef91a0",
+		"src/icrc3/archive.rs": "36968615f9c38c3db592b01d726cfb6599dd94e8900ff3faaa706d9b417ed4fc",
+		"src/icrc3/blocks.rs": "9cb05980ae001724eb9dde9010a7a8e5b599ce4862a008df6355de9231342ffc",
+		"src/icrc3/mod.rs": "74b6117b56f3e004d658b179bf61a31d555d982c30937791a6a27ff348969469",
+		"src/icrc3/schema.rs": "094f1534a71f7d72c1537ac5845c14dd37f9976afd75f25dd2e6fe99e918cbb8",
+		"src/icrc3/transactions.rs": "75890eee613be76d443bcc0e77b21837c1e6212c2cae9bb4259fab8e8709c939",
+		"src/lib.rs": "d53b9389187e7a5dd8e049ca28b28f7642b49877161a392c640fc8475a140904"
+	},
+	"package": "d6b8263cab9c48ecf70ee6a33600143612d515e581df410b3767a66e43004fc6"
+}

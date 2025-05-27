@@ -1,4 +1,4 @@
-# version\_check
+# version_check
 
 [![Build Status](https://github.com/SergioBenitez/version_check/workflows/CI/badge.svg)](https://github.com/SergioBenitez/version_check/actions)
 [![Current Crates.io Version](https://img.shields.io/crates/v/version_check.svg)](https://crates.io/crates/version_check)
@@ -76,5 +76,5 @@ representative code sample, see [autocfg].
 
 `version_check` is licensed under either of the following, at your option:
 
- * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
- * MIT License ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT License ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)

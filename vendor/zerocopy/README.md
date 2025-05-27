@@ -12,21 +12,21 @@ made in the doc comment on `src/lib.rs` or in `tools/generate-readme`.
 
 # zerocopy
 
-*<span style="font-size: 100%; color:grey;">Need more out of zerocopy?
-Submit a [customer request issue][customer-request-issue]!</span>*
+_<span style="font-size: 100%; color:grey;">Need more out of zerocopy?
+Submit a [customer request issue][customer-request-issue]!</span>_
 
-***<span style="font-size: 140%">Fast, safe, <span
-style="color:red;">compile error</span>. Pick two.</span>***
+**_<span style="font-size: 140%">Fast, safe, <span
+style="color:red;">compile error</span>. Pick two.</span>_**
 
 Zerocopy makes zero-cost memory manipulation effortless. We write `unsafe`
 so you don't have to.
 
-*Thanks for using zerocopy 0.8! For an overview of what changes from 0.7,
+_Thanks for using zerocopy 0.8! For an overview of what changes from 0.7,
 check out our [release notes][release-notes], which include a step-by-step
-guide for upgrading from 0.7.*
+guide for upgrading from 0.7._
 
-*Have questions? Need help? Ask the maintainers on [GitHub][github-q-a] or
-on [Discord][discord]!*
+_Have questions? Need help? Ask the maintainers on [GitHub][github-q-a] or
+on [Discord][discord]!_
 
 [customer-request-issue]: https://github.com/google/zerocopy/issues/new/choose
 [release-notes]: https://github.com/google/zerocopy/discussions/1680
@@ -38,13 +38,14 @@ on [Discord][discord]!*
 ###### Conversion Traits
 
 Zerocopy provides four derivable traits for zero-cost conversions:
+
 - `TryFromBytes` indicates that a type may safely be converted from
   certain byte sequences (conditional on runtime checks)
 - `FromZeros` indicates that a sequence of zero bytes represents a valid
   instance of a type
 - `FromBytes` indicates that a type may safely be converted from an
   arbitrary byte sequence
-- `IntoBytes` indicates that a type may safely be converted *to* a byte
+- `IntoBytes` indicates that a type may safely be converted _to_ a byte
   sequence
 
 These traits support sized types, slices, and [slice DSTs][slice-dsts].
@@ -56,6 +57,7 @@ These traits support sized types, slices, and [slice DSTs][slice-dsts].
 Zerocopy provides three derivable marker traits that do not provide any
 functionality themselves, but are required to call certain methods provided
 by the conversion traits:
+
 - `KnownLayout` indicates that zerocopy can reason about certain layout
   qualities of a type
 - `Immutable` indicates that a type is free from interior mutability,
@@ -77,7 +79,7 @@ Zerocopy provides six macros for safe casting between types:
   mutable or immutable reference of one type to an immutable reference of
   another type of the same size
 
-These macros perform *compile-time* size and alignment checks, meaning that
+These macros perform _compile-time_ size and alignment checks, meaning that
 unconditional casts have zero cost at runtime. Conditional casts do not need
 to validate size or alignment runtime, but do need to validate contents.
 
@@ -110,7 +112,7 @@ for network parsing.
   However, you may experience better compile times if you instead directly
   depend on both `zerocopy` and `zerocopy-derive` in your `Cargo.toml`,
   since doing so will allow Rust to compile these crates in parallel. To do
-  so, do *not* enable the `derive` feature, and list both dependencies in
+  so, do _not_ enable the `derive` feature, and list both dependencies in
   your `Cargo.toml` with the same leading non-zero version number; e.g:
 
   ```toml
@@ -122,7 +124,7 @@ for network parsing.
   To avoid the risk of [duplicate import errors][duplicate-import-errors] if
   one of your dependencies enables zerocopy's `derive` feature, import
   derives as `use zerocopy_derive::*` rather than by name (e.g., `use
-  zerocopy_derive::FromBytes`).
+zerocopy_derive::FromBytes`).
 
 - **`simd`**
   When the `simd` feature is enabled, `FromZeros`, `FromBytes`, and
@@ -148,7 +150,8 @@ for network parsing.
 
 Zerocopy is expressly designed for use in security-critical contexts. We
 strive to ensure that that zerocopy code is sound under Rust's current
-memory model, and *any future memory model*. We ensure this by:
+memory model, and _any future memory model_. We ensure this by:
+
 - **...not 'guessing' about Rust's semantics.**
   We annotate `unsafe` code with a precise rationale for its soundness that
   cites a relevant section of Rust's official documentation. When Rust's

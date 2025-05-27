@@ -7,7 +7,7 @@
 - Config methods are const
 - Added `EncoderStringWriter` to allow encoding directly to a String
 - `EncoderWriter` now owns its delegate writer rather than keeping a reference to it (though refs still work)
-    - As a consequence, it is now possible to extract the delegate writer from an `EncoderWriter` via `finish()`, which returns `Result<W>` instead of `Result<()>`. If you were calling `finish()` explicitly, you will now need to use `let _ = foo.finish()` instead of just `foo.finish()` to avoid a warning about the unused value.
+  - As a consequence, it is now possible to extract the delegate writer from an `EncoderWriter` via `finish()`, which returns `Result<W>` instead of `Result<()>`. If you were calling `finish()` explicitly, you will now need to use `let _ = foo.finish()` instead of just `foo.finish()` to avoid a warning about the unused value.
 - When decoding input that has both an invalid length and an invalid symbol as the last byte, `InvalidByte` will be emitted instead of `InvalidLength` to make the problem more obvious.
 
 # 0.12.2
@@ -26,6 +26,7 @@
 - A minor performance improvement in encoding
 
 # 0.11.0
+
 - Minimum rust version 1.34.0
 - `no_std` is now supported via the two new features `alloc` and `std`.
 
@@ -39,7 +40,7 @@
 
 - Remove line wrapping. Line wrapping was never a great conceptual fit in this library, and other features (streaming encoding, etc) either couldn't support it or could support only special cases of it with a great increase in complexity. Line wrapping has been pulled out into a [line-wrap](https://crates.io/crates/line-wrap) crate, so it's still available if you need it.
   - `Base64Display` creation no longer uses a `Result` because it can't fail, which means its helper methods for common
-  configs that `unwrap()` for you are no longer needed
+    configs that `unwrap()` for you are no longer needed
 - Add a streaming encoder `Write` impl to transparently base64 as you write.
 - Remove the remaining `unsafe` code.
 - Remove whitespace stripping to simplify `no_std` support. No out of the box configs use it, and it's trivial to do yourself if needed: `filter(|b| !b" \n\t\r\x0b\x0c".contains(b)`.

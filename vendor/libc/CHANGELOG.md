@@ -11,7 +11,7 @@
 - Cygwin: Add new socket options ([#4350](https://github.com/rust-lang/libc/pull/4350))
 - Cygwin: Add statfs & fcntl ([#4321](https://github.com/rust-lang/libc/pull/4321))
 - FreeBSD: Add `filedesc` and `fdescenttbl` ([#4327](https://github.com/rust-lang/libc/pull/4327))
-- Glibc: Add unstable support for _FILE_OFFSET_BITS=64 ([#4345](https://github.com/rust-lang/libc/pull/4345))
+- Glibc: Add unstable support for \_FILE_OFFSET_BITS=64 ([#4345](https://github.com/rust-lang/libc/pull/4345))
 - Hermit: Add `AF_UNSPEC` ([#4344](https://github.com/rust-lang/libc/pull/4344))
 - Hermit: Add `AF_VSOCK` ([#4344](https://github.com/rust-lang/libc/pull/4344))
 - Illumos, NetBSD: Add `timerfd` APIs ([#4333](https://github.com/rust-lang/libc/pull/4333))
@@ -44,7 +44,7 @@
 ### Fixed
 
 - Cygwin: Fix member types of `statfs` ([#4324](https://github.com/rust-lang/libc/pull/4324))
-- Cygwin: Fix tests  ([#4357](https://github.com/rust-lang/libc/pull/4357))
+- Cygwin: Fix tests ([#4357](https://github.com/rust-lang/libc/pull/4357))
 - Hermit: Make `AF_INET = 3` ([#4344](https://github.com/rust-lang/libc/pull/4344))
 - Musl: Fix the syscall table on RISC-V-32 ([#4335](https://github.com/rust-lang/libc/pull/4335))
 - Musl: Fix the value of `SA_ONSTACK` on RISC-V-32 ([#4335](https://github.com/rust-lang/libc/pull/4335))
@@ -128,7 +128,7 @@
 - Android: Declare `setdomainname` and `getdomainname` <https://github.com/rust-lang/libc/pull/4212>
 - FreeBSD: Add `evdev` structures <https://github.com/rust-lang/libc/pull/3756>
 - FreeBSD: Add the new `st_filerev` field to `stat32` ([#4254](https://github.com/rust-lang/libc/pull/4254))
-- Linux: Add `SI_*`` and `TRAP_*`` signal codes <https://github.com/rust-lang/libc/pull/4225>
+- Linux: Add `SI_*`` and `TRAP\_\*`` signal codes <https://github.com/rust-lang/libc/pull/4225>
 - Linux: Add experimental configuration to enable 64-bit time in kernel APIs, set by `RUST_LIBC_UNSTABLE_LINUX_TIME_BITS64`. <https://github.com/rust-lang/libc/pull/4148>
 - Linux: Add recent socket timestamping flags <https://github.com/rust-lang/libc/pull/4273>
 - Linux: Added new CANFD_FDF flag for the flags field of canfd_frame <https://github.com/rust-lang/libc/pull/4223>
@@ -398,7 +398,7 @@ This release increases the MSRV of `libc` to 1.63.
 - FreeBSD: add the `CLOSE_RANGE_CLOEXEC` flag<https://github.com/rust-lang/libc/pull/3996>
 - FreeBSD: fix test errors regarding `__gregset_t` <https://github.com/rust-lang/libc/pull/3995>
 - FreeBSD: fix tests on x86 FreeBSD 15 <https://github.com/rust-lang/libc/pull/3948>
-- FreeBSD: make `ucontext_t` and `mcontext_t` available on all architectures  <https://github.com/rust-lang/libc/pull/3848>
+- FreeBSD: make `ucontext_t` and `mcontext_t` available on all architectures <https://github.com/rust-lang/libc/pull/3848>
 - Haiku: add `getentropy` <https://github.com/rust-lang/libc/pull/3991>
 - Illumos: add `syncfs` <https://github.com/rust-lang/libc/pull/3990>
 - Illumos: add some recently-added constants <https://github.com/rust-lang/libc/pull/3999>
@@ -462,7 +462,7 @@ This release increases the MSRV of `libc` to 1.63.
 - Solarish: add `POLLRDHUP`, `POSIX_FADV_*`, `O_RSYNC`, and `posix_fallocate` <https://github.com/rust-lang/libc/pull/3936>
 - Unix: add `fnmatch.h` <https://github.com/rust-lang/libc/pull/3937>
 - VxWorks: add riscv64 support <https://github.com/rust-lang/libc/pull/3935>
-- VxWorks: update constants related to the scheduler  <https://github.com/rust-lang/libc/pull/3963>
+- VxWorks: update constants related to the scheduler <https://github.com/rust-lang/libc/pull/3963>
 
 ### Changed
 
@@ -512,6 +512,7 @@ This release increases the MSRV of `libc` to 1.63.
 ## [0.2.158](https://github.com/rust-lang/libc/compare/0.2.157...0.2.158) - 2024-08-19
 
 ### Other
+
 - WASI: fix missing `Iterator` with `rustc-dep-of-std` in <https://github.com/rust-lang/libc/pull/3856#event-13924913068>
 
 ## [0.2.157](https://github.com/rust-lang/libc/compare/0.2.156...0.2.157) - 2024-08-17
@@ -530,14 +531,17 @@ This release increases the MSRV of `libc` to 1.63.
 - WASI: add `select`, `FD_SET`, `FD_ZERO`, `FD_ISSET ` in <https://github.com/rust-lang/libc/pull/3681>
 
 ### Fixed
+
 - TEEOS: fix octal notation for `O_*` constants in <https://github.com/rust-lang/libc/pull/3841>
 
 ### Changed
+
 - FreeBSD: always use freebsd12 when `rustc_dep_of_std` is set in <https://github.com/rust-lang/libc/pull/3723>
 
 ## [0.2.156](https://github.com/rust-lang/libc/compare/v0.2.155...v0.2.156) - 2024-08-15
 
 ### Added
+
 - Apple: add `F_ALLOCATEPERSIST` in <https://github.com/rust-lang/libc/pull/3712>
 - Apple: add `os_sync_wait_on_address` and related definitions in <https://github.com/rust-lang/libc/pull/3769>
 - BSD: generalise `IPV6_DONTFRAG` to all BSD targets in <https://github.com/rust-lang/libc/pull/3716>
@@ -549,15 +553,19 @@ This release increases the MSRV of `libc` to 1.63.
 - VxWorks: add a few errnoLib related constants in <https://github.com/rust-lang/libc/pull/3780>
 
 ### Fixed
+
 - Solaris/illumos: Change `ifa_flags` type to u64 in <https://github.com/rust-lang/libc/pull/3729>
 - QNX 7.0: Disable `libregex` in <https://github.com/rust-lang/libc/pull/3775>
 
 ### Changed
+
 - QNX NTO: update platform support in <https://github.com/rust-lang/libc/pull/3815>
 - `addr_of!(EXTERN_STATIC)` is now considered safe in <https://github.com/rust-lang/libc/pull/3776>
 
 ### Removed
+
 - Apple: remove `rmx_state` in <https://github.com/rust-lang/libc/pull/3776>
 
 ### Other
+
 - Update or remove CI tests that have been failing

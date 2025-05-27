@@ -90,10 +90,13 @@ We have two automated tests running on
 [GitHub Actions](https://github.com/rust-lang/libc/actions):
 
 1. [`libc-test`](https://github.com/gnzlbg/ctest)
-  - `cd libc-test && cargo test`
-  - Use the `skip_*()` functions in `build.rs` if you really need a workaround.
+
+- `cd libc-test && cargo test`
+- Use the `skip_*()` functions in `build.rs` if you really need a workaround.
+
 2. Style checker
-  - [`./ci/style.sh`](https://github.com/rust-lang/libc/blob/main/ci/style.sh)
+
+- [`./ci/style.sh`](https://github.com/rust-lang/libc/blob/main/ci/style.sh)
 
 ## Breaking change policy
 
@@ -105,11 +108,13 @@ item as deprecated and do the actual change after a certain period. The steps
 are:
 
 1. Add `#[deprecated(since = "", note="")]` attribute to the item.
-  - The `since` field should have a next version of `libc` (e.g., if the current
-    version is `0.2.1`, it should be `0.2.2`).
-  - The `note` field should have a reason to deprecate and a tracking issue to
-    call for comments (e.g., "We consider removing this as the upstream removed
-    it. If you're using it, please comment on #XXX").
+
+- The `since` field should have a next version of `libc` (e.g., if the current
+  version is `0.2.1`, it should be `0.2.2`).
+- The `note` field should have a reason to deprecate and a tracking issue to
+  call for comments (e.g., "We consider removing this as the upstream removed
+  it. If you're using it, please comment on #XXX").
+
 2. If we don't see any concerns for a while, do the change actually.
 
 ## Supported target policy

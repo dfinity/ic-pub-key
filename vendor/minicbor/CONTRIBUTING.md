@@ -10,13 +10,10 @@ was created in whole or in part by you and that you have the right to
 submit it under the Blue Oak Model License version 1.0.0, then add a
 line saying
 
-
     Signed-off-by: Your real name <your e-mail address>
 
-
-to your contribution. For merge requests this means that *every commit*
+to your contribution. For merge requests this means that _every commit_
 needs to be signed off in this way, for example using `git commit -s`.
 
 For details in regards to the Blue Oak Model License version 1.0.0
 read the file LICENSE.md or visit https://blueoakcouncil.org/license/1.0.0
-

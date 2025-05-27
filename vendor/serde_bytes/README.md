@@ -1,4 +1,4 @@
-# serde\_bytes [![Build Status](https://img.shields.io/github/actions/workflow/status/serde-rs/bytes/ci.yml?branch=master)](https://github.com/serde-rs/bytes/actions?query=branch%3Amaster) [![Latest Version](https://img.shields.io/crates/v/serde_bytes.svg)](https://crates.io/crates/serde_bytes)
+# serde_bytes [![Build Status](https://img.shields.io/github/actions/workflow/status/serde-rs/bytes/ci.yml?branch=master)](https://github.com/serde-rs/bytes/actions?query=branch%3Amaster) [![Latest Version](https://img.shields.io/crates/v/serde_bytes.svg)](https://crates.io/crates/serde_bytes)
 
 Wrapper types to enable optimized handling of `&[u8]` and `Vec<u8>`.
 

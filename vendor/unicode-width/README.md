@@ -43,7 +43,7 @@ fn main() {
 Additionally, [defective combining character sequences](https://unicode.org/glossary/#defective_combining_character_sequence)
 and nonstandard [Korean jamo](https://unicode.org/glossary/#jamo) sequences may
 be rendered with a different width than what this crate says. (This is not an
-exhaustive list.) For a list of what this crate *does* handle, see
+exhaustive list.) For a list of what this crate _does_ handle, see
 [docs.rs](https://docs.rs/unicode-width/latest/unicode_width/#rules-for-determining-width).
 
 ## crates.io

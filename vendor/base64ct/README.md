@@ -44,7 +44,7 @@ fixed-width line wrapping.
 ## Minimum Supported Rust Version
 
 This crate requires **Rust 1.81** at a minimum.
-   
+
 We may change the MSRV in the future, but it will be accompanied by a minor
 version bump.
 
@@ -52,8 +52,8 @@ version bump.
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -63,8 +63,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://img.shields.io/crates/v/base64ct?logo=rust
 [crate-link]: https://crates.io/crates/base64ct
 [docs-image]: https://docs.rs/base64ct/badge.svg
@@ -75,9 +74,7 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.81+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300570-formats
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [RFC 4648]: https://tools.ietf.org/html/rfc4648
 [`pem-rfc7468`]: https://github.com/RustCrypto/formats/tree/master/pem-rfc7468

@@ -12,10 +12,10 @@ Word boundaries are defined by non-alphanumeric characters, as well as
 within those words in this manner:
 
 1. If an uppercase character is followed by lowercase letters, a word
-boundary is considered to be just prior to that uppercase character.
+   boundary is considered to be just prior to that uppercase character.
 2. If multiple uppercase characters are consecutive, they are considered to
-be within a single word, except that the last will be part of the next word
-if it is followed by lowercase characters (see rule 1).
+   be within a single word, except that the last will be part of the next word
+   if it is followed by lowercase characters (see rule 1).
 
 That is, "HelloWorld" is segmented `Hello|World` whereas "XMLHttpRequest" is
 segmented `XML|Http|Request`.
@@ -23,7 +23,7 @@ segmented `XML|Http|Request`.
 Characters not within words (such as spaces, punctuations, and underscores)
 are not included in the output string except as they are a part of the case
 being converted to. Multiple adjacent word boundaries (such as a series of
-underscores) are folded into one. ("hello__world" in snake case is therefore
+underscores) are folded into one. ("hello\_\_world" in snake case is therefore
 "hello_world", not the exact same string). Leading or trailing word boundary
 indicators are dropped, except insofar as CamelCase capitalizes the first word.
 

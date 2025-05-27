@@ -1,6 +1,5 @@
 <p align="center"><img src="design/logo.png" alt="once_cell"></p>
 
-
 [![Build Status](https://github.com/matklad/once_cell/actions/workflows/ci.yaml/badge.svg)](https://github.com/matklad/once_cell/actions)
 [![Crates.io](https://img.shields.io/crates/v/once_cell.svg)](https://crates.io/crates/once_cell)
 [![API reference](https://docs.rs/once_cell/badge.svg)](https://docs.rs/once_cell/)
@@ -9,7 +8,7 @@
 
 `once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
 might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
-to the stored contents. In a nutshell, API looks *roughly* like this:
+to the stored contents. In a nutshell, API looks _roughly_ like this:
 
 ```rust
 impl OnceCell<T> {
@@ -46,12 +45,12 @@ More patterns and use-cases are in the [docs](https://docs.rs/once_cell/)!
 
 # Related crates
 
-* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
-* [lazy-init](https://crates.io/crates/lazy-init)
-* [lazycell](https://crates.io/crates/lazycell)
-* [mitochondria](https://crates.io/crates/mitochondria)
-* [lazy_static](https://crates.io/crates/lazy_static)
-* [async_once_cell](https://crates.io/crates/async_once_cell)
-* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
+- [double-checked-cell](https://github.com/niklasf/double-checked-cell)
+- [lazy-init](https://crates.io/crates/lazy-init)
+- [lazycell](https://crates.io/crates/lazycell)
+- [mitochondria](https://crates.io/crates/mitochondria)
+- [lazy_static](https://crates.io/crates/lazy_static)
+- [async_once_cell](https://crates.io/crates/async_once_cell)
+- [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
 
 Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).

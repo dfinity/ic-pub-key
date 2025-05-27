@@ -234,8 +234,8 @@
 # Release 0.2.1 (2018-11-02)
 
 - [`RandBigInt` now uses `Rng::fill_bytes`][53] to improve performance, instead
-  of repeated `gen::<u32>` calls.  The also affects the implementations of the
-  other `rand` traits.  This may potentially change the values produced by some
+  of repeated `gen::<u32>` calls. The also affects the implementations of the
+  other `rand` traits. This may potentially change the values produced by some
   seeded RNGs on previous versions, but the values were tested to be stable
   with `ChaChaRng`, `IsaacRng`, and `XorShiftRng`.
 - [`BigInt` and `BigUint` now implement `num_integer::Roots`][56].
@@ -255,10 +255,10 @@
 ### Enhancements
 
 - [`BigInt` and `BigUint` now implement `Product` and `Sum`][22] for iterators
-  of any item that we can `Mul` and `Add`, respectively.  For example, a
+  of any item that we can `Mul` and `Add`, respectively. For example, a
   factorial can now be simply: `let f: BigUint = (1u32..1000).product();`
 - [`BigInt` now supports two's-complement logic operations][26], namely
-  `BitAnd`, `BitOr`, `BitXor`, and `Not`.  These act conceptually as if each
+  `BitAnd`, `BitOr`, `BitXor`, and `Not`. These act conceptually as if each
   number had an infinite prefix of `0` or `1` bits for positive or negative.
 - [`BigInt` now supports assignment operators][41] like `AddAssign`.
 - [`BigInt` and `BigUint` now support conversions with `i128` and `u128`][44],
@@ -270,10 +270,10 @@
 ### Breaking Changes
 
 - [`num-bigint` now requires rustc 1.15 or greater][23].
-- [The crate now has a `std` feature, and won't build without it][46].  This is
+- [The crate now has a `std` feature, and won't build without it][46]. This is
   in preparation for someday supporting `#![no_std]` with `alloc`.
 - [The `serde` dependency has been updated to 1.0][24], still disabled by
-  default.  The `rustc-serialize` crate is no longer supported by `num-bigint`.
+  default. The `rustc-serialize` crate is no longer supported by `num-bigint`.
 - [The `rand` dependency has been updated to 0.5][48], now disabled by default.
   This requires rustc 1.22 or greater for `rand`'s own requirement.
 - [`Shr for BigInt` now rounds down][8] rather than toward zero, matching the
@@ -281,7 +281,7 @@
 - [`ParseBigIntError` is now an opaque type][37].
 - [The `big_digit` module is no longer public][38], nor are the `BigDigit` and
   `DoubleBigDigit` types and `ZERO_BIG_DIGIT` constant that were re-exported in
-  the crate root.  Public APIs which deal in digits, like `BigUint::from_slice`,
+  the crate root. Public APIs which deal in digits, like `BigUint::from_slice`,
   will now always be base-`u32`.
 
 **Contributors**: @clarcharr, @cuviper, @dodomorandi, @tiehuis, @tspiteri
@@ -319,7 +319,6 @@
 
 [18]: https://github.com/rust-num/num-bigint/pull/18
 
-
 # Release 0.1.42 (2018-02-07)
 
 - [num-bigint now has its own source repository][num-356] at [rust-num/num-bigint][home].
@@ -335,9 +334,7 @@
 [11]: https://github.com/rust-num/num-bigint/pull/11
 [15]: https://github.com/rust-num/num-bigint/pull/15
 
-
 # Prior releases
 
-No prior release notes were kept.  Thanks all the same to the many
+No prior release notes were kept. Thanks all the same to the many
 contributors that have made this crate what it is!
-

@@ -43,17 +43,17 @@ libc = "0.2"
 
 ## Features
 
-* `std`: by default `libc` links to the standard library. Disable this feature
+- `std`: by default `libc` links to the standard library. Disable this feature
   to remove this dependency and be able to use `libc` in `#![no_std]` crates.
 
-* `extra_traits`: all `struct`s implemented in `libc` are `Copy` and `Clone`.
+- `extra_traits`: all `struct`s implemented in `libc` are `Copy` and `Clone`.
   This feature derives `Debug`, `Eq`, `Hash`, and `PartialEq`.
 
 The following features are deprecated:
 
-* `use_std`: this is equivalent to `std`
-* `const-extern-fn`: this is now enabled by default
-* `align`: this is now enabled by default
+- `use_std`: this is equivalent to `std`
+- `const-extern-fn`: this is now enabled by default
+- `align`: this is now enabled by default
 
 ## Rust version support
 
@@ -82,10 +82,10 @@ The test-matrix at [GitHub Actions] and [Cirrus CI] show the platforms in which
 
 This project is licensed under either of
 
-* [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
   ([LICENSE-APACHE](https://github.com/rust-lang/libc/blob/HEAD/LICENSE-APACHE))
 
-* [MIT License](https://opensource.org/licenses/MIT)
+- [MIT License](https://opensource.org/licenses/MIT)
   ([LICENSE-MIT](https://github.com/rust-lang/libc/blob/HEAD/LICENSE-MIT))
 
 at your option.

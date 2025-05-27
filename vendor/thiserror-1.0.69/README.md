@@ -1,5 +1,4 @@
-derive(Error)
-=============
+# derive(Error)
 
 [<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
@@ -16,7 +15,7 @@ This library provides a convenient derive macro for the standard library's
 thiserror = "1.0"
 ```
 
-*Compiler support: requires rustc 1.61+*
+_Compiler support: requires rustc 1.61+_
 
 <br>
 
@@ -59,10 +58,10 @@ pub enum DataStoreError {
 
   The messages support a shorthand for interpolating fields from the error.
 
-    - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
-    - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
-    - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
-    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+  - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+  - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+  - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+  - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
 
   These shorthands can be used together with any additional format args, which
   may be arbitrary expressions. For example:
@@ -111,7 +110,7 @@ pub enum DataStoreError {
   you don't ever need to specify both attributes.
 
   Any error type that implements `std::error::Error` or dereferences to `dyn
-  std::error::Error` will work as a source.
+std::error::Error` will work as a source.
 
   ```rust
   #[derive(Error, Debug)]
@@ -138,11 +137,10 @@ pub enum DataStoreError {
   ```
 
 - If a field is both a source (named `source`, or has `#[source]` or `#[from]`
-  attribute) *and* is marked `#[backtrace]`, then the Error trait's `provide()`
+  attribute) _and_ is marked `#[backtrace]`, then the Error trait's `provide()`
   method is forwarded to the source's `provide` so that both layers of the error
   share the same backtrace. The `#[backtrace]` attribute requires a nightly
   compiler with Rust version 1.73 or newer.
-
 
   ```rust
   #[derive(Error, Debug)]

@@ -25,8 +25,8 @@ version bump.
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -36,8 +36,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/spki
 [crate-link]: https://crates.io/crates/spki
 [docs-image]: https://docs.rs/spki/badge.svg
@@ -48,9 +47,7 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.65+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300570-formats
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [X.509]: https://en.wikipedia.org/wiki/X.509
 [RFC 5280 § 4.1]: https://tools.ietf.org/html/rfc5280#section-4.1

@@ -30,7 +30,7 @@ default-features = false
 
 The `Float` and `Real` traits are only available when either `std` or `libm` is enabled.
 
-The `FloatCore` trait is always available.  `MulAdd` and `MulAddAssign` for `f32`
+The `FloatCore` trait is always available. `MulAdd` and `MulAddAssign` for `f32`
 and `f64` also require `std` or `libm`, as do implementations of signed and floating-
 point exponents in `Pow`.
 
@@ -46,8 +46,8 @@ The `num-traits` crate is tested for rustc 1.60 and greater.
 
 Licensed under either of
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 

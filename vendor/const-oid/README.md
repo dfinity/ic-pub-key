@@ -20,7 +20,7 @@ Union (ITU) and ISO/IEC standard for naming any object, concept, or "thing"
 with a globally unambiguous persistent name.
 
 The ITU's [X.660] standard provides the OID specification. Every OID is part of
-a hierarchical namespace which begins with a *root OID*, which is either the
+a hierarchical namespace which begins with a _root OID_, which is either the
 ITU's root OID (0), the ISO's root OID (1), or the joint ISO/ITU root OID (2).
 
 The following is an example of an OID, in this case identifying the
@@ -66,8 +66,8 @@ version bump.
 
 Licensed under either of:
 
-* [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-* [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -77,8 +77,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/const-oid
 [crate-link]: https://crates.io/crates/const-oid
 [docs-image]: https://docs.rs/const-oid/badge.svg
@@ -89,8 +88,6 @@ dual licensed as above, without any additional terms or conditions.
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300570-formats
 [build-image]: https://github.com/RustCrypto/formats/workflows/const-oid/badge.svg?branch=master&event=push
 [build-link]: https://github.com/RustCrypto/formats/actions
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [X.660]: https://www.itu.int/rec/T-REC-X.660

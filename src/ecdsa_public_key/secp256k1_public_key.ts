@@ -17,9 +17,12 @@ class PublicKeyWithChainCode {
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
 		let public_key = this.public_key.asAffinePoint();
-		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
-        let pt = ProjectivePoint.fromAffine(affine_pt);
-        return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
+		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(
+			public_key,
+			this.chain_code
+		);
+		let pt = ProjectivePoint.fromAffine(affine_pt);
+		return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
 	}
 }
 /**
@@ -108,9 +111,9 @@ class DerivationPath {
 	/**
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */
-    toString(): string {
-        return this.path.map(p => Buffer.from(p).toString('hex')).join('/');
-    }
+	toString(): string {
+		return this.path.map((p) => Buffer.from(p).toString('hex')).join('/');
+	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
@@ -148,16 +151,16 @@ class DerivationPath {
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-            let base_mul = ProjectivePoint.BASE.mul(next_offset);
-            let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+			let base_mul = ProjectivePoint.BASE.mul(next_offset);
+			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
 
-            if (!next_pt.equals(ProjectivePoint.ZERO)) {
-                return [next_chain_code, next_offset, next_pt.toAffine()];
-            }
+			if (!next_pt.equals(ProjectivePoint.ZERO)) {
+				return [next_chain_code, next_offset, next_pt.toAffine()];
+			}
 
-            // Otherwise set up the next input as defined by SLIP-0010
-            ckd_input[0] = 0x01;
-            ckd_input.set(next_chain_code.bytes, 1);
+			// Otherwise set up the next input as defined by SLIP-0010
+			ckd_input[0] = 0x01;
+			ckd_input.set(next_chain_code.bytes, 1);
 		}
 	}
 
@@ -173,29 +176,30 @@ class DerivationPath {
 		ckd_input: Uint8Array,
 		chain_code: ChainCode
 	): [ChainCode, bigint] {
-        let hmac = createHmac('sha512', chain_code.bytes);
-        hmac.update(ckd_input);
-        hmac.update(idx);
-        let hmac_output = hmac.digest();
-        assert.equal(hmac_output.length, 64);
+		let hmac = createHmac('sha512', chain_code.bytes);
+		hmac.update(ckd_input);
+		hmac.update(idx);
+		let hmac_output = hmac.digest();
+		assert.equal(hmac_output.length, 64);
 
-        let fb = hmac_output.subarray(0, 32);
+		let fb = hmac_output.subarray(0, 32);
 		let fb_hex = Buffer.from(fb).toString('hex');
-        let next_chain_key = hmac_output.subarray(32, 64);
-        let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
-        // Treat the bytes as an integer
-        let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
-        // The k256 modulus:
-        const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
-        // If iL >= order, try again with the "next" index as described in SLIP-10
-        if (next_offset >= MODULUS) { // One subtraction is enough, so no need to get fancy.
-            let next_input = new Uint8Array(33);
-            next_input[0] = 0x01;
-            next_input.set(next_chain_key, 1);
-            return DerivationPath.ckd(idx, next_input, chain_code)
-        }
+		let next_chain_key = hmac_output.subarray(32, 64);
+		let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
+		// Treat the bytes as an integer
+		let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
+		// The k256 modulus:
+		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
+		// If iL >= order, try again with the "next" index as described in SLIP-10
+		if (next_offset >= MODULUS) {
+			// One subtraction is enough, so no need to get fancy.
+			let next_input = new Uint8Array(33);
+			next_input[0] = 0x01;
+			next_input.set(next_chain_key, 1);
+			return DerivationPath.ckd(idx, next_input, chain_code);
+		}
 
-        return [new ChainCode(next_chain_key), next_offset];
+		return [new ChainCode(next_chain_key), next_offset];
 	}
 }
 
@@ -257,10 +261,12 @@ export function test_derive_public_key() {
 			])
 		),
 		new Sec1EncodedPublicKey(
-			Buffer.from(new Uint8Array([
-				2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151, 65, 222,
-				90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
-			]))
+			Buffer.from(
+				new Uint8Array([
+					2, 75, 247, 142, 64, 187, 81, 210, 198, 193, 76, 17, 170, 143, 58, 241, 84, 151, 65, 222,
+					90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
+				])
+			)
 		)
 	);
 

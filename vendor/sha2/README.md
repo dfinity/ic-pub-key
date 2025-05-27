@@ -30,8 +30,8 @@ done with a minor version bump.
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -41,8 +41,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://img.shields.io/crates/v/sha2.svg
 [crate-link]: https://crates.io/crates/sha2
 [docs-image]: https://docs.rs/sha2/badge.svg
@@ -53,7 +52,5 @@ dual licensed as above, without any additional terms or conditions.
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260041-hashes
 [build-image]: https://github.com/RustCrypto/hashes/workflows/sha2/badge.svg?branch=master
 [build-link]: https://github.com/RustCrypto/hashes/actions?query=workflow%3Asha2
-
-[//]: # (general links)
-
+[//]: # 'general links'
 [1]: https://en.wikipedia.org/wiki/SHA-2

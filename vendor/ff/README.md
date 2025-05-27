@@ -11,7 +11,7 @@ discussion.
 
 ## Disclaimers
 
-* This library does not provide constant-time guarantees. The traits enable downstream
+- This library does not provide constant-time guarantees. The traits enable downstream
   users to expose constant-time logic, but `#[derive(PrimeField)]` in particular does not
   generate constant-time code (even for trait methods that return constant-time-compatible
   values).
@@ -68,9 +68,9 @@ minor version bump.
 
 Licensed under either of
 
- * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
-   http://www.apache.org/licenses/LICENSE-2.0)
- * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
+  http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
 

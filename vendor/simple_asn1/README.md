@@ -12,4 +12,3 @@ of these traits, your program or library can then use the convenience functions
 `der_encode` and `der_decode` to do all the parsing work in one action.
 
 Patches welcome!
-

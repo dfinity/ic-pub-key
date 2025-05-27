@@ -1,5 +1,5 @@
-byteorder
-=========
+# byteorder
+
 This crate provides convenience methods for encoding and decoding
 numbers in either big-endian or little-endian order.
 
@@ -8,11 +8,9 @@ numbers in either big-endian or little-endian order.
 
 Dual-licensed under MIT or the [UNLICENSE](https://unlicense.org/).
 
-
 ### Documentation
 
 https://docs.rs/byteorder
-
 
 ### Installation
 
@@ -55,7 +53,6 @@ in a `no_std` context, add the following to your `Cargo.toml`:
 byteorder = { version = "1", default-features = false }
 ```
 
-
 ### Minimum Rust version policy
 
 This crate's minimum supported `rustc` version is `1.60.0`.
@@ -68,7 +65,6 @@ version of Rust.
 
 In general, this crate will be conservative with respect to the minimum
 supported version of Rust.
-
 
 ### Alternatives
 

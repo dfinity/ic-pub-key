@@ -20,24 +20,21 @@ the [`c2-chacha`](https://crates.io/crates/c2-chacha) crate.
 
 Links:
 
--   [API documentation (master)](https://rust-random.github.io/rand/rand_chacha)
--   [API documentation (docs.rs)](https://docs.rs/rand_chacha)
--   [Changelog](https://github.com/rust-random/rand/blob/master/rand_chacha/CHANGELOG.md)
+- [API documentation (master)](https://rust-random.github.io/rand/rand_chacha)
+- [API documentation (docs.rs)](https://docs.rs/rand_chacha)
+- [Changelog](https://github.com/rust-random/rand/blob/master/rand_chacha/CHANGELOG.md)
 
 [rand]: https://crates.io/crates/rand
-[^1]: D. J. Bernstein, [*ChaCha, a variant of Salsa20*](
-      https://cr.yp.to/chacha.html)
 
-[^2]: [eSTREAM: the ECRYPT Stream Cipher Project](
-      http://www.ecrypt.eu.org/stream/)
+[^1]: D. J. Bernstein, [_ChaCha, a variant of Salsa20_](https://cr.yp.to/chacha.html)
 
+[^2]: [eSTREAM: the ECRYPT Stream Cipher Project](http://www.ecrypt.eu.org/stream/)
 
 ## Crate Features
 
 `rand_chacha` is `no_std` compatible when disabling default features; the `std`
 feature can be explicitly required to re-enable `std` support. Using `std`
 allows detection of CPU features and thus better optimisation.
-
 
 # License
 

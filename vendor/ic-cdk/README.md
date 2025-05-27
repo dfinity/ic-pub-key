@@ -46,32 +46,32 @@ This library re-exports macros defined in `ic-cdk-macros` crate.
 
 The macros fall into two categories:
 
-* To register functions as canister entry points
-* To export Candid definitions
+- To register functions as canister entry points
+- To export Candid definitions
 
 ### Register functions as canister entry points
 
 These macros are directly related to the [Internet Computer Specification](https://internetcomputer.org/docs/current/references/ic-interface-spec#entry-points).
 
-* [`init`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.init.html)
-* [`pre_upgrade`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.pre_upgrade.html)
-* [`post_upgrade`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.post_upgrade.html)
-* [`inspect_message`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.inspect_message.html)
-* [`heartbeat`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.heartbeat.html)
-* [`on_low_wasm_memory`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.on_low_wasm_memory.html)
-* [`update`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.update.html)
-* [`query`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.query.html)
+- [`init`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.init.html)
+- [`pre_upgrade`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.pre_upgrade.html)
+- [`post_upgrade`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.post_upgrade.html)
+- [`inspect_message`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.inspect_message.html)
+- [`heartbeat`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.heartbeat.html)
+- [`on_low_wasm_memory`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.on_low_wasm_memory.html)
+- [`update`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.update.html)
+- [`query`](https://docs.rs/ic-cdk/latest/ic_cdk/attr.query.html)
 
 ### Export Candid definitions
 
-* [`export_candid`](https://docs.rs/ic-cdk/latest/ic_cdk/macro.export_candid.html)
+- [`export_candid`](https://docs.rs/ic-cdk/latest/ic_cdk/macro.export_candid.html)
 
 Check [Generating Candid files for Rust canisters](https://internetcomputer.org/docs/current/developer-docs/backend/candid/generating-candid/) for more details.
 
 ## More examples
 
-* [Basic examples](https://github.com/dfinity/cdk-rs/tree/main/examples): Demonstrate usage of `ic-cdk` API.
-* [Comprehensive examples](https://github.com/dfinity/examples/tree/master/rust): Illustrate how to build useful Rust canisters.
+- [Basic examples](https://github.com/dfinity/cdk-rs/tree/main/examples): Demonstrate usage of `ic-cdk` API.
+- [Comprehensive examples](https://github.com/dfinity/examples/tree/master/rust): Illustrate how to build useful Rust canisters.
 
 ## Manage Data Structure in Stable Memory
 

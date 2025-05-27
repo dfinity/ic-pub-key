@@ -78,6 +78,7 @@ cargo run -p witx-bindgen -- crates/witx-bindgen/WASI/phases/snapshot/witx/wasi_
 
 Note that this uses the WASI standard repository as a submodule. If you do not
 have this submodule present in your source tree, run:
+
 ```
 git submodule update --init
 ```

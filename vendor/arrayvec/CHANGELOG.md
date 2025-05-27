@@ -1,5 +1,4 @@
-Recent Changes (arrayvec)
--------------------------
+## Recent Changes (arrayvec)
 
 - 0.5.2
 
@@ -75,7 +74,6 @@ Recent Changes (arrayvec)
     backing array. This will be refined in the next version, since we
     need to make changes to the user visible API.
   - The `use_union` feature now does nothing (like its documentation foretold).
-
 
 - 0.4.8
 

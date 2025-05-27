@@ -18,4 +18,3 @@ CONTRIBUTING.md first.
 
 [1]: https://crates.io/crates/minicbor
 [2]: https://blueoakcouncil.org/license/1.0.0
-

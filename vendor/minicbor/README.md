@@ -17,4 +17,3 @@ CONTRIBUTING.md first.
 
 [1]: https://tools.ietf.org/html/rfc8949
 [2]: https://blueoakcouncil.org/license/1.0.0
-

@@ -6,9 +6,11 @@
   [#285](https://github.com/matklad/once_cell/pull/285).
 
 ## 1.21.2
+
 - Relax success ordering from AcqRel to Release in `race`: [#278](https://github.com/matklad/once_cell/pull/278).
 
 ## 1.21.1
+
 - Reduce MSRV to 1.65: [#277](https://github.com/matklad/once_cell/pull/277).
 
 ## 1.21.0
@@ -66,7 +68,6 @@
 - Add extension to `unsync` and `sync` `Lazy` mut API:
   - `force_mut`
   - `get_mut`
-
 
 ## 1.13.1
 

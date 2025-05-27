@@ -59,8 +59,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/crypto-bigint
 [crate-link]: https://crates.io/crates/crypto-bigint
 [docs-image]: https://docs.rs/crypto-bigint/badge.svg
@@ -71,9 +70,7 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.65+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300602-crypto-bigint
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [audited by NCC Group]: https://research.nccgroup.com/2023/08/30/public-report-entropy-rust-cryptography-review/
 [Entropy]: https://entropy.xyz/

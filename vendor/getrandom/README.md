@@ -14,7 +14,6 @@
 [LICENSE-MIT]: https://raw.githubusercontent.com/rust-random/getrandom/master/LICENSE-MIT
 [License]: https://img.shields.io/crates/l/getrandom
 
-
 A Rust library for retrieving random data from (operating) system sources. It is
 assumed that the system always provides high-quality cryptographically secure random
 data, ideally backed by hardware entropy sources. This crate derives its name
@@ -56,7 +55,7 @@ This crate requires Rust 1.36.0 or later.
 
 ## Platform Support
 
-This crate generally supports the same operating system and platform versions that the Rust standard library does. 
+This crate generally supports the same operating system and platform versions that the Rust standard library does.
 Additional targets may be supported using pluggable custom implementations.
 
 This means that as Rust drops support for old versions of operating systems (such as old Linux kernel versions, Android API levels, etc)
@@ -66,8 +65,8 @@ in stable releases, `getrandom` may create new patch releases (`0.N.x`) that rem
 
 The `getrandom` library is distributed under either of
 
- * [Apache License, Version 2.0][LICENSE-APACHE]
- * [MIT license][LICENSE-MIT]
+- [Apache License, Version 2.0][LICENSE-APACHE]
+- [MIT license][LICENSE-MIT]
 
 at your option.
 

@@ -13,8 +13,8 @@ Buffer type for block processing of data with minimized amount of unreachable pa
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -22,8 +22,7 @@ at your option.
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://img.shields.io/crates/v/block-buffer.svg
 [crate-link]: https://crates.io/crates/block-buffer
 [docs-image]: https://docs.rs/block-buffer/badge.svg
@@ -34,7 +33,5 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260052-utils
 [build-image]: https://github.com/RustCrypto/utils/workflows/block-buffer/badge.svg?branch=master&event=push
 [build-link]: https://github.com/RustCrypto/utils/actions/workflows/block-buffer.yml
-
-[//]: # (general links)
-
+[//]: # 'general links'
 [RustCrypto]: https://github.com/rustcrypto

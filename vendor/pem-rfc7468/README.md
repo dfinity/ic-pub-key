@@ -9,7 +9,7 @@
 
 Pure Rust implementation of PEM Encoding ([RFC 7468]) for PKIX, PKCS, and
 CMS Structures, a strict subset of the original Privacy-Enhanced Mail encoding
-intended  specifically for use with cryptographic keys, certificates, and other
+intended specifically for use with cryptographic keys, certificates, and other
 messages.
 
 Provides a `no_std`-friendly, constant-time implementation suitable for use with
@@ -31,7 +31,7 @@ MC4CAQAwBQYDK2VwBCIEIBftnHPp22SewYmmEoMcX8VwI4IHwaqd+9LFPj/15eqF
 ```
 
 However, all of these formats actually implement a text-based encoding that is
-similar but *not* identical to the legacy PEM encoding as described in
+similar but _not_ identical to the legacy PEM encoding as described in
 [RFC 1421].
 
 For this reason, [RFC 7468] was created to describe a stricter form of
@@ -78,8 +78,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/pem-rfc7468
 [crate-link]: https://crates.io/crates/pem-rfc7468
 [docs-image]: https://docs.rs/pem-rfc7468/badge.svg
@@ -90,9 +89,7 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.60+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300570-formats
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [RFC 1421]: https://datatracker.ietf.org/doc/html/rfc1421
 [RFC 7468]: https://datatracker.ietf.org/doc/html/rfc7468

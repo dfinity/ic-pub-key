@@ -1,5 +1,4 @@
-Anyhow&ensp;¯\\\_(°ペ)\_/¯
-==========================
+# Anyhow&ensp;¯\\\_(°ペ)\_/¯
 
 [<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
@@ -16,7 +15,7 @@ for easy idiomatic error handling in Rust applications.
 anyhow = "1.0"
 ```
 
-*Compiler support: requires rustc 1.39+*
+_Compiler support: requires rustc 1.39+_
 
 <br>
 

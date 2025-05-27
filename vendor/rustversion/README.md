@@ -1,5 +1,4 @@
-Compiler version cfg
-====================
+# Compiler version cfg
 
 [<img alt="github" src="https://img.shields.io/badge/github-dtolnay/rustversion-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/rustversion)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/rustversion.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/rustversion)
@@ -53,21 +52,21 @@ rustversion = "1.0"
 
 - <b>`#[rustversion::before(`</b><i>version or date</i><b>`)]`</b>
   —<br>
-  Negative of *#[rustversion::since(...)]*.
+  Negative of _#[rustversion::since(...)]_.
 
 - <b>`#[rustversion::not(`</b><i>selector</i><b>`)]`</b>
   —<br>
-  Negative of any selector; for example *#[rustversion::not(nightly)]*.
+  Negative of any selector; for example _#[rustversion::not(nightly)]_.
 
 - <b>`#[rustversion::any(`</b><i>selectors...</i><b>`)]`</b>
   —<br>
   True if any of the comma-separated selectors is true; for example
-  *#[rustversion::any(stable, beta)]*.
+  _#[rustversion::any(stable, beta)]_.
 
 - <b>`#[rustversion::all(`</b><i>selectors...</i><b>`)]`</b>
   —<br>
   True if all of the comma-separated selectors are true; for example
-  *#[rustversion::all(since(1.31), before(1.34))]*.
+  _#[rustversion::all(since(1.31), before(1.34))]_.
 
 - <b>`#[rustversion::attr(`</b><i>selector</i><b>`, `</b><i>attribute</i><b>`)]`</b>
   —<br>
@@ -76,7 +75,7 @@ rustversion = "1.0"
 - <b>`rustversion::cfg!(`</b><i>selector</i><b>`)`</b>
   —<br>
   An expression form of any of the above attributes; for example
-  *if rustversion::cfg!(any(stable, beta)) { ... }*.
+  _if rustversion::cfg!(any(stable, beta)) { ... }_.
 
 <br>
 

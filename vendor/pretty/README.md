@@ -23,8 +23,8 @@ See the generated API documentation [here](https://docs.rs/pretty).
 
 ## Requirements
 
-1.   [Rust](https://www.rust-lang.org/)
-2.   [Cargo](https://crates.io/)
+1.  [Rust](https://www.rust-lang.org/)
+2.  [Cargo](https://crates.io/)
 
 You can install both with the following:
 

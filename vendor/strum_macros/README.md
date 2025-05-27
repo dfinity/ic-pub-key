@@ -12,7 +12,7 @@ Strum is a set of macros and traits for working with enums and strings easier in
 # Compatibility
 
 Strum is currently compatible with versions of rustc >= 1.56.1. Pull Requests that improve compatibility with older
-versions are welcome. The project goal is to support a rust version for at least 2 years after release 
+versions are welcome. The project goal is to support a rust version for at least 2 years after release
 and even longer is preferred since this project changes slowly.
 
 # Including Strum in Your Project
@@ -33,21 +33,21 @@ strum_macros = "0.26"
 
 Strum has implemented the following macros:
 
-| Macro | Description |
-| --- | ----------- |
-| [EnumString] | Converts strings to enum variants based on their name. |
-| [Display] | Converts enum variants to strings |
-| [FromRepr] | Convert from an integer to an enum. |
-| [AsRefStr] | Implement `AsRef<str>` for `MyEnum` |
-| [IntoStaticStr] | Implements `From<MyEnum> for &'static str` on an enum |
-| [EnumIter] | Creates a new type that iterates of the variants of an enum. |
-| [EnumProperty] | Add custom properties to enum variants. |
-| [EnumMessage] | Add a verbose message to an enum variant. |
-| [EnumDiscriminants] | Generate a new type with only the discriminant names. |
-| [EnumCount] | Add a constant `usize` equal to the number of variants. |
-| [VariantArray] | Adds an associated `VARIANTS` constant which is an array of all enum discriminants |
-| [VariantNames] | Adds an associated `VARIANTS` constant which is an array of discriminant names |
-| [EnumTable] | *Experimental*, creates a new type that stores an item of a specified type for each variant of the enum. |
+| Macro               | Description                                                                                              |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| [EnumString]        | Converts strings to enum variants based on their name.                                                   |
+| [Display]           | Converts enum variants to strings                                                                        |
+| [FromRepr]          | Convert from an integer to an enum.                                                                      |
+| [AsRefStr]          | Implement `AsRef<str>` for `MyEnum`                                                                      |
+| [IntoStaticStr]     | Implements `From<MyEnum> for &'static str` on an enum                                                    |
+| [EnumIter]          | Creates a new type that iterates of the variants of an enum.                                             |
+| [EnumProperty]      | Add custom properties to enum variants.                                                                  |
+| [EnumMessage]       | Add a verbose message to an enum variant.                                                                |
+| [EnumDiscriminants] | Generate a new type with only the discriminant names.                                                    |
+| [EnumCount]         | Add a constant `usize` equal to the number of variants.                                                  |
+| [VariantArray]      | Adds an associated `VARIANTS` constant which is an array of all enum discriminants                       |
+| [VariantNames]      | Adds an associated `VARIANTS` constant which is an array of discriminant names                           |
+| [EnumTable]         | _Experimental_, creates a new type that stores an item of a specified type for each variant of the enum. |
 
 # Contributing
 

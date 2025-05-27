@@ -4,7 +4,7 @@
 This library provides the following common encodings:
 
 | Name                     | Description                                            |
-|--------------------------|--------------------------------------------------------|
+| ------------------------ | ------------------------------------------------------ |
 | `HEXLOWER`               | lowercase hexadecimal                                  |
 | `HEXLOWER_PERMISSIVE`    | lowercase hexadecimal (case-insensitive decoding)      |
 | `HEXUPPER`               | uppercase hexadecimal                                  |

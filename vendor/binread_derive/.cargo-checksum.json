@@ -1,1 +1,32 @@
-{"files":{"Cargo.toml":"eaa3a5cb4861faf129abbe45323df7e971673395efb364db50e8dd40b6bed730","README.md":"ff107000f8f05edd8f3e2ab6ed1f1149816be7c743be0ad375617d5242c2ed4d","src/codegen/mod.rs":"b2cf5959daff688489b65fa57caf49554d7ea85235e8f7b24c17306760ec3680","src/codegen/read_options.rs":"c31bd7abca4097367be8c0815272ae355610a4233415cf5362e47bc01568ea0f","src/codegen/read_options/debug_template.rs":"dbcaa657162f9f2dcf83d116da5c25b88c2e2a6727f017b8458c8139dfd28d95","src/codegen/read_options/enum.rs":"797dc845ed652505abe54adc35a3560024e77c1d9a4895411800c7775894c3e1","src/codegen/read_options/struct.rs":"fc6f1277879569a2918aef35464d29cd4f89fbdc6f18cbda57eaf21b43859b9a","src/codegen/sanitization.rs":"3e0526b64dbf8421c17241cd33bdc215de871c3b6455ef71e45e717f1652c4ae","src/lib.rs":"f06c72cc7a9941061084f162afdd250993ac2a92581737be61926cf0a40072cb","src/parser/attrs.rs":"4680b06716911bff067db171dc01685afb2bd38500d375b9ead768c90cc7cac8","src/parser/field_level_attrs.rs":"8c70844d24e4481be383d437d30bd6825d064e2db9e782875aacafe065a6ee24","src/parser/keywords.rs":"781b3a20c4eb3c549719b47645f9c81f18a0e369c038fcef453cacf76fd41412","src/parser/macros.rs":"fbee288731e2d04e7bc7c8c31f42112a46e457e48bd5091db3657d94a1d9e02e","src/parser/meta_types.rs":"42383c11759129f9e654eeb7f291e38b2f67c17322d10626ca04145d8dd60575","src/parser/mod.rs":"413aa82f62c9a33b6e2f63c0881582de2cf6852ce902d9c9620ca78ccd20c6aa","src/parser/top_level_attrs.rs":"a0ab356b12334132494cd6741ac1117f898dd157e097d85f16ea29bc9728d178","src/parser/types/assert.rs":"281260bb3418be95df1532eb2c6660db055f844ca5462655b9cede892916ebb3","src/parser/types/cond_endian.rs":"7410983afeb3ee823d5ff2a5e17ea1df76f7b0016aeb22c2de400b45b7008ab7","src/parser/types/condition.rs":"c2aa0fd1070f212d946c6df5b58bb3a6bf1de60f09eae2f7a7d89e262781d7e0","src/parser/types/enum_error_mode.rs":"67180a94f08e52b9252a8253434fb47ae93b01f519df1f39b512db82edbab00c","src/parser/types/imports.rs":"2acafbe143b2b093993e565a37de7d6f7317e8c1a99a54ed643afd93d6fe3d82","src/parser/types/magic.rs":"7d4eb613ac23fe67f1bcc034de92b6b5f85d9ed1c7b17546b31510ce873b294f","src/parser/types/map.rs":"e6aba092746c69dfcf85d4c003eb10e549d77eb7a4b25fd376a3b07cc1c729b3","src/parser/types/mod.rs":"cdb995422ab2a516e35b652cd62951e1b0163c22e5655514bf3c073538228dc3","src/parser/types/passed_args.rs":"4b5a59e182dc7b4d642a7d9693c0d99257c0374e26522f9107e799702f4ae243","src/parser/types/read_mode.rs":"bf0f7da5f79221cec4bc072ee1822bf09ad293a0eb7e197c2ff8a1584402160e","src/parser/types/spanned_value.rs":"26f47f11503ccbcc6142e5bb9251e0df6171ca594a786f12b1b7df42d307a11c"},"package":"1d9672209df1714ee804b1f4d4f68c8eb2a90b1f7a07acf472f88ce198ef1fed"}
+{
+	"files": {
+		"Cargo.toml": "eaa3a5cb4861faf129abbe45323df7e971673395efb364db50e8dd40b6bed730",
+		"README.md": "ff107000f8f05edd8f3e2ab6ed1f1149816be7c743be0ad375617d5242c2ed4d",
+		"src/codegen/mod.rs": "b2cf5959daff688489b65fa57caf49554d7ea85235e8f7b24c17306760ec3680",
+		"src/codegen/read_options.rs": "c31bd7abca4097367be8c0815272ae355610a4233415cf5362e47bc01568ea0f",
+		"src/codegen/read_options/debug_template.rs": "dbcaa657162f9f2dcf83d116da5c25b88c2e2a6727f017b8458c8139dfd28d95",
+		"src/codegen/read_options/enum.rs": "797dc845ed652505abe54adc35a3560024e77c1d9a4895411800c7775894c3e1",
+		"src/codegen/read_options/struct.rs": "fc6f1277879569a2918aef35464d29cd4f89fbdc6f18cbda57eaf21b43859b9a",
+		"src/codegen/sanitization.rs": "3e0526b64dbf8421c17241cd33bdc215de871c3b6455ef71e45e717f1652c4ae",
+		"src/lib.rs": "f06c72cc7a9941061084f162afdd250993ac2a92581737be61926cf0a40072cb",
+		"src/parser/attrs.rs": "4680b06716911bff067db171dc01685afb2bd38500d375b9ead768c90cc7cac8",
+		"src/parser/field_level_attrs.rs": "8c70844d24e4481be383d437d30bd6825d064e2db9e782875aacafe065a6ee24",
+		"src/parser/keywords.rs": "781b3a20c4eb3c549719b47645f9c81f18a0e369c038fcef453cacf76fd41412",
+		"src/parser/macros.rs": "fbee288731e2d04e7bc7c8c31f42112a46e457e48bd5091db3657d94a1d9e02e",
+		"src/parser/meta_types.rs": "42383c11759129f9e654eeb7f291e38b2f67c17322d10626ca04145d8dd60575",
+		"src/parser/mod.rs": "413aa82f62c9a33b6e2f63c0881582de2cf6852ce902d9c9620ca78ccd20c6aa",
+		"src/parser/top_level_attrs.rs": "a0ab356b12334132494cd6741ac1117f898dd157e097d85f16ea29bc9728d178",
+		"src/parser/types/assert.rs": "281260bb3418be95df1532eb2c6660db055f844ca5462655b9cede892916ebb3",
+		"src/parser/types/cond_endian.rs": "7410983afeb3ee823d5ff2a5e17ea1df76f7b0016aeb22c2de400b45b7008ab7",
+		"src/parser/types/condition.rs": "c2aa0fd1070f212d946c6df5b58bb3a6bf1de60f09eae2f7a7d89e262781d7e0",
+		"src/parser/types/enum_error_mode.rs": "67180a94f08e52b9252a8253434fb47ae93b01f519df1f39b512db82edbab00c",
+		"src/parser/types/imports.rs": "2acafbe143b2b093993e565a37de7d6f7317e8c1a99a54ed643afd93d6fe3d82",
+		"src/parser/types/magic.rs": "7d4eb613ac23fe67f1bcc034de92b6b5f85d9ed1c7b17546b31510ce873b294f",
+		"src/parser/types/map.rs": "e6aba092746c69dfcf85d4c003eb10e549d77eb7a4b25fd376a3b07cc1c729b3",
+		"src/parser/types/mod.rs": "cdb995422ab2a516e35b652cd62951e1b0163c22e5655514bf3c073538228dc3",
+		"src/parser/types/passed_args.rs": "4b5a59e182dc7b4d642a7d9693c0d99257c0374e26522f9107e799702f4ae243",
+		"src/parser/types/read_mode.rs": "bf0f7da5f79221cec4bc072ee1822bf09ad293a0eb7e197c2ff8a1584402160e",
+		"src/parser/types/spanned_value.rs": "26f47f11503ccbcc6142e5bb9251e0df6171ca594a786f12b1b7df42d307a11c"
+	},
+	"package": "1d9672209df1714ee804b1f4d4f68c8eb2a90b1f7a07acf472f88ce198ef1fed"
+}

@@ -85,8 +85,8 @@ done with a minor version bump.
 
 All crates licensed under either of
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -96,8 +96,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/k256
 [crate-link]: https://crates.io/crates/k256
 [docs-image]: https://docs.rs/k256/badge.svg
@@ -108,9 +107,7 @@ dual licensed as above, without any additional terms or conditions.
 [rustc-image]: https://img.shields.io/badge/rustc-1.65+-blue.svg
 [chat-image]: https://img.shields.io/badge/zulip-join_chat-blue.svg
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260040-elliptic-curves
-
-[//]: # (general links)
-
+[//]: # 'general links'
 [RustCrypto]: https://github.com/RustCrypto/
 [secp256k1]: https://en.bitcoin.it/wiki/Secp256k1
 [`elliptic-curve`]: https://github.com/RustCrypto/traits/tree/master/elliptic-curve

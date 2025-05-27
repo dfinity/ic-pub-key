@@ -1,5 +1,4 @@
-Rust Quasi-Quoting
-==================
+# Rust Quasi-Quoting
 
 [<img alt="github" src="https://img.shields.io/badge/github-dtolnay/quote-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/quote)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/quote.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/quote)
@@ -17,7 +16,7 @@ tokens to hand back to the compiler to compile into the caller's crate.
 Quasi-quoting is a solution to one piece of that &mdash; producing tokens to
 return to the compiler.
 
-The idea of quasi-quoting is that we write *code* that we treat as *data*.
+The idea of quasi-quoting is that we write _code_ that we treat as _data_.
 Within the `quote!` macro, we can write what looks like code to our text editor
 or IDE. We get all the benefits of the editor's brace matching, syntax
 highlighting, indentation, and maybe autocompletion. But rather than compiling
@@ -34,8 +33,8 @@ macros.
 quote = "1.0"
 ```
 
-*Version requirement: Quote supports rustc 1.56 and up.*<br>
-[*Release notes*](https://github.com/dtolnay/quote/releases)
+_Version requirement: Quote supports rustc 1.56 and up._<br>
+[_Release notes_](https://github.com/dtolnay/quote/releases)
 
 <br>
 

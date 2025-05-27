@@ -174,7 +174,7 @@
 
 # Release 0.2.6 (2018-09-13)
 
-- [Documented that `pow(0, 0)` returns `1`][79].  Mathematically, this is not
+- [Documented that `pow(0, 0)` returns `1`][79]. Mathematically, this is not
   strictly defined, but the current behavior is a pragmatic choice that has
   precedent in Rust `core` for the primitives and in many other languages.
 - [The new `WrappingShl` and `WrappingShr` traits][81] will wrap the shift count
@@ -210,13 +210,13 @@
 - [The new `CheckedNeg` and `CheckedRem` traits][63] perform checked `Neg` and
   `Rem`, returning `Some(output)` or `None` on overflow.
 - [The `no_std` implementation of `FloatCore::to_degrees` for `f32`][61] now
-  uses a constant for greater accuracy, mirroring [rust#47919].  (With `std` it
+  uses a constant for greater accuracy, mirroring [rust#47919]. (With `std` it
   just calls the inherent `f32::to_degrees` in the standard library.)
 - [The new `MulAdd` and `MulAddAssign` traits][59] perform a fused multiply-
-  add.  For integer types this is just a convenience, but for floating point
+  add. For integer types this is just a convenience, but for floating point
   types this produces a more accurate result than the separate operations.
 - [All applicable traits are now implemented for 128-bit integers][60] starting
-  with Rust 1.26, enabled by the new `i128` crate feature.  The `FromPrimitive`
+  with Rust 1.26, enabled by the new `i128` crate feature. The `FromPrimitive`
   and `ToPrimitive` traits now also have corresponding 128-bit methods, which
   default to converting via 64-bit integers for compatibility.
 
@@ -239,7 +239,6 @@
 [52]: https://github.com/rust-num/num-traits/pull/52
 [rust-10184]: https://github.com/rust-lang/rust/issues/10184
 
-
 # Release 0.2.1 (2018-03-01)
 
 - [The new `FloatCore` trait][32] offers a subset of `Float` for `#![no_std]` use.
@@ -247,7 +246,7 @@
 - [The new `Inv` trait][37] returns the multiplicative inverse, or reciprocal.
 - [The new `Pow` trait][37] performs exponentiation, much like the existing `pow`
   function, but with generic exponent types.
-- [The new `One::is_one` method][39] tests if a value equals 1.  Implementers
+- [The new `One::is_one` method][39] tests if a value equals 1. Implementers
   should override this method if there's a more efficient way to check for 1,
   rather than comparing with a temporary `one()`.
 
@@ -258,11 +257,10 @@
 [39]: https://github.com/rust-num/num-traits/pull/39
 [41]: https://github.com/rust-num/num-traits/pull/41
 
-
 # Release 0.2.0 (2018-02-06)
 
 - **breaking change**: [There is now a `std` feature][30], enabled by default, along
-  with the implication that building *without* this feature makes this a
+  with the implication that building _without_ this feature makes this a
   `#![no_std]` crate.
   - The `Float` and `Real` traits are only available when `std` is enabled.
   - Otherwise, the API is unchanged, and num-traits 0.1.43 now re-exports its
@@ -273,13 +271,11 @@
 [semver-trick]: https://github.com/dtolnay/semver-trick
 [30]: https://github.com/rust-num/num-traits/pull/30
 
-
 # Release 0.1.43 (2018-02-06)
 
 - All items are now [re-exported from num-traits 0.2][31] for compatibility.
 
 [31]: https://github.com/rust-num/num-traits/pull/31
-
 
 # Release 0.1.42 (2018-01-22)
 
@@ -300,8 +296,7 @@ Thanks to @cuviper, @Enet4, @fabianschuiki, @svartalf, and @yoanlcq for their co
 [22]: https://github.com/rust-num/num-traits/pull/22
 [23]: https://github.com/rust-num/num-traits/pull/23
 
-
 # Prior releases
 
-No prior release notes were kept.  Thanks all the same to the many
+No prior release notes were kept. Thanks all the same to the many
 contributors that have made this crate what it is!

@@ -27,8 +27,8 @@ version bump.
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -38,8 +38,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://buildstats.info/crate/sec1
 [crate-link]: https://crates.io/crates/sec1
 [docs-image]: https://docs.rs/sec1/badge.svg
@@ -50,9 +49,7 @@ dual licensed as above, without any additional terms or conditions.
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/300570-formats
 [build-image]: https://github.com/RustCrypto/formats/workflows/sec1/badge.svg?branch=master&event=push
 [build-link]: https://github.com/RustCrypto/formats/actions
-
-[//]: # (links)
-
+[//]: # 'links'
 [RustCrypto]: https://github.com/rustcrypto
 [SEC1: Elliptic Curve Cryptography]: https://www.secg.org/sec1-v2.pdf
 [RFC5915]: https://datatracker.ietf.org/doc/html/rfc5915

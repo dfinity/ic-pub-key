@@ -129,8 +129,8 @@ trait.
 
 Licensed under either of:
 
- * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
- * [MIT license](http://opensource.org/licenses/MIT)
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -140,8 +140,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 
-[//]: # (badges)
-
+[//]: # 'badges'
 [crate-image]: https://img.shields.io/crates/v/digest.svg
 [crate-link]: https://crates.io/crates/digest
 [docs-image]: https://docs.rs/digest/badge.svg
@@ -152,9 +151,7 @@ dual licensed as above, without any additional terms or conditions.
 [chat-link]: https://rustcrypto.zulipchat.com/#narrow/stream/260041-hashes
 [build-image]: https://github.com/RustCrypto/traits/workflows/digest/badge.svg?branch=master&event=push
 [build-link]: https://github.com/RustCrypto/traits/actions?query=workflow%3Adigest
-
-[//]: # (general links)
-
+[//]: # 'general links'
 [0]: https://en.wikipedia.org/wiki/Cryptographic_hash_function
 [1]: https://github.com/RustCrypto/hashes
 [2]: https://docs.rs/generic-array
