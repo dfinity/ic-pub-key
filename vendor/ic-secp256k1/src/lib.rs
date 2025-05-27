@@ -714,6 +714,17 @@ pub struct PublicKey {
     pub key: k256::PublicKey,
 }
 
+impl Display for PublicKey {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use k256::elliptic_curve::point::AffineCoordinates;
+        let affine = self.key.as_affine();
+        let x = affine.x();
+        let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<Vec<String>>().join("");
+        let y_odd = affine.y_is_odd();
+        write!(f, "x: {} y_odd: {}", x_bytes, y_odd.unwrap_u8())
+    }
+}
+
 impl PublicKey {
     /// Deserialize a public key stored in SEC1 format
     ///

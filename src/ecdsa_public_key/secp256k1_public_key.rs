@@ -1,5 +1,3 @@
-use std::io::Read;
-
 use elliptic_curve::PrimeField;
 use ic_secp256k1::{DerivationIndex, DerivationPath};
 use ic_secp256k1::PublicKey;
@@ -69,9 +67,9 @@ fn public_key_as_affine_hex(pk: &ic_secp256k1::PublicKey) -> String {
     use elliptic_curve::point::AffineCoordinates;
     let affine = pk.key.as_affine();
     let x = affine.x();
-    let x_bytes = x.bytes().map(|x| x.unwrap()).collect::<Vec<u8>>();
+    let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<Vec<String>>().join("");
     let y = affine.y_is_odd();
-    format!("\n  x: {}\n  y is odd: {:?}", hex::encode(x_bytes), y)
+    format!("\n  x: {}\n  y is odd: {:?}", x_bytes, y.unwrap_u8())
 }
 
 pub fn derive_public_key(
