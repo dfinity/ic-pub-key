@@ -28,17 +28,17 @@ class PublicKeyWithChainCode {
     
         (derived_key, chain_code)
         */
-        console.log("derive_subkey_with_chain_code: derive_offset in: public_key:", this.public_key.asAffineHex());
-        console.log("derive_subkey_with_chain_code: derive_offset in: chain_code:", this.chain_code.asHex());
-        console.log("derive_subkey_with_chain_code: derive_offset in: derivation_path:", derivation_path.toString());
+        console.log("derive_subkey_with_chain_code: arg: public_key:", this.public_key.asAffineHex());
+        console.log("derive_subkey_with_chain_code: arg: chain_code:", this.chain_code.asHex());
+        console.log("derive_subkey_with_chain_code: arg: derivation_path:", derivation_path.toString());
 
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
 
 
-        console.log("derive_subkey_with_chain_code: derive_offset out: pt:", ProjectivePoint.fromAffine(affine_pt).toHex());
-        console.log("derive_subkey_with_chain_code: derive_offset offset:", _offset);
-        console.log("derive_subkey_with_chain_code: derive_offset chain_code:", chain_code.asHex());
+        console.log("derive_subkey_with_chain_code: derive_offset: pt:", ProjectivePoint.fromAffine(affine_pt).toHex());
+        console.log("derive_subkey_with_chain_code: derive_offset: offset:", _offset);
+        console.log("derive_subkey_with_chain_code: derive_offset: chain_code:", chain_code.asHex());
 
         let pt = ProjectivePoint.fromAffine(affine_pt);
         return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
@@ -66,6 +66,11 @@ class Sec1EncodedPublicKey {
 		const hex = point.toHex();
 		const bytes = Buffer.from(hex, 'hex');
 		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
+	static fromAffinePoint(point: AffinePoint): Sec1EncodedPublicKey {
+		const projective_point = ProjectivePoint.fromAffine(point);
+		return Sec1EncodedPublicKey.fromProjectivePoint(projective_point);
 	}
 
 	asHex(): string {
