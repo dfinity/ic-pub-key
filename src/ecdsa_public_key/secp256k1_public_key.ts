@@ -118,6 +118,10 @@ type PathComponent = Uint8Array;
 class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
+    toString(): string {
+        return this.path.map(p => Buffer.from(p).toString('hex')).join('/');
+    }
+
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
 		/*
         fn derive_offset(
@@ -297,7 +301,7 @@ pub fn derive_public_key(
     console.log("derive_public_key:");
     console.log("derive_public_key: arg1: pubkey:", ecdsa_public_key.public_key.asAffineHex());
     console.log("derive_public_key: arg1: chain code:", ecdsa_public_key.chain_code.asHex());
-    console.log("derive_public_key: arg2: derivation path:", simple_derivation_path.path.map(p => Buffer.from(p).toString('hex')).join('/'));
+    console.log("derive_public_key: arg2: derivation path:", simple_derivation_path.toString());
 
 	let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
 
