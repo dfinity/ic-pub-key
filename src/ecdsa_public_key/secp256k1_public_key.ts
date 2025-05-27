@@ -218,6 +218,7 @@ class DerivationPath {
 
             let base_mul = ProjectivePoint.BASE.mul(next_offset);
             let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+			console.log("ckd_pub: next_offset:", next_offset.toString(16));
 			console.log("ckd_pub: base_mul:", base_mul.toHex());
 			console.log("ckd_pub: next_pt:", next_pt.toHex());
 
@@ -272,9 +273,12 @@ class DerivationPath {
         assert.equal(hmac_output.length, 64);
 
         let fb = hmac_output.subarray(0, 32);
+        console.log("ckd: fb:         ", Buffer.from(fb).toString('hex'));
         let next_chain_key = hmac_output.subarray(32, 64);
+		let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
         // Treat the bytes as an integer
-        let next_offset = BigInt(fb.readBigUInt64BE(0)); // Note: Do NOT reduce here; the reduction is handled below.
+        let next_offset = BigInt(`0x${next_chain_key_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
+		console.log("ckd: next_offset:", next_offset.toString(16));
         // The k256 modulus:
         const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
         // If iL >= order, try again with the "next" index as described in SLIP-10

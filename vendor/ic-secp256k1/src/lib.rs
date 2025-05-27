@@ -129,7 +129,9 @@ impl DerivationPath {
         let hmac_output: [u8; 64] = hmac.finalize().into_bytes().into();
 
         let fb = k256::FieldBytes::from_slice(&hmac_output[..32]);
+        println!("ckd: fb         : {}", hex::encode(fb));
         let next_offset = <k256::Scalar as Reduce<k256::U256>>::reduce_bytes(fb);
+        println!("ckd: next_offset: {:02x?}", next_offset);
         let next_chain_key: [u8; 32] = hmac_output[32..].to_vec().try_into().expect("Correct size");
 
         // If iL >= order, try again with the "next" index as described in SLIP-10
@@ -163,7 +165,8 @@ impl DerivationPath {
 
             let base_mul = k256::ProjectivePoint::mul_by_generator(&next_offset);
             let next_pt = (pt + base_mul).to_affine();
-            println!("ckd_pub: base_mul: {}", base_mul);
+            println!("ckd_pub: next_offset: {:02x?}", next_offset);
+            println!("ckd_pub: base_mul: {:02x?}", base_mul);
             println!("ckd_pub: next_pt: {}", next_pt);
 
             // If the new key is not infinity, we're done: return the new key
