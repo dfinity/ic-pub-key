@@ -67,7 +67,7 @@ pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
 
 fn public_key_as_affine_hex(pk: &ic_secp256k1::PublicKey) -> String {
     use elliptic_curve::point::AffineCoordinates;
-    let affine = pk.as_affine();
+    let affine = pk.key.as_affine();
     let x = affine.x();
     let x_bytes = x.bytes().map(|x| x.unwrap()).collect::<Vec<u8>>();
     let y = affine.y_is_odd();

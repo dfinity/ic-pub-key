@@ -702,7 +702,8 @@ impl PrivateKey {
 /// A secp256k1 public key, suitable for verifying ECDSA or BIP340 signatures
 #[derive(Clone, Eq, PartialEq, Debug)]
 pub struct PublicKey {
-    key: k256::PublicKey,
+    /// Made public in order to get intermediate values
+    pub key: k256::PublicKey,
 }
 
 impl PublicKey {
