@@ -192,7 +192,6 @@ class DerivationPath {
 		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
 		// If iL >= order, try again with the "next" index as described in SLIP-10
 		if (next_offset >= MODULUS) {
-			// One subtraction is enough, so no need to get fancy.
 			let next_input = new Uint8Array(33);
 			next_input[0] = 0x01;
 			next_input.set(next_chain_key, 1);
