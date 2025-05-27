@@ -29,8 +29,9 @@ class PublicKeyWithChainCode {
         (derived_key, chain_code)
         */
 		let public_key = this.public_key.asAffinePoint();
-		let todo = derivation_path.derive_offset(public_key, this.chain_code);
-		throw new Error('Not finished: derive_subkey_with_chain_code');
+		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(public_key, this.chain_code);
+        let pt = ProjectivePoint.fromAffine(affine_pt);
+        return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
 	}
 }
 /**
