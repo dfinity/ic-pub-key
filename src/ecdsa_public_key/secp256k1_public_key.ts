@@ -132,8 +132,11 @@ class DerivationPath {
 
 		for (let idx of this.path) {
 			let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
+			chain_code = next_chain_code;
+			pt = next_pt;
+			offset += next_offset;
 		}
-		throw new Error('Not implemented: DerivationPath.derive_offset');
+		return [pt, offset, chain_code];
 	}
 
 	static ckd_pub(
