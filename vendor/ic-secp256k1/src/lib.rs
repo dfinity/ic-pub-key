@@ -1051,7 +1051,11 @@ impl PublicKey {
         println!("derive_subkey_with_chain_code: arg: chain_code: {}", hex::encode(chain_code));
         println!("derive_subkey_with_chain_code: arg: derivation_path: {}", derivation_path);
         let public_key: AffinePoint = *self.key.as_affine();
-        let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
+        let (pt, offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
+
+        println!("derive_subkey_with_chain_code: derive_offset: pt: {pt}");
+        println!("derive_subkey_with_chain_code: derive_offset: offset: {:?}", offset);
+        println!("derive_subkey_with_chain_code: derive_offset: chain_code: {}", hex::encode(chain_code));
 
         let derived_key = Self {
             key: k256::PublicKey::from(
