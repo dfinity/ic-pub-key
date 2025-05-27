@@ -393,10 +393,13 @@ export function test_derive_public_key() {
 		)
 	);
 
+	let before = Date.now();
 	const pub_key_with_derivation_path = derive_public_key(
 		pub_key_without_derivation_path,
 		derivation_path
 	);
+	let after = Date.now();
+	console.log(`derive_public_key took ${after - before}ms`);
 
 	console.log('Derived public key: ');
 	console.log(pub_key_with_derivation_path);
