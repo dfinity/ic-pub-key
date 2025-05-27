@@ -366,8 +366,6 @@ dependencies = [
 [[package]]
 name = "ic-secp256k1"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf559ce911c6d6bcebc5ba3d7dafe5003550bb37173398ba80df24cf0bab38b9"
 dependencies = [
  "hmac",
  "k256",
