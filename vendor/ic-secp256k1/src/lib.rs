@@ -5,6 +5,8 @@
 
 //! A crate with handling of ECDSA keys over the secp256k1 curve
 
+use std::fmt::Display;
+
 use k256::{
     elliptic_curve::{
         generic_array::{typenum::Unsigned, GenericArray},
@@ -65,6 +67,12 @@ pub struct DerivationIndex(pub Vec<u8>);
 #[derive(Clone, Debug)]
 pub struct DerivationPath {
     path: Vec<DerivationIndex>,
+}
+
+impl Display for DerivationPath {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.path.iter().map(|i| i.0.iter().map(|b| format!("{:02x}", b)).collect::<Vec<String>>().join("")).collect::<Vec<String>>().join("/"))
+    }
 }
 
 impl DerivationPath {
@@ -1027,6 +1035,8 @@ impl PublicKey {
         derivation_path: &DerivationPath,
         chain_code: &[u8; 32],
     ) -> (Self, [u8; 32]) {
+
+        println!("derive_subkey_with_chain_code: derivation_path: {}", derivation_path);
         let public_key: AffinePoint = *self.key.as_affine();
         let (pt, _offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
 
