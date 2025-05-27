@@ -63,15 +63,6 @@ pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
     DerivationPath::new(simple.iter().map(|x| DerivationIndex(x.to_vec())).collect())
 }
 
-fn public_key_as_affine_hex(pk: &ic_secp256k1::PublicKey) -> String {
-    use elliptic_curve::point::AffineCoordinates;
-    let affine = pk.key.as_affine();
-    let x = affine.x();
-    let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<Vec<String>>().join("");
-    let y = affine.y_is_odd();
-    format!("\n  x: {}\n  y is odd: {:?}", x_bytes, y.unwrap_u8())
-}
-
 pub fn derive_public_key(
     ecdsa_public_key: &ECDSAPublicKey,
     simple_derivation_path: &Vec<Vec<u8>>,
@@ -90,7 +81,7 @@ pub fn derive_public_key(
         .expect("Incorrect chain code size");
 
     println!("derive_public_key:");
-    println!("derive_public_key: arg1: pubkey: {}", public_key_as_affine_hex(&pk));
+    println!("derive_public_key: arg1: pubkey: {pk}");
     println!("derive_public_key: arg1: chain code: {:?}", hex::encode(&ecdsa_public_key.chain_code));
     println!("derive_public_key: arg2: {:?}", &simple_derivation_path);
     
