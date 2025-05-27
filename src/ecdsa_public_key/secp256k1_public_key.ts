@@ -284,8 +284,9 @@ pub fn derive_public_key(
 }
 
 */
-
-	console.log('Affine hex: ', ecdsa_public_key.public_key.asAffineHex());
+    console.log("derive_public_key:");
+    console.log("derive_public_key: arg1:", ecdsa_public_key.public_key.asAffineHex());
+    console.log("derive_public_key: arg2:", simple_derivation_path.path.map(p => Buffer.from(p).toString('hex')).join('/'));
 
 	let derived_key = ecdsa_public_key.derive_subkey_with_chain_code(simple_derivation_path);
 
