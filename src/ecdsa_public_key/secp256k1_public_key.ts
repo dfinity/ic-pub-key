@@ -246,7 +246,7 @@ export function test_derive_public_key() {
 
 	{
 		console.log('Public key without derivation path: ');
-		console.log(pub_key_without_derivation_path);
+		console.log(JSON.stringify(pub_key_without_derivation_path));
 		assert.equal(
 			pub_key_without_derivation_path.public_key.x_as_hex(),
 			'b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a'
