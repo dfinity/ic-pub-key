@@ -20,6 +20,11 @@ export class PublicKeyWithChainCode {
 		public readonly chain_code: ChainCode
 	) {}
 
+	/**
+	 * A convenience function that accepts the format provided by dfx calls to the signer canister.
+	 * @param public_key_array The public key as a byte array.
+	 * @param chain_code_array The chain code as a byte array.
+	 */
 	static fromArray(public_key_array: number[], chain_code_array: number[]): PublicKeyWithChainCode {
 		return new PublicKeyWithChainCode(
 			Sec1EncodedPublicKey.fromArray(public_key_array),
@@ -140,7 +145,24 @@ class DerivationPath {
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */
 	toString(): string {
-		return this.path.map((p) => Buffer.from(p).toString('hex')).join('/');
+		return this.path.map((p) => DerivationPath.urlEncode(p)).join('/');
+	}
+
+    static isAsciiAlphanumeric(code: number): boolean {
+		return (
+		  (code >= 48 && code <= 57) ||  // 0-9
+		  (code >= 65 && code <= 90) ||  // A-Z
+		  (code >= 97 && code <= 122)    // a-z
+		);
+	  }
+	  static urlEncodeU8(u8: number): string {
+		if (DerivationPath.isAsciiAlphanumeric(u8)) {
+			return String.fromCharCode(u8);
+		}
+		return `%${u8.toString(16)}`;
+	}
+	static urlEncode(path: Uint8Array): string {
+		return [...path].map((p) => DerivationPath.urlEncodeU8(p)).join('');
 	}
 
 	/**
@@ -278,7 +300,7 @@ export function test_derive_public_key() {
 	);
 
 	console.log('Derivation path: ');
-	console.log(derivation_path);
+	console.log(derivation_path.toString());
 
 	const expected_pub_key_with_derivation_path = new PublicKeyWithChainCode(
 		new Sec1EncodedPublicKey(
