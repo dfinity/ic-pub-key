@@ -17,7 +17,7 @@ program
     .command('secp256k1 <pubkey> <chaincode> <derivationpath>')
     .description('Derive a key')
     .action((pubkey, chaincode, derivationpath) => {
-		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromHex(chaincode, pubkey);
+		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromHex(pubkey, chaincode);
 		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, derivationpath);
 		console.log("derived pubkey: ", derived_pubkey.public_key.asHex());
 		console.log("derived chaincode: ", derived_pubkey.chain_code.asHex());

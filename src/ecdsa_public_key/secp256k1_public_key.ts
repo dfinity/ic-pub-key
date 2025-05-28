@@ -4,21 +4,21 @@ import { createHmac } from 'crypto';
 
 export class PublicKeyWithChainCode {
 	constructor(
-		public readonly chain_code: ChainCode,
-		public readonly public_key: Sec1EncodedPublicKey
+		public readonly public_key: Sec1EncodedPublicKey,
+		public readonly chain_code: ChainCode
 	) {}
 
-	static fromArray(chain_code_array: number[], public_key_array: number[]): PublicKeyWithChainCode {
+	static fromArray(public_key_array: number[], chain_code_array: number[]): PublicKeyWithChainCode {
 		return new PublicKeyWithChainCode(
-			ChainCode.fromArray(chain_code_array),
-			Sec1EncodedPublicKey.fromArray(public_key_array)
+			Sec1EncodedPublicKey.fromArray(public_key_array),
+			ChainCode.fromArray(chain_code_array)
 		);
 	}
 
-	static fromHex(chain_code_hex: string, public_key_hex: string): PublicKeyWithChainCode {
-		let chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
+	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
 		let public_key = new Sec1EncodedPublicKey(new Uint8Array(Buffer.from(public_key_hex, 'hex')));
-		return new PublicKeyWithChainCode(chain_key, public_key);
+		let chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
+		return new PublicKeyWithChainCode(public_key, chain_key);
 	}
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
@@ -28,7 +28,7 @@ export class PublicKeyWithChainCode {
 			this.chain_code
 		);
 		let pt = ProjectivePoint.fromAffine(affine_pt);
-		return new PublicKeyWithChainCode(chain_code, Sec1EncodedPublicKey.fromProjectivePoint(pt));
+		return new PublicKeyWithChainCode(Sec1EncodedPublicKey.fromProjectivePoint(pt), chain_code);
 	}
 }
 /**
@@ -235,12 +235,12 @@ export function derive_public_key(
 export function test_derive_public_key() {
 	const pub_key_without_derivation_path = PublicKeyWithChainCode.fromArray(
 		[
-			33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110, 206, 217,
-			163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209
-		],
-		[
 			2, 184, 79, 243, 248, 131, 41, 168, 135, 101, 125, 3, 9, 189, 26, 26, 249, 227, 118, 1, 229,
 			209, 165, 53, 214, 254, 125, 66, 227, 127, 121, 244, 10
+		],
+		[
+			33, 40, 145, 188, 3, 47, 40, 211, 105, 186, 207, 57, 220, 54, 159, 235, 81, 110, 206, 217,
+			163, 216, 52, 152, 36, 106, 234, 209, 84, 111, 140, 209
 		]
 	);
 
@@ -269,12 +269,6 @@ export function test_derive_public_key() {
 	console.log(derivation_path);
 
 	const expected_pub_key_with_derivation_path = new PublicKeyWithChainCode(
-		new ChainCode(
-			new Uint8Array([
-				188, 53, 184, 81, 95, 3, 170, 21, 67, 8, 30, 42, 244, 232, 120, 242, 139, 39, 243, 206, 0,
-				192, 53, 244, 6, 135, 2, 211, 62, 232, 133, 134
-			])
-		),
 		new Sec1EncodedPublicKey(
 			Buffer.from(
 				new Uint8Array([
@@ -282,6 +276,12 @@ export function test_derive_public_key() {
 					90, 205, 249, 37, 230, 220, 35, 13, 252, 93, 170, 34, 217
 				])
 			)
+		),
+		new ChainCode(
+			new Uint8Array([
+				188, 53, 184, 81, 95, 3, 170, 21, 67, 8, 30, 42, 244, 232, 120, 242, 139, 39, 243, 206, 0,
+				192, 53, 244, 6, 135, 2, 211, 62, 232, 133, 134
+			])
 		)
 	);
 
