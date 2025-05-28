@@ -82,6 +82,12 @@ export class Sec1EncodedPublicKey {
 		const x = this.asAffinePoint().x;
 		return x.toString(16);
 	}
+	toJSON(): string {
+		return this.asHex();
+	}
+	toString(): string {
+		return JSON.stringify(this);
+	}
 }
 /**
  * A chain code is a 32 byte array
@@ -103,6 +109,10 @@ export class ChainCode {
 
 	asHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
+	}
+
+	toJSON(): string {
+		return this.asHex();
 	}
 }
 
@@ -284,10 +294,10 @@ export function test_derive_public_key() {
 	console.log(`derive_public_key took ${after - before}ms`);
 
 	console.log('Derived public key: ');
-	console.log(pub_key_with_derivation_path);
+	console.log(JSON.stringify(pub_key_with_derivation_path));
 
 	console.log('Expected public key: ');
-	console.log(expected_pub_key_with_derivation_path);
+	console.log(JSON.stringify(expected_pub_key_with_derivation_path));
 
 	// Verify that the derived public key matches the expected public key
 	if (!deepEqual(pub_key_with_derivation_path, expected_pub_key_with_derivation_path)) {
