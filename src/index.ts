@@ -41,15 +41,14 @@ program
 	});
 
 program
-	.command('caller-secp256k1 <principal> <pubkey> <chaincode> <derivationpath>')
+	.command('caller-secp256k1 <principal> <pubkey> <chaincode> [derivationpath]')
 	.description('Derive a key for the given principal')
 	.action((principal, pubkey, chaincode, derivationpath) => {
 		let parsed_principal = Principal.fromText(principal);
-		let derivation_path = principal_derivation_path(parsed_principal);
+		let caller_derivation_path = principal_derivation_path(parsed_principal);
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
-		let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
-		let combined_derivation_path = new DerivationPath([...derivation_path.path, ...parsed_derivationpath.path]);
-		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, parsed_derivationpath);
+		let combined_derivation_path = derivationpath ? new DerivationPath([...caller_derivation_path.path, ...DerivationPath.fromBlob(derivationpath).path]) : caller_derivation_path;
+		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, combined_derivation_path);
 		let ans = {
 			request: {
 				key: pubkey_with_chain_code,

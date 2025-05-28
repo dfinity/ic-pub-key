@@ -157,14 +157,14 @@ export class DerivationPath {
 	}
 
 	toJSON(): string {
-		return this.toBlob();
+		return this.toHex();
 	}
 
 	/**
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */
 	toHex(): string {
-		return this.path.map((p) => DerivationPath.blobEncode(p)).join('/');
+		return this.path.map((p) => Buffer.from(p).toString('hex')).join('/');
 	}
 
 	/**
