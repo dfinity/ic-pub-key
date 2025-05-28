@@ -141,14 +141,28 @@ type PathComponent = Uint8Array;
 class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
+	toString(): string {
+		return this.toUrl();
+	}
+
 	/**
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */
-	toString(): string {
+	toHex(): string {
 		return this.path.map((p) => DerivationPath.urlEncode(p)).join('/');
 	}
 
-    static isAsciiAlphanumeric(code: number): boolean {
+	/**
+	 * @returns A string representation of the derivation path: URL encoded with a '/' between each path component.
+	 */
+	toUrl(): string {
+		return this.path.map((p) => DerivationPath.urlEncode(p)).join('/');
+	}
+
+	/**
+	 * @returns True if the character is an ASCII alphanumeric character.
+	 */
+	static isAsciiAlphanumeric(code: number): boolean {
 		return (
 		  (code >= 48 && code <= 57) ||  // 0-9
 		  (code >= 65 && code <= 90) ||  // A-Z
@@ -163,6 +177,31 @@ class DerivationPath {
 	}
 	static urlEncode(path: Uint8Array): string {
 		return [...path].map((p) => DerivationPath.urlEncodeU8(p)).join('');
+	}
+	static urlDecode(s: string): Uint8Array {
+		let ans = [];
+		let skip = 0;
+		let byte = 0;
+		for (let char of s) {
+			if (skip == 2) {
+				byte = parseInt(char, 16);
+				skip--;
+				continue;
+			}
+			if (skip == 1) {
+				byte = byte * 16 + parseInt(char, 16);
+				ans.push(byte);
+				skip--;
+				continue;
+			}
+			if (char === '%') {
+				skip = 2;
+				byte = 0;
+				continue;
+			}
+			ans.push(char.charCodeAt(0));
+		}
+		return new Uint8Array(ans);
 	}
 
 	/**
