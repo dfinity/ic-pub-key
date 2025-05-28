@@ -142,24 +142,24 @@ export class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
 	/**
-	 * @returns A string representation of the derivation path: URL encoded with a '/' between each path component.
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
 	 */
 	toString(): string {
-		return this.toUrl();
+		return this.toBlob();
 	}
 
 	/**
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */
 	toHex(): string {
-		return this.path.map((p) => DerivationPath.urlEncode(p)).join('/');
+		return this.path.map((p) => DerivationPath.blobEncode(p)).join('/');
 	}
 
 	/**
-	 * @returns A string representation of the derivation path: URL encoded with a '/' between each path component.
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
 	 */
-	toUrl(): string {
-		return this.path.map((p) => DerivationPath.urlEncode(p)).join('/');
+	toBlob(): string {
+		return this.path.map((p) => DerivationPath.blobEncode(p)).join('/');
 	}
 
 	/**
@@ -172,16 +172,31 @@ export class DerivationPath {
 			(code >= 97 && code <= 122) // a-z
 		);
 	}
-	static urlEncodeU8(u8: number): string {
+	/**
+	 * Encodes a single byte as a Candid blob string.
+	 * @param u8 
+	 * @returns 
+	 */
+	static blobEncodeU8(u8: number): string {
 		if (DerivationPath.isAsciiAlphanumeric(u8)) {
 			return String.fromCharCode(u8);
 		}
-		return `%${u8.toString(16)}`;
+		return `\\${u8.toString(16)}`;
 	}
-	static urlEncode(path: Uint8Array): string {
-		return [...path].map((p) => DerivationPath.urlEncodeU8(p)).join('');
+	/**
+	 * Encodes an array of bytes as a Candid blob string.
+	 * @param path
+	 * @returns
+	 */
+	static blobEncode(path: Uint8Array): string {
+		return [...path].map((p) => DerivationPath.blobEncodeU8(p)).join('');
 	}
-	static urlDecode(s: string): Uint8Array {
+	/**
+	 * Decodes a Candid blob string as an array of bytes.
+	 * @param s
+	 * @returns
+	 */
+	static blobDecode(s: string): Uint8Array {
 		let ans = [];
 		let skip = 0;
 		let byte = 0;
@@ -197,7 +212,7 @@ export class DerivationPath {
 				skip--;
 				continue;
 			}
-			if (char === '%') {
+			if (char === '\\') {
 				skip = 2;
 				byte = 0;
 				continue;
@@ -207,12 +222,12 @@ export class DerivationPath {
 		return new Uint8Array(ans);
 	}
 
-	static fromUrl(url: string): DerivationPath {
-		return new DerivationPath(url.split('/').map((p) => DerivationPath.urlDecode(p)));
+	static fromBlob(blob: string): DerivationPath {
+		return new DerivationPath(blob.split('/').map((p) => DerivationPath.blobDecode(p)));
 	}
 
 	static fromString(s: string): DerivationPath {
-		return DerivationPath.fromUrl(s);
+		return DerivationPath.fromBlob(s);
 	}
 
 	/**
