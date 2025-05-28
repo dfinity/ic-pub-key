@@ -2,7 +2,19 @@ import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 
+/**
+ * The response type for the ICP management canister's `ecdsa_public_key` method.
+ */
+export type EcdsaPublicKeyResponse = PublicKeyWithChainCode;
+
+/**
+ * A public key with its chain code.
+ */
 export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
 	constructor(
 		public readonly public_key: Sec1EncodedPublicKey,
 		public readonly chain_code: ChainCode
