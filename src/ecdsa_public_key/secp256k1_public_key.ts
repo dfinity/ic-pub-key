@@ -148,6 +148,10 @@ export class DerivationPath {
 		return this.toBlob();
 	}
 
+	toJSON(): string {
+		return this.toBlob();
+	}
+
 	/**
 	 * @returns A string representation of the derivation path: Hex with a '/' between each path component.
 	 */

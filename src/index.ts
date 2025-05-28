@@ -25,8 +25,16 @@ program
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromHex(pubkey, chaincode);
 		let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
 		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, parsed_derivationpath);
-		console.log('derived pubkey:    ', derived_pubkey.public_key.asHex());
-		console.log('derived chaincode: ', derived_pubkey.chain_code.asHex());
+		let ans = {
+			request: {
+				key: pubkey_with_chain_code,
+				derivation_path: parsed_derivationpath
+			},
+			response: {
+				key: derived_pubkey
+			}
+		};
+		console.log(JSON.stringify(ans, null, 2));
 	});
 
 program.parse(process.argv);
