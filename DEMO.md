@@ -92,3 +92,23 @@ user    0m2.340s
 sys     0m0.272s
 ```
 (Note: The time here includes compiling the typescript.)
+
+## Using the caller & schema as part of the derivation path
+
+```
+$ time dfx canister call signer --identity default --network staging generic_caller_ecdsa_public_key --argument-file args.secp256k1.123456.did
+(
+  variant {
+    Ok = record {
+      record {
+        public_key = blob "\02\42\79\ea\3e\07\58\2b\d0\73\88\72\52\55\b3\80\62\76\f2\99\73\23\ce\db\cf\a7\8f\ea\65\87\40\c8\a2";
+        chain_code = blob "\1b\2c\fa\6f\a9\72\0f\e4\1c\73\07\61\d8\04\57\7b\dc\e4\ec\93\09\8e\44\a4\dc\78\74\6b\4e\8d\2c\5d";
+      };
+    }
+  },
+)
+
+real	0m4.119s
+user	0m0.025s
+sys	0m0.015s
+```
