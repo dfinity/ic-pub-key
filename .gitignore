@@ -6,3 +6,7 @@ dist
 # Added by cargo
 
 /target
+
+# Git
+.git
+/branches
