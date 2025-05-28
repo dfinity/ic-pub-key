@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import {
+	DerivationPath,
 	derive_public_key as derive_secp256k1_public_key,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode,
 	test_derive_public_key as test_derive_secp256k1_public_key
@@ -22,7 +23,8 @@ program
 	.description('Derive a key')
 	.action((pubkey, chaincode, derivationpath) => {
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromHex(pubkey, chaincode);
-		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, derivationpath);
+		let parsed_derivationpath = DerivationPath.fromUrl(derivationpath);
+		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, parsed_derivationpath);
 		console.log('derived pubkey: ', derived_pubkey.public_key.asHex());
 		console.log('derived chaincode: ', derived_pubkey.chain_code.asHex());
 	});

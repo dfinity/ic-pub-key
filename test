@@ -6,3 +6,4 @@ set -euxo pipefail
 # mkpubkey greet Bob
 npx ts-node src/index.ts greet Alice
 npx ts-node src/index.ts test-secp256k1
+npx ts-node src/index.ts secp256k1 02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a 212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1 2/444/66666

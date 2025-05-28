@@ -136,11 +136,14 @@ export class ChainCode {
 /**
  * One part of a derivation path.
  */
-type PathComponent = Uint8Array;
+export type PathComponent = Uint8Array;
 
-class DerivationPath {
+export class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
+	/**
+	 * @returns A string representation of the derivation path: URL encoded with a '/' between each path component.
+	 */
 	toString(): string {
 		return this.toUrl();
 	}
@@ -164,12 +167,12 @@ class DerivationPath {
 	 */
 	static isAsciiAlphanumeric(code: number): boolean {
 		return (
-		  (code >= 48 && code <= 57) ||  // 0-9
-		  (code >= 65 && code <= 90) ||  // A-Z
-		  (code >= 97 && code <= 122)    // a-z
+			(code >= 48 && code <= 57) || // 0-9
+			(code >= 65 && code <= 90) || // A-Z
+			(code >= 97 && code <= 122) // a-z
 		);
-	  }
-	  static urlEncodeU8(u8: number): string {
+	}
+	static urlEncodeU8(u8: number): string {
 		if (DerivationPath.isAsciiAlphanumeric(u8)) {
 			return String.fromCharCode(u8);
 		}
