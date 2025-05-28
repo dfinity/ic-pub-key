@@ -1,7 +1,7 @@
 # Demo
 
 ## Chain Fusion Signer Root Key
-I have modified the staging chanin fusion signer so that it can provide its root key:
+I have modified the staging chain fusion signer so that it can provide its root key:
 
 Provide an empty derivation path:
 ```
