@@ -2,7 +2,7 @@ import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 
-class PublicKeyWithChainCode {
+export class PublicKeyWithChainCode {
 	constructor(
 		public readonly chain_code: ChainCode,
 		public readonly public_key: Sec1EncodedPublicKey
@@ -13,6 +13,12 @@ class PublicKeyWithChainCode {
 			ChainCode.fromArray(chain_code_array),
 			Sec1EncodedPublicKey.fromArray(public_key_array)
 		);
+	}
+
+	static fromHex(chain_code_hex: string, public_key_hex: string): PublicKeyWithChainCode {
+		let chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
+		let public_key = new Sec1EncodedPublicKey(new Uint8Array(Buffer.from(public_key_hex, 'hex')));
+		return new PublicKeyWithChainCode(chain_key, public_key);
 	}
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
@@ -28,7 +34,7 @@ class PublicKeyWithChainCode {
 /**
  * A public key, represented as a 33 byte array using sec1 encoding.
  */
-class Sec1EncodedPublicKey {
+export class Sec1EncodedPublicKey {
 	static readonly LENGTH = 33;
 
 	constructor(public readonly bytes: Uint8Array) {
@@ -80,7 +86,7 @@ class Sec1EncodedPublicKey {
 /**
  * A chain code is a 32 byte array
  */
-class ChainCode {
+export class ChainCode {
 	static readonly LENGTH = 32;
 
 	constructor(public readonly bytes: Uint8Array) {
