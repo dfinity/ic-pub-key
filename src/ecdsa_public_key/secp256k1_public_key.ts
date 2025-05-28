@@ -38,6 +38,14 @@ export class PublicKeyWithChainCode {
 		return new PublicKeyWithChainCode(public_key, chain_key);
 	}
 
+	static fromBlob(public_key_blob: string, chain_code_blob: string): PublicKeyWithChainCode {
+		let public_key_array = DerivationPath.blobDecode(public_key_blob);
+		let chain_code_array = DerivationPath.blobDecode(chain_code_blob);
+		let public_key = new Sec1EncodedPublicKey(public_key_array);
+		let chain_code = new ChainCode(chain_code_array);
+		return new PublicKeyWithChainCode(public_key, chain_code);
+	}
+
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(

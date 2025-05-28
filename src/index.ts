@@ -22,7 +22,7 @@ program
 	.command('secp256k1 <pubkey> <chaincode> <derivationpath>')
 	.description('Derive a key')
 	.action((pubkey, chaincode, derivationpath) => {
-		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromHex(pubkey, chaincode);
+		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
 		let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
 		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, parsed_derivationpath);
 		let ans = {
