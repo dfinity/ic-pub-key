@@ -204,6 +204,14 @@ class DerivationPath {
 		return new Uint8Array(ans);
 	}
 
+	static fromUrl(url: string): DerivationPath {
+		return new DerivationPath(url.split('/').map((p) => DerivationPath.urlDecode(p)));
+	}
+
+	static fromString(s: string): DerivationPath {
+		return DerivationPath.fromUrl(s);
+	}
+
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
 	 * @param pt The public key to derive the offset from.
