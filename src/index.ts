@@ -47,7 +47,7 @@ program
 		let parsed_principal = Principal.fromText(principal);
 		let caller_derivation_path = principal_derivation_path(parsed_principal);
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
-		let combined_derivation_path = derivationpath ? new DerivationPath([...caller_derivation_path.path, ...DerivationPath.fromBlob(derivationpath).path]) : caller_derivation_path;
+		let combined_derivation_path = new DerivationPath([...caller_derivation_path.path, ...DerivationPath.fromBlob(derivationpath).path]);
 		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, combined_derivation_path);
 		let ans = {
 			request: {

@@ -234,7 +234,10 @@ export class DerivationPath {
 		return new Uint8Array(ans);
 	}
 
-	static fromBlob(blob: string): DerivationPath {
+	static fromBlob(blob: string|undefined): DerivationPath {
+		if (blob === undefined) {
+			return new DerivationPath([]);
+		}
 		return new DerivationPath(blob.split('/').map((p) => DerivationPath.blobDecode(p)));
 	}
 
