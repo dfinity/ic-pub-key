@@ -22,11 +22,11 @@ derive.command('test-secp256k1').description('Self test').action(test_derive_sec
 
 let ecdsa = derive.command('ecdsa').description('Derive an ECDSA public key');
 ecdsa
-	.command('secp256k1 <pubkey> <chaincode> <derivationpath>')
+	.command('secp256k1')
 	.description('Derive a key')
-	.requiredOption('-k, --key <key>', 'The parent public key')
-	.requiredOption('-c, --chaincode <chaincode>', 'The parent chain code')
-	.option('-d, --derivationpath <derivationpath>', 'The derivation path')
+	.requiredOption('-k, --key <pubkey>', 'The parent public key', String)
+	.requiredOption('-c, --chaincode <chaincode>', 'The parent chain code', String)
+	.option('-d, --derivationpath <derivationpath>', 'The derivation path', String)
 	.action(({pubkey, chaincode, derivationpath}) => {
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
 		let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
