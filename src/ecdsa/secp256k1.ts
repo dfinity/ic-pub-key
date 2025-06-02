@@ -76,12 +76,16 @@ export class Sec1EncodedPublicKey {
 			return Sec1EncodedPublicKey.fromHex(str);
 		}
 		// Otherwise, parse as a blob:
-		const bytes = DerivationPath.blobDecode(str);
-		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+		return Sec1EncodedPublicKey.fromBlob(str);
 	}
 
 	static fromHex(hex: string): Sec1EncodedPublicKey {
 		const bytes = Buffer.from(hex, 'hex');
+		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
+	static fromBlob(blob: string): Sec1EncodedPublicKey {
+		const bytes = DerivationPath.blobDecode(blob);
 		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
 	}
 
@@ -102,6 +106,10 @@ export class Sec1EncodedPublicKey {
 
 	asHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
+	}
+
+	asBlob(): string {
+		return DerivationPath.blobEncode(this.bytes);
 	}
 
 	asProjectivePoint(): ProjectivePoint {
