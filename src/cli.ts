@@ -11,16 +11,16 @@ import {
 
 const program = new Command();
 
-program.name('ic-pub-key').description('Tools for Internet Computer Protocol public keys').version('1.0.0');
+program
+	.name('ic-pub-key')
+	.description('Tools for Internet Computer Protocol public keys')
+	.version('1.0.0');
 
-let derive = program.command('derive');
+let derive = program.command('derive').description('Derive a public key');
 
-derive
-	.command('test-secp256k1')
-	.description('Derive a key')
-	.action(test_derive_secp256k1_public_key);
+derive.command('test-secp256k1').description('Self test').action(test_derive_secp256k1_public_key);
 
-let ecdsa = derive.command('ecdsa');
+let ecdsa = derive.command('ecdsa').description('Derive an ECDSA public key');
 ecdsa
 	.command('secp256k1 <pubkey> <chaincode> <derivationpath>')
 	.description('Derive a key')
