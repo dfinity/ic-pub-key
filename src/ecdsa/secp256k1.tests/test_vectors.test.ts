@@ -25,9 +25,16 @@ interface TestVectors {
 	};
 }
 
-describe('Test Vectors', () => {
+/**
+ * Loads the test vectors from the samples.json file.
+ */
+function loadTestVectors(): TestVectors {
 	const samplesPath = path.join(process.cwd(), 'test', 'samples.json');
-	const testVectors: TestVectors = JSON.parse(fs.readFileSync(samplesPath, 'utf-8'));
+	return JSON.parse(fs.readFileSync(samplesPath, 'utf-8'));
+}
+
+describe('Test Vectors', () => {
+	const testVectors = loadTestVectors();
 
 	testVectors.ecdsa.secp256k1['test-vectors'].forEach((vector, index) => {
 		it(`should derive correct key for test vector ${index + 1}`, () => {
