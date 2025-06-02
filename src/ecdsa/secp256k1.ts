@@ -70,6 +70,11 @@ export class Sec1EncodedPublicKey {
 		}
 	}
 
+	static fromHex(hex: string): Sec1EncodedPublicKey {
+		const bytes = Buffer.from(hex, 'hex');
+		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
 	static fromArray(array: number[]): Sec1EncodedPublicKey {
 		return new Sec1EncodedPublicKey(new Uint8Array(array));
 	}
@@ -126,6 +131,11 @@ export class ChainCode {
 				`Invalid ChainCode length: expected ${ChainCode.LENGTH} bytes, got ${bytes.length}`
 			);
 		}
+	}
+
+	static fromHex(hex: string): ChainCode {
+		const bytes = Buffer.from(hex, 'hex');
+		return new ChainCode(new Uint8Array(bytes));
 	}
 
 	static fromArray(array: number[]): ChainCode {
@@ -330,8 +340,10 @@ export class DerivationPath {
 			next_input.set(next_chain_key, 1);
 			return DerivationPath.ckd(idx, next_input, chain_code);
 		}
+		// Change the next_chain_key into a Uint8Array
+		let next_chain_key_array = new Uint8Array(next_chain_key);
 
-		return [new ChainCode(next_chain_key), next_offset];
+		return [new ChainCode(next_chain_key_array), next_offset];
 	}
 }
 
