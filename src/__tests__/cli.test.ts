@@ -1,15 +1,15 @@
-import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 import * as path from 'path';
+import { describe, expect, it } from 'vitest';
 
 describe('CLI', () => {
-    const cliPath = path.join(process.cwd(), 'dist', 'cli.js');
+	const cliPath = path.join(process.cwd(), 'dist', 'cli.js');
 
-    it('should show help message', () => {
-        const output = execSync(`node ${cliPath} --help`).toString();
-        expect(output).toContain('Tools for Internet Computer Protocol public keys');
-    });
-    /*
+	it('should show help message', () => {
+		const output = execSync(`node ${cliPath} --help`).toString();
+		expect(output).toContain('Tools for Internet Computer Protocol public keys');
+	});
+	/*
 
     it('should derive secp256k1 key with valid inputs', () => {
         const pubkey = '02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a';
@@ -59,4 +59,4 @@ describe('CLI', () => {
         }).toThrow();
     });
    */
-}); 
+});
