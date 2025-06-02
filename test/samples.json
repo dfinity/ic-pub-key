@@ -1,0 +1,15 @@
+{
+    "ecdsa": {
+        "secp256k1": {
+            "test-vectors": [
+               {
+                "public-key": "02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a",
+                "chain-code": "212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1",
+                "derivation-path": "2/444/66666",
+                "expected-public-key": "024bf78e40bb51d2c6c14c11aa8f3af1549741de5acdf925e6dc230dfc5daa22d9",
+                "expected-chain-code": "bc35b8515f03aa1543081e2af4e878f28b27f3ce00c035f4068702d33ee88586"
+               }
+            ]
+        }
+    }
+}
