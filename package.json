@@ -1,15 +1,17 @@
 {
 	"name": "mkpubkey",
 	"version": "1.0.0",
+	"type": "module",
 	"main": "index.js",
 	"bin": {
-		"derive-pub-key": "./dist/cli.js"
+		"ic-pub-key": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
 		"build": "tsc && chmod +x dist/cli.js",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"start": "node dist/cli.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -27,5 +29,8 @@
 		"@dfinity/principal": "^2.4.1",
 		"@noble/secp256k1": "^2.2.3",
 		"commander": "^14.0.0"
+	},
+	"engines": {
+		"node": ">=16.0.0"
 	}
 }
