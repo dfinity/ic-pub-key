@@ -40,7 +40,7 @@ pub fn print_test_vectors() {
     }
 
     let derivation_path: Vec<Vec<u8>> = vec![
-        "2".repeat(1).as_bytes().to_vec(),
+        "2".as_bytes().to_vec(),
         "4".repeat(3).as_bytes().to_vec(),
         "6".repeat(5).as_bytes().to_vec(),
     ];
@@ -60,7 +60,7 @@ pub fn print_test_vectors() {
     );
 }
 
-pub fn derivation_path(simple: &Vec<Vec<u8>>) -> DerivationPath {
+pub fn derivation_path(simple: &[Vec<u8>]) -> DerivationPath {
     DerivationPath::new(simple.iter().map(|x| DerivationIndex(x.to_vec())).collect())
 }
 
