@@ -7,7 +7,7 @@ import {
 	derive_public_key as derive_secp256k1_public_key,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode,
 	test_derive_public_key as test_derive_secp256k1_public_key
-} from './ecdsa/secp256k1_public_key';
+} from './ecdsa/secp256k1';
 
 const program = new Command();
 
