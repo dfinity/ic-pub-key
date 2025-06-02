@@ -13,12 +13,14 @@ const program = new Command();
 
 program.name('ic-pub-key').description('A simple CLI app written in TypeScript').version('1.0.0');
 
-program
+let derive = program.command('derive');
+
+derive
 	.command('test-secp256k1')
 	.description('Derive a key')
 	.action(test_derive_secp256k1_public_key);
 
-let ecdsa = program.command('ecdsa');
+let ecdsa = derive.command('ecdsa');
 ecdsa
 	.command('secp256k1 <pubkey> <chaincode> <derivationpath>')
 	.description('Derive a key')

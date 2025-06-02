@@ -80,7 +80,7 @@ We need to input the root key and derivation path:
 
 ```
 OLD: $ time npx ts-node src/index.ts secp256k1 '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' 2/444/66666
-NEW: $ time npx ic-pub-key secp256k1 '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' 2/444/66666
+NEW: $ time npx ic-pub-key derive secp256k1 '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' 2/444/66666
 {
   "request": {
     "key": {
