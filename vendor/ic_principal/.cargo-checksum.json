@@ -1,9 +1,0 @@
-{
-	"files": {
-		"Cargo.toml": "d1d1f7f3495196491ff30b9062a39c9503ccfcdb9bab0921b67d1f653e29da50",
-		"LICENSE": "166bd8e8cf7790087d1fd18a9fa4d060cc0d0b3e5ab30689aa5f3a59a93386bf",
-		"README.md": "bbe076c54e3832351d6a592863eb7d4dcab34191ee395f86c74d02a877aa09aa",
-		"src/lib.rs": "7dab6906b653eaaf5f0619c084f1123353b7d7d21574f1ba300cc2d8801913d7"
-	},
-	"package": "1762deb6f7c8d8c2bdee4b6c5a47b60195b74e9b5280faa5ba29692f8e17429c"
-}

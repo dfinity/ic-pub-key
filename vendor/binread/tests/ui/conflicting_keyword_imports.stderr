@@ -1,5 +1,0 @@
-error: conflicting import keyword
- --> $DIR/conflicting_keyword_imports.rs:4:22
-  |
-4 | #[br(import(a: i32), import_tuple(args: (i32, )))]
-  |                      ^^^^^^^^^^^^

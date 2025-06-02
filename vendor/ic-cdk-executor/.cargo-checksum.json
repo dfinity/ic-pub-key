@@ -1,9 +1,0 @@
-{
-	"files": {
-		"Cargo.lock": "f993bc6cc9169361375085e06febf3d006fd3bc5f19eb273d97c3d6f8f5a338a",
-		"Cargo.toml": "0974c81f6b5b3a0825211b58c2dcf7e1d6c645b309ca4c432d707e0533adb599",
-		"build.rs": "a69fd2e97b4b5875d1656adf5f1b441bee2b79cb513b862548e617a6a90b38c4",
-		"src/lib.rs": "8603ccaab36867fca691bbfcee78ec1e59f7fde3be2239d4c08b79c670b51863"
-	},
-	"package": "903057edd3d4ff4b3fe44a64eaee1ceb73f579ba29e3ded372b63d291d7c16c2"
-}

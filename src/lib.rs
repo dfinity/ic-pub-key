@@ -1,1 +1,1 @@
-pub mod ecdsa_public_key;
+pub mod ecdsa;
