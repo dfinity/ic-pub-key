@@ -29,7 +29,7 @@ describe('Sec1EncodedPublicKey', () => {
 			const serialized = key.asBlob();
 			console.error(`serialized: '${serialized}'`);
 			const parsed = Sec1EncodedPublicKey.fromBlob(serialized);
-			//expect(parsed).toEqual(key);
+			expect(parsed).toEqual(key);
 		});
 	});
 });
