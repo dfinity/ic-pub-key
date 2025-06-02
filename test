@@ -8,5 +8,5 @@ npx ic-pub-key derive test-secp256k1
 # With hex encoded public keys:
 #npx ts-node src/index.ts secp256k1 02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a 212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1 2/444/66666
 #npx ts-node src/index.ts caller-secp256k1 "$(dfx identity get-principal)" 02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a 212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1 2/444/66666
-time npx ic-pub-key derive ecdsa secp256k1 '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' 2/444/66666
+time npx ic-pub-key derive ecdsa secp256k1 -k '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' -c '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' -d 2/444/66666
 time npx ic-pub-key derive ecdsa caller-secp256k1 "$(dfx identity get-principal)" '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' ''
