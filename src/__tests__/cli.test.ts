@@ -9,8 +9,8 @@ describe('CLI', () => {
 		const output = execSync(`node ${cliPath} --help`).toString();
 		expect(output).toContain('Tools for Internet Computer Protocol public keys');
 	});
-	/*
 
+	/*
     it('should derive secp256k1 key with valid inputs', () => {
         const pubkey = '02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a';
         const chaincode = '212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1';
