@@ -1,9 +1,11 @@
 # Demo
 
 ## Chain Fusion Signer Root Key
+
 I have modified the staging chain fusion signer so that it can provide its root key:
 
 Provide an empty derivation path:
+
 ```
 $ cat args.secp256k1.empty.did
 (
@@ -15,9 +17,11 @@ $ cat args.secp256k1.empty.did
   null,
 )
 ```
+
 And get the canister root key:
+
 ```
-$ time dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.empty.did 
+$ time dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.empty.did
 (
   variant {
     Ok = record {
@@ -35,6 +39,7 @@ sys	0m0.016s
 ```
 
 ## Chain Fusion Signer Derived Key
+
 Set a non-empty derived key:
 
 ```
@@ -48,9 +53,11 @@ $ cat args.secp256k1.123456.did
   null,
 )
 ```
+
 and we can get the derived key:
+
 ```
-$ time dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.123456.did 
+$ time dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.123456.did
 (
   variant {
     Ok = record {
@@ -68,7 +75,9 @@ sys	0m0.020s
 ```
 
 ## Compute the derived key locally
+
 We need to input the root key and derivation path:
+
 ```
 $ time npx ts-node src/index.ts secp256k1 '\02\b8\4f\f3\f8\83\29\a8\87\65\7d\03\09\bd\1a\1a\f9\e3\76\01\e5\d1\a5\35\d6\fe\7d\42\e3\7f\79\f4\0a' '\21\28\91\bc\03\2f\28\d3\69\ba\cf\39\dc\36\9f\eb\51\6e\ce\d9\a3\d8\34\98\24\6a\ea\d1\54\6f\8c\d1' 2/444/66666
 {
@@ -91,6 +100,7 @@ real    0m1.311s
 user    0m2.340s
 sys     0m0.272s
 ```
+
 (Note: The time here includes compiling the typescript.)
 
 ## Using the caller & schema as part of the derivation path

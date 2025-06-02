@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
 import {
 	DerivationPath,
@@ -7,8 +8,6 @@ import {
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode,
 	test_derive_public_key as test_derive_secp256k1_public_key
 } from './ecdsa_public_key/secp256k1_public_key';
-import { Principal } from "@dfinity/principal";
-
 
 const program = new Command();
 
@@ -21,7 +20,8 @@ program
 	.description('Derive a key')
 	.action(test_derive_secp256k1_public_key);
 
-program
+let ecdsa = program.command('ecdsa');
+ecdsa
 	.command('secp256k1 <pubkey> <chaincode> <derivationpath>')
 	.description('Derive a key')
 	.action((pubkey, chaincode, derivationpath) => {
@@ -40,15 +40,21 @@ program
 		console.log(JSON.stringify(ans, null, 2));
 	});
 
-program
+ecdsa
 	.command('caller-secp256k1 <principal> <pubkey> <chaincode> [derivationpath]')
 	.description('Derive a key for the given principal')
 	.action((principal, pubkey, chaincode, derivationpath) => {
 		let parsed_principal = Principal.fromText(principal);
 		let caller_derivation_path = principal_derivation_path(parsed_principal);
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
-		let combined_derivation_path = new DerivationPath([...caller_derivation_path.path, ...DerivationPath.fromBlob(derivationpath).path]);
-		let derived_pubkey = derive_secp256k1_public_key(pubkey_with_chain_code, combined_derivation_path);
+		let combined_derivation_path = new DerivationPath([
+			...caller_derivation_path.path,
+			...DerivationPath.fromBlob(derivationpath).path
+		]);
+		let derived_pubkey = derive_secp256k1_public_key(
+			pubkey_with_chain_code,
+			combined_derivation_path
+		);
 		let ans = {
 			request: {
 				key: pubkey_with_chain_code,
@@ -60,7 +66,6 @@ program
 		};
 		console.log(JSON.stringify(ans, null, 2));
 	});
-
 
 program.parse(process.argv);
 

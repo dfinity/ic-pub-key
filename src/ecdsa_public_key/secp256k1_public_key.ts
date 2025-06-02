@@ -186,8 +186,8 @@ export class DerivationPath {
 	}
 	/**
 	 * Encodes a single byte as a Candid blob string.
-	 * @param u8 
-	 * @returns 
+	 * @param u8
+	 * @returns
 	 */
 	static blobEncodeU8(u8: number): string {
 		if (DerivationPath.isAsciiAlphanumeric(u8)) {
@@ -234,7 +234,7 @@ export class DerivationPath {
 		return new Uint8Array(ans);
 	}
 
-	static fromBlob(blob: string|undefined): DerivationPath {
+	static fromBlob(blob: string | undefined): DerivationPath {
 		if (blob === undefined) {
 			return new DerivationPath([]);
 		}
