@@ -2,43 +2,43 @@ name: TypeScript CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Read .nvmrc
-      run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Check formatting
-      run: npm run format -- --check
-    
-    - name: Type check
-      run: npm run build
-    
-    - name: Run tests
-      run: npm test
-    
-    - name: Run coverage and generate HTML report
-      run: npm run test:coverage:report
-    
-    - name: Upload coverage HTML report
-      uses: actions/upload-artifact@v4
-      with:
-        name: typescript-test-coverage-html
-        path: coverage/ 
+      - uses: actions/checkout@v4
+
+      - name: Read .nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format -- --check
+
+      - name: Type check
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run coverage and generate HTML report
+        run: npm run test:coverage:report
+
+      - name: Upload coverage HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript-test-coverage-html
+          path: coverage/

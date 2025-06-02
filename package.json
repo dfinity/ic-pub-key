@@ -8,6 +8,9 @@
 	},
 	"scripts": {
 		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
+		"format:check": "prettier --check './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
+		"format:github": "prettier --write './.github/**/*.{yml,yaml}'",
+		"format:github:check": "prettier --check './.github/**/*.{yml,yaml}'",
 		"build": "tsc && chmod +x dist/cli.js",
 		"test": "vitest run",
 		"test:watch": "vitest",
