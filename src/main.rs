@@ -1,4 +1,3 @@
-
 use mkpubkey::ecdsa::secp256k1;
 
 fn main() {
