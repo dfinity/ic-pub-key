@@ -44,9 +44,13 @@ ecdsa
 	});
 
 ecdsa
-	.command('caller-secp256k1 <principal> <pubkey> <chaincode> [derivationpath]')
+	.command('caller-secp256k1')
 	.description('Derive a key for the given principal')
-	.action((principal, pubkey, chaincode, derivationpath) => {
+	.requiredOption('-p, --principal <principal>', "The caller's principal", String)
+	.requiredOption('-k, --pubkey <pubkey>', 'The parent public key', String)
+	.requiredOption('-c, --chaincode <chaincode>', 'The parent chain code', String)
+	.option('-d, --derivationpath <derivationpath>', 'The derivation path', String)
+	.action(({ principal, pubkey, chaincode, derivationpath }) => {
 		let parsed_principal = Principal.fromText(principal);
 		let caller_derivation_path = principal_derivation_path(parsed_principal);
 		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
