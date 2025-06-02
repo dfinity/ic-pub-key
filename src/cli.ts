@@ -11,7 +11,7 @@ import {
 
 const program = new Command();
 
-program.name('ic-pub-key').description('A simple CLI app written in TypeScript').version('1.0.0');
+program.name('ic-pub-key').description('Tools for Internet Computer Protocol public keys').version('1.0.0');
 
 let derive = program.command('derive');
 
