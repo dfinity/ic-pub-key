@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "src/index.js",
 	"bin": {
-		"derive-pub-key": "./dist/cli.js"
+		"ic-pub-key": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",

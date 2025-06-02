@@ -11,9 +11,7 @@ import {
 
 const program = new Command();
 
-program.name('mycli').description('A simple CLI app written in TypeScript').version('1.0.0');
-
-program.command('greet <name>').description('Greet a user').action(say_hello);
+program.name('ic-pub-key').description('A simple CLI app written in TypeScript').version('1.0.0');
 
 program
 	.command('test-secp256k1')
