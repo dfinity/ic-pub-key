@@ -4,7 +4,10 @@
 
 use super::{FieldElement, ProjectivePoint, CURVE_EQUATION_B};
 use crate::{CompressedPoint, EncodedPoint, FieldBytes, PublicKey, Scalar, Secp256k1};
-use core::{fmt::Display, ops::{Mul, Neg}};
+use core::{
+    fmt::Display,
+    ops::{Mul, Neg},
+};
 use elliptic_curve::{
     group::{prime::PrimeCurveAffine, GroupEncoding},
     point::{AffineCoordinates, DecompactPoint, DecompressPoint},
@@ -50,12 +53,15 @@ impl Display for AffinePoint {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         use crate::elliptic_curve::point::AffineCoordinates;
         let x = self.x();
-        let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<alloc::vec::Vec<alloc::string::String>>().join("");
+        let x_bytes = x
+            .iter()
+            .map(|x| format!("{x:02x}"))
+            .collect::<alloc::vec::Vec<alloc::string::String>>()
+            .join("");
         let y_odd = self.y_is_odd();
         write!(f, "x: {} y_odd: {}", x_bytes, y_odd.unwrap_u8())
     }
 }
-
 
 impl AffinePoint {
     /// Additive identity of the group: the point at infinity.

@@ -5,7 +5,9 @@
 use super::{AffinePoint, FieldElement, Scalar, CURVE_EQUATION_B_SINGLE};
 use crate::{CompressedPoint, EncodedPoint, PublicKey, Secp256k1};
 use core::{
-    fmt::Display, iter::Sum, ops::{Add, AddAssign, Neg, Sub, SubAssign}
+    fmt::Display,
+    iter::Sum,
+    ops::{Add, AddAssign, Neg, Sub, SubAssign},
 };
 use elliptic_curve::ops::BatchInvert;
 use elliptic_curve::{
@@ -45,12 +47,15 @@ impl Display for ProjectivePoint {
         use crate::elliptic_curve::point::AffineCoordinates;
         let affine = self.to_affine();
         let x = affine.x();
-        let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<Vec<alloc::string::String>>().join("");
+        let x_bytes = x
+            .iter()
+            .map(|x| format!("{x:02x}"))
+            .collect::<Vec<alloc::string::String>>()
+            .join("");
         let y_odd = affine.y_is_odd();
         write!(f, "x: {} y_odd: {}", x_bytes, y_odd.unwrap_u8())
     }
 }
-
 
 impl ProjectivePoint {
     /// Additive identity of the group: the point at infinity.

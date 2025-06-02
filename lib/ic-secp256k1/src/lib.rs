@@ -71,7 +71,20 @@ pub struct DerivationPath {
 
 impl Display for DerivationPath {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.path.iter().map(|i| i.0.iter().map(|b| format!("{:02x}", b)).collect::<Vec<String>>().join("")).collect::<Vec<String>>().join("/"))
+        write!(
+            f,
+            "{}",
+            self.path
+                .iter()
+                .map(|i| i
+                    .0
+                    .iter()
+                    .map(|b| format!("{:02x}", b))
+                    .collect::<Vec<String>>()
+                    .join(""))
+                .collect::<Vec<String>>()
+                .join("/")
+        )
     }
 }
 
@@ -157,7 +170,6 @@ impl DerivationPath {
 
         let mut ckd_input = pt.to_bytes();
 
-
         let pt: ProjectivePoint = pt.into();
 
         loop {
@@ -188,8 +200,10 @@ impl DerivationPath {
         println!("");
         println!("derive_offset: arg: derivation_path: {}", self);
         println!("derive_offset: arg: pt: {}", pt);
-        println!("derive_offset: arg: chain_code: {}", hex::encode(chain_code));
-
+        println!(
+            "derive_offset: arg: chain_code: {}",
+            hex::encode(chain_code)
+        );
 
         let mut offset = Scalar::ZERO;
         let mut pt = pt;
@@ -203,7 +217,10 @@ impl DerivationPath {
             println!("derive_offset: after applying idx: {:02x?}", idx);
             println!("derive_offset: after applying idx: pt: {}", pt);
             println!("derive_offset: after applying idx: offset: {:?}", offset);
-            println!("derive_offset: after applying idx: chain_code: {}", hex::encode(chain_code));
+            println!(
+                "derive_offset: after applying idx: chain_code: {}",
+                hex::encode(chain_code)
+            );
         }
 
         (pt, offset, chain_code)
@@ -736,7 +753,11 @@ impl Display for PublicKey {
         use k256::elliptic_curve::point::AffineCoordinates;
         let affine = self.key.as_affine();
         let x = affine.x();
-        let x_bytes = x.iter().map(|x| format!("{x:02x}")).collect::<Vec<String>>().join("");
+        let x_bytes = x
+            .iter()
+            .map(|x| format!("{x:02x}"))
+            .collect::<Vec<String>>()
+            .join("");
         let y_odd = affine.y_is_odd();
         write!(f, "x: {} y_odd: {}", x_bytes, y_odd.unwrap_u8())
     }
@@ -1063,16 +1084,27 @@ impl PublicKey {
         derivation_path: &DerivationPath,
         chain_code: &[u8; 32],
     ) -> (Self, [u8; 32]) {
-
         println!("derive_subkey_with_chain_code: arg: public_key: {}", self);
-        println!("derive_subkey_with_chain_code: arg: chain_code: {}", hex::encode(chain_code));
-        println!("derive_subkey_with_chain_code: arg: derivation_path: {}", derivation_path);
+        println!(
+            "derive_subkey_with_chain_code: arg: chain_code: {}",
+            hex::encode(chain_code)
+        );
+        println!(
+            "derive_subkey_with_chain_code: arg: derivation_path: {}",
+            derivation_path
+        );
         let public_key: AffinePoint = *self.key.as_affine();
         let (pt, offset, chain_code) = derivation_path.derive_offset(public_key, chain_code);
 
         println!("derive_subkey_with_chain_code: derive_offset: pt: {pt}");
-        println!("derive_subkey_with_chain_code: derive_offset: offset: {:?}", offset);
-        println!("derive_subkey_with_chain_code: derive_offset: chain_code: {}", hex::encode(chain_code));
+        println!(
+            "derive_subkey_with_chain_code: derive_offset: offset: {:?}",
+            offset
+        );
+        println!(
+            "derive_subkey_with_chain_code: derive_offset: chain_code: {}",
+            hex::encode(chain_code)
+        );
 
         let derived_key = Self {
             key: k256::PublicKey::from(
