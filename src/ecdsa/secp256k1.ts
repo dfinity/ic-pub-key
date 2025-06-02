@@ -70,6 +70,16 @@ export class Sec1EncodedPublicKey {
 		}
 	}
 
+	static fromString(str: string): Sec1EncodedPublicKey {
+		// If string has the right length and contains only hex characters, parse as hex:
+		if (str.length === Sec1EncodedPublicKey.LENGTH * 2 && /^[0-9A-Fa-f]+$/.test(str)) {
+			return Sec1EncodedPublicKey.fromHex(str);
+		}
+		// Otherwise, parse as a blob:
+		const bytes = DerivationPath.blobDecode(str);
+		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
 	static fromHex(hex: string): Sec1EncodedPublicKey {
 		const bytes = Buffer.from(hex, 'hex');
 		return new Sec1EncodedPublicKey(new Uint8Array(bytes));

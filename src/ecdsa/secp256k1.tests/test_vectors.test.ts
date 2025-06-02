@@ -28,7 +28,7 @@ interface TestVectors {
 /**
  * Loads the test vectors from the samples.json file.
  */
-function loadTestVectors(): TestVectors {
+export function loadTestVectors(): TestVectors {
 	const samplesPath = path.join(process.cwd(), 'test', 'samples.json');
 	return JSON.parse(fs.readFileSync(samplesPath, 'utf-8'));
 }
