@@ -152,7 +152,7 @@ export class DerivationPath {
 	/**
 	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
 	 */
-	toString(): string {
+	toString(): string | undefined {
 		return this.toBlob();
 	}
 
@@ -170,7 +170,10 @@ export class DerivationPath {
 	/**
 	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
 	 */
-	toBlob(): string {
+	toBlob(): string | undefined {
+		if (this.path.length === 0) {
+			return undefined;
+		}
 		return this.path.map((p) => DerivationPath.blobEncode(p)).join('/');
 	}
 
