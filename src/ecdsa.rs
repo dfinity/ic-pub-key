@@ -1,1 +1,1 @@
-pub mod secp256k1_public_key;
+pub mod secp256k1;
