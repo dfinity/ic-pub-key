@@ -3,11 +3,11 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"bin": {
-		"mycli": "./dist/index.js"
+		"derive-pub-key": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
-		"build": "tsc && chmod +x dist/index.js",
+		"build": "tsc && chmod +x dist/cli.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
