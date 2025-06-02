@@ -1,14 +1,15 @@
 {
 	"name": "mkpubkey",
 	"version": "1.0.0",
-	"main": "src/index.js",
+	"main": "index.js",
 	"bin": {
-		"ic-pub-key": "./dist/cli.js"
+		"derive-pub-key": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
 		"build": "tsc && chmod +x dist/cli.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"keywords": [],
 	"author": "",
@@ -19,7 +20,8 @@
 		"@types/node": "^22.15.21",
 		"prettier": "^3.5.3",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.8.3"
+		"typescript": "^5.8.3",
+		"vitest": "^1.3.1"
 	},
 	"dependencies": {
 		"@dfinity/principal": "^2.4.1",
