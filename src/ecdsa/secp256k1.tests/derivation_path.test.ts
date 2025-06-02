@@ -18,7 +18,7 @@ describe('DerivationPath', () => {
 
 		it('should escape non-ASCII characters', () => {
 			const path = new DerivationPath([new Uint8Array([0x00, 0xff, 0x0a])]);
-			expect(path.toBlob()).toBe('\\0\\ff\\a');
+			expect(path.toBlob()).toBe('\\00\\ff\\0a');
 		});
 	});
 });

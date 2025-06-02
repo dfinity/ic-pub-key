@@ -224,7 +224,8 @@ export class DerivationPath {
 		if (DerivationPath.isAsciiAlphanumeric(u8)) {
 			return String.fromCharCode(u8);
 		}
-		return `\\${u8.toString(16)}`;
+		// Backslash and two hex chars:
+		return `\\${u8.toString(16).padStart(2, '0')}`;
 	}
 	/**
 	 * Encodes an array of bytes as a Candid blob string.
