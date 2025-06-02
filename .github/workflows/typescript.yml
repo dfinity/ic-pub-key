@@ -25,8 +25,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check GitHub workflow formatting
+        run: npm run format:github:check
+
       - name: Check formatting
-        run: npm run format -- --check
+        run: npm run format:check
 
       - name: Type check
         run: npm run build
@@ -40,5 +43,5 @@ jobs:
       - name: Upload coverage HTML report
         uses: actions/upload-artifact@v4
         with:
-          name: typescript-test-coverage-html
+          name: coverage-html
           path: coverage/
