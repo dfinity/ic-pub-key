@@ -47,14 +47,11 @@ impl PublicKeyWithChainCode {
     }
 }
 
-pub fn load_test_vectors() -> Vec<PublicKeyWithChainCode> {
+pub fn load_test_vectors() -> Vec<TestVector> {
     let test_vectors = include_str!("../../test/samples.json");
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
     let test_vectors = &samples["schnorr"]["test_vectors"];
-    let test_vectors: Vec<TestVector> =
-        serde_json::from_value(test_vectors.clone()).unwrap();
-    test_vectors
-        .into_iter()
-        .map(|v| PublicKeyWithChainCode::from_hex(&v.public_key, &v.chain_code).unwrap())
-        .collect()
+    serde_json::from_value(test_vectors.clone()).unwrap()
 }
+
+#[test]
