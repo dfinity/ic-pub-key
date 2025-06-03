@@ -1,8 +1,58 @@
 //! Derives public keys locally with the ic-ed25519 library.
 
-use ic_ed25519::PublicKey;
+use ic_ed25519::{DerivationIndex, DerivationPath, PublicKey};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+
+/// Detivation path, as serialized in the test vectors.
+pub struct SerializedDerivationPath {
+    pub elements: Vec<Vec<u8>>,
+}
+impl SerializedDerivationPath {
+    fn elements_from_blob(blob: &str) -> Result<Vec<u8>, String> {
+        let mut elements = Vec::new();
+        let mut chars = blob.chars();
+        while let Some(next) = chars.next() {
+            let byte = if next == '\\' {
+                // Parse the next 2 chars as a hex byte:
+                let mut byte = 0u8;
+                for _ in 0..2 {
+                    byte = byte * 16
+                        + chars
+                            .next()
+                            .expect("Expect two hex chars after a backslash.")
+                            .to_digit(16)
+                            .unwrap() as u8;
+                }
+                byte
+            } else {
+                // Parse the next char as ASCII:
+                next as u8
+            };
+            elements.push(byte);
+        }
+        Ok(elements)
+    }
+    pub fn from_blob(blob: &str) -> Result<Self, String> {
+        // Split the string at '/' and parse each element:
+        let elements = blob
+            .split('/')
+            .map(Self::elements_from_blob)
+            .collect::<Result<Vec<_>, _>>()?;
+        Ok(Self { elements })
+    }
+}
+impl From<SerializedDerivationPath> for DerivationPath {
+    fn from(path: SerializedDerivationPath) -> Self {
+        Self::new(
+            path.elements
+                .into_iter()
+                .map(|element| DerivationIndex(element.clone()))
+                .collect(),
+        )
+    }
+}
+
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ChainCode([u8; ChainCode::LENGTH]);
 impl ChainCode {
