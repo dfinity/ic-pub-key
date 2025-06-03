@@ -23,7 +23,7 @@ impl ChainCode {
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct HexPublicKeyWithChainCode {
+pub struct TestVector {
     pub public_key: String,
     pub chain_code: String,
 }
@@ -51,7 +51,7 @@ pub fn load_test_vectors() -> Vec<PublicKeyWithChainCode> {
     let test_vectors = include_str!("../../test/samples.json");
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
     let test_vectors = &samples["schnorr"]["test_vectors"];
-    let test_vectors: Vec<HexPublicKeyWithChainCode> =
+    let test_vectors: Vec<TestVector> =
         serde_json::from_value(test_vectors.clone()).unwrap();
     test_vectors
         .into_iter()
