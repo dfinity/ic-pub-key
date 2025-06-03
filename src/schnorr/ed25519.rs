@@ -78,8 +78,7 @@ pub struct TestVector {
     pub public_key: String,
     pub chain_code: String,
     pub derivation_path: String,
-    pub derived_key: String,
-    pub expected_derived_key: String,
+    pub expected_public_key: String,
     pub expected_chain_code: String,
 }
 
@@ -105,7 +104,7 @@ impl PublicKeyWithChainCode {
 pub fn load_test_vectors() -> Vec<TestVector> {
     let test_vectors = include_str!("../../test/samples.json");
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
-    let test_vectors = &samples["schnorr"]["test_vectors"];
+    let test_vectors = &samples["schnorr"]["ed25519"]["test_vectors"];
     serde_json::from_value(test_vectors.clone()).unwrap()
 }
 
@@ -121,7 +120,7 @@ fn key_derivation_works() {
                 .unwrap()
                 .into();
         let expected_derived_key = PublicKeyWithChainCode::from_hex(
-            &test_vector.expected_derived_key,
+            &test_vector.expected_public_key,
             &test_vector.expected_chain_code,
         )
         .unwrap();
