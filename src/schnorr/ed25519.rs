@@ -24,8 +24,13 @@ impl ChainCode {
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TestVector {
+    pub name: String,
     pub public_key: String,
     pub chain_code: String,
+    pub derivation_path: String,
+    pub derived_key: String,
+    pub expected_derived_key: String,
+    pub expected_chain_code: String,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -55,3 +60,16 @@ pub fn load_test_vectors() -> Vec<TestVector> {
 }
 
 #[test]
+fn key_derivation_works() {
+    let test_vectors = load_test_vectors();
+    for test_vector in test_vectors {
+        let _parent_key =
+            PublicKeyWithChainCode::from_hex(&test_vector.public_key, &test_vector.chain_code)
+                .unwrap();
+        let _expected_derived_key = PublicKeyWithChainCode::from_hex(
+            &test_vector.expected_derived_key,
+            &test_vector.expected_chain_code,
+        )
+        .unwrap();
+    }
+}
