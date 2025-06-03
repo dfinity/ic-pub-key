@@ -11,3 +11,5 @@ icrc-ledger-types = "0.1.9"
 pretty_assertions = "1.4.1"
 elliptic-curve = { version = "0.13.8" }
 hex = "0.4"
+serde_json = "1.0.140"
+serde = "1.0.219"

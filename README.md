@@ -1,4 +1,5 @@
 # IC Public Key
+
 Typescript utilities for working with ICP public keys.
 
 This library contains typescript translations of the following functions:
