@@ -113,13 +113,22 @@ pub fn load_test_vectors() -> Vec<TestVector> {
 fn key_derivation_works() {
     let test_vectors = load_test_vectors();
     for test_vector in test_vectors {
-        let _parent_key =
+        let parent_key =
             PublicKeyWithChainCode::from_hex(&test_vector.public_key, &test_vector.chain_code)
                 .unwrap();
-        let _expected_derived_key = PublicKeyWithChainCode::from_hex(
+        let derivation_path: DerivationPath =
+            SerializedDerivationPath::from_blob(&test_vector.derivation_path)
+                .unwrap()
+                .into();
+        let expected_derived_key = PublicKeyWithChainCode::from_hex(
             &test_vector.expected_derived_key,
             &test_vector.expected_chain_code,
         )
         .unwrap();
+        let (derived_key, derived_chain_code) = parent_key
+            .public_key
+            .derive_subkey_with_chain_code(&derivation_path, &parent_key.chain_code.0);
+        assert_eq!(derived_key, expected_derived_key.public_key);
+        assert_eq!(derived_chain_code, expected_derived_key.chain_code.0);
     }
 }
