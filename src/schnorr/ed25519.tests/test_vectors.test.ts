@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
 import { DerivationPath, PublicKeyWithChainCode } from '../ed25519';
 
-
 interface TestVector {
 	public_key: string;
 	chain_code: string;
@@ -49,7 +48,7 @@ describe('Test Vectors', () => {
 
 			// Check the results
 			expect(derivedKey.public_key.toHex()).toEqual(vector.expected_public_key);
-			expect(derivedKey.chain_code.asHex()).toEqual(vector.expected_chain_code);
+			expect(derivedKey.chain_code.toHex()).toEqual(vector.expected_chain_code);
 		});
 	});
 });

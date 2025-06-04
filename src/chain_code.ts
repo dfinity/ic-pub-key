@@ -21,11 +21,11 @@ export class ChainCode {
 		return new ChainCode(new Uint8Array(array));
 	}
 
-	asHex(): string {
+	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
 	}
 
 	toJSON(): string {
-		return this.asHex();
+		return this.toHex();
 	}
 }

@@ -171,7 +171,7 @@ export class DerivationPath {
 			offset = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 			console.error(`derive_offset:offset: ${offset.toString(16)}`);
 			// First loop:
-            /*
+			/*
 			assert.equal(
 				le_hex(offset.toString(16).padStart(64, '0')),
 				'8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c',
@@ -179,10 +179,10 @@ export class DerivationPath {
 			);
             */
 			pt = pt.add(ed.ExtendedPoint.BASE.mul(offset));
-            sum += offset;
+			sum += offset;
 			console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
 			// First loop:
-            /*
+			/*
 			assert.equal(
 				pt.toHex(),
 				'd98cff36b6fe4868cfdacd51eea8ec963ef64616300bc2a78271b92935d57d22',
@@ -190,7 +190,7 @@ export class DerivationPath {
 			);
             */
 
-            chain_code = new ChainCode(okm.subarray(64, 96));
+			chain_code = new ChainCode(okm.subarray(64, 96));
 		}
 		return [pt, sum, chain_code];
 	}
