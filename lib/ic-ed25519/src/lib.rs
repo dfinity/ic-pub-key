@@ -870,11 +870,7 @@ impl DerivationPath {
             hkdf.expand(b"Ed25519", &mut okm)
                 .expect("96 is a valid length for HKDF-SHA-512");
             eprintln!("derive_offset:okm: {:?}", hex::encode(&okm));
-
-            let mut offset = [0u8; 64];
-            offset.copy_from_slice(&okm[0..64]);
-            offset.reverse(); // dalek uses little endian
-            let offset = Scalar::from_bytes_mod_order_wide(&offset);
+            let offset = Self::offset_from_okm(&okm);
             eprintln!("derive_offset:offset: {:?}", hex::encode(&offset.to_bytes()));
 
             pt += EdwardsPoint::mul_base(&offset);
@@ -883,5 +879,55 @@ impl DerivationPath {
         }
 
         (pt, sum, chain_code)
+    }
+
+    /// Convert a 96 byte HKDF output to a Scalar
+    pub fn offset_from_okm(okm: &[u8;96]) -> Scalar {
+        let mut offset = [0u8; 64];
+        offset.copy_from_slice(&okm[0..64]);
+        offset.reverse(); // dalek uses little endian
+        let offset = Scalar::from_bytes_mod_order_wide(&offset);
+        offset
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_offset_from_okm() {
+        let test_vectors = vec![
+            (
+                "zero",
+                //123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                "0000000000000000000000000000000000000000000000000000000000000000",
+            ),
+            (
+                "one",
+                //123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000",
+                "0100000000000000000000000000000000000000000000000000000000000000", // Little endian
+            ),
+            (
+                "modulus",
+                //123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef-123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                "00000000000000000000000000000000000000000000000000000000000000007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed0000000000000000000000000000000000000000000000000000000000000000",
+                "0000000000000000000000000000000000000000000000000000000000000001",
+            ),
+            (
+                "random",
+                "4c3c57859e14fd4bf76d26d5089a2c409d246151a4f1848aa917a82f80fc6268fce6cb45ccd89f326ad7759e9a09e3ea03917cce58b7309088a40a0f23df5abc71f04d8c92317647d6b20d1f83e6dfdce8411b66b9b7f78339442616cd6e3364",
+                "8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c",
+            )
+        ];
+        for (name, okm, expected) in test_vectors {
+            let okm = hex::decode(okm).unwrap();
+            let okm = okm.try_into().unwrap();
+            let offset = DerivationPath::offset_from_okm(&okm);
+            let offset_hex = hex::encode(offset.as_bytes());
+            assert_eq!(offset_hex, expected, "Mismatch for {name}");
+        }
     }
 }

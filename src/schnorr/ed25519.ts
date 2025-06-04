@@ -156,10 +156,7 @@ export class DerivationPath {
             // First loop:
             assert.equal(okm_hex, "4c3c57859e14fd4bf76d26d5089a2c409d246151a4f1848aa917a82f80fc6268fce6cb45ccd89f326ad7759e9a09e3ea03917cce58b7309088a40a0f23df5abc71f04d8c92317647d6b20d1f83e6dfdce8411b66b9b7f78339442616cd6e3364");
 
-            let offset_bytes = okm.subarray(0, 64);
-            // Interpret those bytes as a big endian number:
-            let offset = BigInt('0x'+Buffer.from(offset_bytes).toString('hex'));
-            
+            let offset = DerivationPath.offset_from_okm(okm);            
             console.error(`derive_offset:offset: ${offset.toString(16)}  > mod? ${offset > MODULUS}`);
             let offset_mod = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
             console.error(`derive_offset:offset_mod: ${offset_mod.toString(16)}`);
@@ -182,6 +179,13 @@ export class DerivationPath {
 		// TODO:
 		throw new Error('Not implemented');
 	}
+
+    static offset_from_okm(okm: Uint8Array): bigint {
+        let offset_bytes = okm.subarray(0, 64);
+        // Interpret those bytes as a big endian number:
+        let offset = BigInt('0x'+Buffer.from(offset_bytes).toString('hex'));
+        return offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
+    }
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd_pub](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L138)
