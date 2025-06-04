@@ -35,6 +35,7 @@
 	},
 	"dependencies": {
 		"@dfinity/principal": "^2.4.1",
+		"@noble/ed25519": "^2.2.3",
 		"@noble/secp256k1": "^2.2.3",
 		"commander": "^14.0.0"
 	},
