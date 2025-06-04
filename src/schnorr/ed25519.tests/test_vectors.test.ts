@@ -1,9 +1,10 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import * as fs from 'fs';
 import * as path from 'path';
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
 import { DerivationPath, PublicKeyWithChainCode } from '../ed25519';
+
 
 interface TestVector {
 	public_key: string;
@@ -47,10 +48,8 @@ describe('Test Vectors', () => {
 			const derivedKey = inputKey.derive_subkey_with_chain_code(derivationPath);
 
 			// Check the results
-			let expected_public_key = ExtendedPoint.fromHex(vector.expected_public_key);
-			let expected_chain_code = ChainCode.fromHex(vector.expected_chain_code);
-			//expect(derivedKey.public_key).toEqual(expected_public_key);
-			//expect(derivedKey.chain_code).toEqual(expected_chain_code);
+			expect(derivedKey.public_key.toHex()).toEqual(vector.expected_public_key);
+			expect(derivedKey.chain_code.asHex()).toEqual(vector.expected_chain_code);
 		});
 	});
 });

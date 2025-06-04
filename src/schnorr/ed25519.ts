@@ -69,9 +69,8 @@ export class PublicKeyWithChainCode {
 
         (key, chain_code)	
         */
-		derivation_path.derive_offset(this.public_key, this.chain_code);
-		// TODO:
-		throw new Error('Not implemented');
+		let [pt, sum, chain_code] = derivation_path.derive_offset(this.public_key, this.chain_code);
+		return new PublicKeyWithChainCode(pt, chain_code);
 	}
 }
 
