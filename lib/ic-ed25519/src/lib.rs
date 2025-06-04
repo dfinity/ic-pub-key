@@ -869,6 +869,7 @@ impl DerivationPath {
             let mut okm = [0u8; 96];
             hkdf.expand(b"Ed25519", &mut okm)
                 .expect("96 is a valid length for HKDF-SHA-512");
+            eprintln!("derive_offset:okm: {:?}", hex::encode(&okm));
 
             let mut offset = [0u8; 64];
             offset.copy_from_slice(&okm[0..64]);

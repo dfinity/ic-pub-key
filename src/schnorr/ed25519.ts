@@ -1,4 +1,6 @@
 import * as ed from '@noble/ed25519';
+import { hkdf as noble_hkdf } from '@noble/hashes/hkdf.js';
+import { sha512 } from '@noble/hashes/sha2';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
@@ -141,6 +143,10 @@ export class DerivationPath {
 
 			let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
 			console.error(`derive_offset:ikm: ${ikm_hex}`);
+
+			let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
+			let okm_hex = [...okm].map((c) => c.toString(16).padStart(2, '0')).join('');
+			console.error(`derive_offset:okm: ${okm_hex}`);
 		}
 		/*
         let offset = BigInt(0);
