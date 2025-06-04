@@ -135,10 +135,7 @@ export class DerivationPath {
 
         for (let idx of this.path) {
             console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
-            let pt_hex = pt.toHex();
-            // For every hex code in the public key, convert to a char code, so if the raw public key was 32 bytes, hex is 64 chars, and this is now 64 bytes:
             let ikm = pt.toRawBytes();
-            // Append the idx to the ikm Uint8Array:
             ikm.set(idx, 32);
 
             let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
