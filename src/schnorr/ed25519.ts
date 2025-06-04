@@ -141,7 +141,9 @@ export class DerivationPath {
 		for (let idx of this.path) {
 			console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
 			// First loop:
+			/*
 			assert.equal(pt.toHex(), '5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b31691');
+			*/
 			let pt_bytes = pt.toRawBytes();
 			let ikm = new Uint8Array(pt_bytes.length + idx.length);
 			ikm.set(pt_bytes, 0);
@@ -150,53 +152,48 @@ export class DerivationPath {
 			let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
 			console.error(`derive_offset:ikm: ${ikm_hex}`);
 			// First loop:
+			/*
 			assert.equal(ikm_hex, '5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b3169132');
+			*/
 
 			let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 			let okm_hex = [...okm].map((c) => c.toString(16).padStart(2, '0')).join('');
 			console.error(`derive_offset:okm: ${okm_hex}`);
 			// First loop:
+			/*
 			assert.equal(
 				okm_hex,
 				'4c3c57859e14fd4bf76d26d5089a2c409d246151a4f1848aa917a82f80fc6268fce6cb45ccd89f326ad7759e9a09e3ea03917cce58b7309088a40a0f23df5abc71f04d8c92317647d6b20d1f83e6dfdce8411b66b9b7f78339442616cd6e3364'
 			);
+            */
 
 			let offset = DerivationPath.offset_from_okm(okm);
 			console.error(`derive_offset:offset: ${offset.toString(16)}  > mod? ${offset > MODULUS}`);
 			offset = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 			console.error(`derive_offset:offset: ${offset.toString(16)}`);
 			// First loop:
+            /*
 			assert.equal(
 				le_hex(offset.toString(16).padStart(64, '0')),
 				'8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c',
 				'offset_mod - little endian'
 			);
-			//                                     4ddbc91b43f63879250b393de0ec758156f7eeecd490dd25a227011c4955f7f4
+            */
 			pt = pt.add(ed.ExtendedPoint.BASE.mul(offset));
             sum += offset;
 			console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
 			// First loop:
+            /*
 			assert.equal(
 				pt.toHex(),
 				'd98cff36b6fe4868cfdacd51eea8ec963ef64616300bc2a78271b92935d57d22',
 				'pt plus base'
 			);
+            */
 
-			throw new Error('Not implemented');
+            chain_code = new ChainCode(okm.subarray(64, 96));
 		}
-		/*
-        let offset = BigInt(0);
-
-		for (let idx of this.path) {
-			let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
-			chain_code = next_chain_code;
-			pt = next_pt;
-			offset += next_offset;
-		}
-		return [pt, offset, chain_code];
-        */
-		// TODO:
-		throw new Error('Not implemented');
+		return [pt, sum, chain_code];
 	}
 
 	static offset_from_okm(okm: Uint8Array): bigint {
