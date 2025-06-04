@@ -163,16 +163,17 @@ export class DerivationPath {
 
 			let offset = DerivationPath.offset_from_okm(okm);
 			console.error(`derive_offset:offset: ${offset.toString(16)}  > mod? ${offset > MODULUS}`);
-			let offset_mod = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
-			console.error(`derive_offset:offset_mod: ${offset_mod.toString(16)}`);
+			offset = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
+			console.error(`derive_offset:offset: ${offset.toString(16)}`);
 			// First loop:
 			assert.equal(
-				le_hex(offset_mod.toString(16).padStart(64, '0')),
+				le_hex(offset.toString(16).padStart(64, '0')),
 				'8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c',
 				'offset_mod - little endian'
 			);
 			//                                     4ddbc91b43f63879250b393de0ec758156f7eeecd490dd25a227011c4955f7f4
 			pt = pt.add(ed.ExtendedPoint.BASE.mul(offset));
+            sum += offset;
 			console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
 			// First loop:
 			assert.equal(
