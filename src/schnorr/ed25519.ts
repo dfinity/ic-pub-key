@@ -6,6 +6,8 @@ import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
 import { blobDecode, blobEncode } from '../encoding';
 
+const MODULUS = 2n ** 255n - 19n; // The order of the curve
+
 /**
  * The response type for the ICP management canister's `schnorr_public_key` method.
  *
@@ -154,12 +156,16 @@ export class DerivationPath {
             // First loop:
             assert.equal(okm_hex, "4c3c57859e14fd4bf76d26d5089a2c409d246151a4f1848aa917a82f80fc6268fce6cb45ccd89f326ad7759e9a09e3ea03917cce58b7309088a40a0f23df5abc71f04d8c92317647d6b20d1f83e6dfdce8411b66b9b7f78339442616cd6e3364");
 
-            let offset_bytes = okm.subarray(0, 32);
+            let offset_bytes = okm.subarray(0, 64);
             // Interpret those bytes as a big endian number:
             let offset = BigInt('0x'+Buffer.from(offset_bytes).toString('hex'));
-            console.error(`derive_offset:offset: ${offset.toString(16)}`);
+            
+            console.error(`derive_offset:offset: ${offset.toString(16)}  > mod? ${offset > MODULUS}`);
+            let offset_mod = offset % MODULUS; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
+            console.error(`derive_offset:offset_mod: ${offset_mod.toString(16)}`);
             // First loop:
-            assert.equal(offset.toString(16), "8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c");
+            assert.equal(offset_mod.toString(16), "8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c");
+            //                                     4ddbc91b43f63879250b393de0ec758156f7eeecd490dd25a227011c4955f7f4
             throw new Error('Not implemented');
 		}
 		/*
