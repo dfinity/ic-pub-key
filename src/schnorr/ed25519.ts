@@ -34,7 +34,7 @@ export class PublicKeyWithChainCode {
 	static fromArray(public_key_array: number[], chain_code_array: number[]): PublicKeyWithChainCode {
 		let public_key_hex = public_key_array.map((p) => p.toString(16).padStart(2, '0')).join('');
 		return new PublicKeyWithChainCode(
-			ed.ExtendedPoint.fromHex(public_key_hex),
+			ed.ExtendedPoint.fromHex(public_key_hex, true), // Reduced mod 2**255-19
 			ChainCode.fromArray(chain_code_array)
 		);
 	}
@@ -46,7 +46,7 @@ export class PublicKeyWithChainCode {
 	}
 
 	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
-		let public_key = ed.ExtendedPoint.fromHex(public_key_hex);
+		let public_key = ed.ExtendedPoint.fromHex(public_key_hex, true); // Reduced mod 2**255-19
 		let chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
 		return new PublicKeyWithChainCode(public_key, chain_key);
 	}
@@ -136,6 +136,8 @@ export class DerivationPath {
 
 		for (let idx of this.path) {
 			console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
+            // First loop:
+            assert.equal(pt.toHex(), "5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b31691");
 			let pt_bytes = pt.toRawBytes();
 			let ikm = new Uint8Array(pt_bytes.length + idx.length);
 			ikm.set(pt_bytes, 0);
@@ -143,10 +145,22 @@ export class DerivationPath {
 
 			let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
 			console.error(`derive_offset:ikm: ${ikm_hex}`);
+            // First loop:
+            assert.equal(ikm_hex, "5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b3169132");
 
 			let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 			let okm_hex = [...okm].map((c) => c.toString(16).padStart(2, '0')).join('');
 			console.error(`derive_offset:okm: ${okm_hex}`);
+            // First loop:
+            assert.equal(okm_hex, "4c3c57859e14fd4bf76d26d5089a2c409d246151a4f1848aa917a82f80fc6268fce6cb45ccd89f326ad7759e9a09e3ea03917cce58b7309088a40a0f23df5abc71f04d8c92317647d6b20d1f83e6dfdce8411b66b9b7f78339442616cd6e3364");
+
+            let offset_bytes = okm.subarray(0, 32);
+            // Interpret those bytes as a big endian number:
+            let offset = BigInt('0x'+Buffer.from(offset_bytes).toString('hex'));
+            console.error(`derive_offset:offset: ${offset.toString(16)}`);
+            // First loop:
+            assert.equal(offset.toString(16), "8ca4ea9be78a8e0748050291e6944d209aba69209170d0981e2db792242dd70c");
+            throw new Error('Not implemented');
 		}
 		/*
         let offset = BigInt(0);

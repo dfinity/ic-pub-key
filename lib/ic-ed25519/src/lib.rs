@@ -875,6 +875,7 @@ impl DerivationPath {
             offset.copy_from_slice(&okm[0..64]);
             offset.reverse(); // dalek uses little endian
             let offset = Scalar::from_bytes_mod_order_wide(&offset);
+            eprintln!("derive_offset:offset: {:?}", hex::encode(&offset.to_bytes()));
 
             pt += EdwardsPoint::mul_base(&offset);
             sum += offset;
