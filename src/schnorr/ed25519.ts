@@ -191,7 +191,7 @@ export class DerivationPath {
 		let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
 		// Treat the bytes as an integer
 		let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
-		// The k256 modulus:
+		// The k256 modulus: TODO: Change!
 		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
 		// If iL >= order, try again with the "next" index as described in SLIP-10
 		if (next_offset >= MODULUS) {
