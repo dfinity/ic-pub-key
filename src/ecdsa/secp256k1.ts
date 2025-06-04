@@ -1,6 +1,7 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
+import { blobDecode, blobEncode } from '../encoding.js';
 
 /**
  * The response type for the ICP management canister's `ecdsa_public_key` method.
@@ -39,8 +40,8 @@ export class PublicKeyWithChainCode {
 	}
 
 	static fromBlob(public_key_blob: string, chain_code_blob: string): PublicKeyWithChainCode {
-		let public_key_array = DerivationPath.blobDecode(public_key_blob);
-		let chain_code_array = DerivationPath.blobDecode(chain_code_blob);
+		let public_key_array = blobDecode(public_key_blob);
+		let chain_code_array = blobDecode(chain_code_blob);
 		let public_key = new Sec1EncodedPublicKey(public_key_array);
 		let chain_code = new ChainCode(chain_code_array);
 		return new PublicKeyWithChainCode(public_key, chain_code);
@@ -85,7 +86,7 @@ export class Sec1EncodedPublicKey {
 	}
 
 	static fromBlob(blob: string): Sec1EncodedPublicKey {
-		const bytes = DerivationPath.blobDecode(blob);
+		const bytes = blobDecode(blob);
 		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
 	}
 
@@ -109,7 +110,7 @@ export class Sec1EncodedPublicKey {
 	}
 
 	asBlob(): string {
-		return DerivationPath.blobEncode(this.bytes);
+		return blobEncode(this.bytes);
 	}
 
 	asProjectivePoint(): ProjectivePoint {
@@ -202,75 +203,14 @@ export class DerivationPath {
 		if (this.path.length === 0) {
 			return undefined;
 		}
-		return this.path.map((p) => DerivationPath.blobEncode(p)).join('/');
-	}
-
-	/**
-	 * @returns True if the character is an ASCII alphanumeric character.
-	 */
-	static isAsciiAlphanumeric(code: number): boolean {
-		return (
-			(code >= 48 && code <= 57) || // 0-9
-			(code >= 65 && code <= 90) || // A-Z
-			(code >= 97 && code <= 122) // a-z
-		);
-	}
-	/**
-	 * Encodes a single byte as a Candid blob string.
-	 * @param u8
-	 * @returns
-	 */
-	static blobEncodeU8(u8: number): string {
-		if (DerivationPath.isAsciiAlphanumeric(u8)) {
-			return String.fromCharCode(u8);
-		}
-		// Backslash and two hex chars:
-		return `\\${u8.toString(16).padStart(2, '0')}`;
-	}
-	/**
-	 * Encodes an array of bytes as a Candid blob string.
-	 * @param path
-	 * @returns
-	 */
-	static blobEncode(path: Uint8Array): string {
-		return [...path].map((p) => DerivationPath.blobEncodeU8(p)).join('');
-	}
-	/**
-	 * Decodes a Candid blob string as an array of bytes.
-	 * @param s
-	 * @returns
-	 */
-	static blobDecode(s: string): Uint8Array {
-		let ans = [];
-		let skip = 0;
-		let byte = 0;
-		for (let char of s) {
-			if (skip == 2) {
-				byte = parseInt(char, 16);
-				skip--;
-				continue;
-			}
-			if (skip == 1) {
-				byte = byte * 16 + parseInt(char, 16);
-				ans.push(byte);
-				skip--;
-				continue;
-			}
-			if (char === '\\') {
-				skip = 2;
-				byte = 0;
-				continue;
-			}
-			ans.push(char.charCodeAt(0));
-		}
-		return new Uint8Array(ans);
+		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
 	static fromBlob(blob: string | undefined): DerivationPath {
 		if (blob === undefined) {
 			return new DerivationPath([]);
 		}
-		return new DerivationPath(blob.split('/').map((p) => DerivationPath.blobDecode(p)));
+		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
 	}
 
 	static fromString(s: string): DerivationPath {
