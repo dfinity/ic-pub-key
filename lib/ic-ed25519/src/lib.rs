@@ -856,6 +856,10 @@ impl DerivationPath {
 
         for idx in self.path() {
             let mut ikm = Vec::with_capacity(PublicKey::BYTES + idx.0.len());
+            eprintln!(
+                "derive_offset:32 bytes of public key: {:?}",
+                hex::encode(pt.compress().0)
+            );
             ikm.extend_from_slice(&pt.compress().0);
             ikm.extend_from_slice(&idx.0);
 

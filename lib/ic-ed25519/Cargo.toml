@@ -55,6 +55,8 @@ features = [
     "pem",
     "hazmat",
 ]
+[dependencies.hex]
+version = "0.4"
 
 [dependencies.hkdf]
 version = "0.12"

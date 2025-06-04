@@ -440,6 +440,7 @@ version = "0.2.0"
 dependencies = [
  "curve25519-dalek",
  "ed25519-dalek",
+ "hex",
  "hkdf",
  "pem",
  "rand",

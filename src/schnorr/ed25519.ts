@@ -3,6 +3,7 @@ import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
 import { blobDecode, blobEncode } from '../encoding';
+import { encode } from 'punycode';
 
 /**
  * The response type for the ICP management canister's `schnorr_public_key` method.
@@ -117,6 +118,13 @@ export class DerivationPath {
 		pt: ed.ExtendedPoint,
 		chain_code: ChainCode
 	): [ed.ExtendedPoint, bigint, ChainCode] {
+        // Deep copy of the chain code:
+        let working_chain_code = new ChainCode(chain_code.bytes.slice());
+        let sum = BigInt(0);
+
+        for (let idx of this.path) {
+            console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
+        }
 		/*
         let offset = BigInt(0);
 
