@@ -862,6 +862,7 @@ impl DerivationPath {
             );
             ikm.extend_from_slice(&pt.compress().0);
             ikm.extend_from_slice(&idx.0);
+            eprintln!("derive_offset:ikm: {:?}", hex::encode(&ikm));
 
             let hkdf = hkdf::Hkdf::<Sha512>::new(Some(&chain_code), &ikm);
 

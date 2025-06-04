@@ -57,8 +57,19 @@ export class PublicKeyWithChainCode {
 	}
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
-		return this; // TODO: Implement
-	}
+        /**
+        let pt = CompressedEdwardsY(self.pk.to_bytes()).decompress().unwrap();
+
+        let (pt, _sum, chain_code) = derivation_path.derive_offset(pt, chain_code);
+
+        let key = Self::new(VerifyingKey::from(pt));
+
+        (key, chain_code)	
+        */
+       derivation_path.derive_offset(this.public_key, this.chain_code);
+        // TODO:
+        throw new Error('Not implemented');
+    }
 }
 
 /**
@@ -124,6 +135,15 @@ export class DerivationPath {
 
         for (let idx of this.path) {
             console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
+            let pt_hex = pt.toHex();
+            // For every hex code in the public key, convert to a char code, so if the raw public key was 32 bytes, hex is 64 chars, and this is now 64 bytes:
+            let ikm = pt.toRawBytes();
+            // Append the idx to the ikm Uint8Array:
+            ikm.set(idx, 32);
+
+            let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
+            console.error(`derive_offset:ikm: ${ikm_hex}`);
+            
         }
 		/*
         let offset = BigInt(0);
