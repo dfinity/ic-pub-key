@@ -135,8 +135,10 @@ export class DerivationPath {
 
         for (let idx of this.path) {
             console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
-            let ikm = pt.toRawBytes();
-            ikm.set(idx, 32);
+            let pt_bytes = pt.toRawBytes();
+            let ikm = new Uint8Array(pt_bytes.length + idx.length);
+            ikm.set(pt_bytes, 0);
+            ikm.set(idx, pt_bytes.length);
 
             let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
             console.error(`derive_offset:ikm: ${ikm_hex}`);
