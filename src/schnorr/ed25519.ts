@@ -6,7 +6,7 @@ import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
 import { blobDecode, blobEncode } from '../encoding';
 
-const MODULUS = 2n ** 255n - 19n; // The order of the curve
+const MODULUS = 2n ** 252n + 27742317777372353535851937790883648493n; // The order of the curve
 
 /**
  * The response type for the ICP management canister's `schnorr_public_key` method.
