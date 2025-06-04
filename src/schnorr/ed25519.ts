@@ -3,7 +3,6 @@ import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
 import { blobDecode, blobEncode } from '../encoding';
-import { encode } from 'punycode';
 
 /**
  * The response type for the ICP management canister's `schnorr_public_key` method.
@@ -57,7 +56,7 @@ export class PublicKeyWithChainCode {
 	}
 
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
-        /**
+		/**
         let pt = CompressedEdwardsY(self.pk.to_bytes()).decompress().unwrap();
 
         let (pt, _sum, chain_code) = derivation_path.derive_offset(pt, chain_code);
@@ -66,10 +65,10 @@ export class PublicKeyWithChainCode {
 
         (key, chain_code)	
         */
-       derivation_path.derive_offset(this.public_key, this.chain_code);
-        // TODO:
-        throw new Error('Not implemented');
-    }
+		derivation_path.derive_offset(this.public_key, this.chain_code);
+		// TODO:
+		throw new Error('Not implemented');
+	}
 }
 
 /**
@@ -129,21 +128,20 @@ export class DerivationPath {
 		pt: ed.ExtendedPoint,
 		chain_code: ChainCode
 	): [ed.ExtendedPoint, bigint, ChainCode] {
-        // Deep copy of the chain code:
-        let working_chain_code = new ChainCode(chain_code.bytes.slice());
-        let sum = BigInt(0);
+		// Deep copy of the chain code:
+		let working_chain_code = new ChainCode(chain_code.bytes.slice());
+		let sum = BigInt(0);
 
-        for (let idx of this.path) {
-            console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
-            let pt_bytes = pt.toRawBytes();
-            let ikm = new Uint8Array(pt_bytes.length + idx.length);
-            ikm.set(pt_bytes, 0);
-            ikm.set(idx, pt_bytes.length);
+		for (let idx of this.path) {
+			console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
+			let pt_bytes = pt.toRawBytes();
+			let ikm = new Uint8Array(pt_bytes.length + idx.length);
+			ikm.set(pt_bytes, 0);
+			ikm.set(idx, pt_bytes.length);
 
-            let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
-            console.error(`derive_offset:ikm: ${ikm_hex}`);
-            
-        }
+			let ikm_hex = [...ikm].map((c) => c.toString(16).padStart(2, '0')).join('');
+			console.error(`derive_offset:ikm: ${ikm_hex}`);
+		}
 		/*
         let offset = BigInt(0);
 

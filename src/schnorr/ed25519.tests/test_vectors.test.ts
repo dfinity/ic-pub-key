@@ -1,15 +1,9 @@
+import { ExtendedPoint } from '@noble/ed25519';
 import * as fs from 'fs';
 import * as path from 'path';
-import { describe, expect, it } from 'vitest';
-import {
-	DerivationPath,
-	PublicKeyWithChainCode,
-} from '../ed25519';
-import {
-    ChainCode
-} from '../../chain_code';
-import { ExtendedPoint } from '@noble/ed25519';
-import { derive_public_key } from '../../ecdsa/secp256k1';
+import { describe, it } from 'vitest';
+import { ChainCode } from '../../chain_code';
+import { DerivationPath, PublicKeyWithChainCode } from '../ed25519';
 
 interface TestVector {
 	public_key: string;
