@@ -871,9 +871,17 @@ impl DerivationPath {
                 .expect("96 is a valid length for HKDF-SHA-512");
             eprintln!("derive_offset:okm: {:?}", hex::encode(&okm));
             let offset = Self::offset_from_okm(&okm);
-            eprintln!("derive_offset:offset: {:?}", hex::encode(&offset.to_bytes()));
+            eprintln!(
+                "derive_offset:offset: {:?}",
+                hex::encode(&offset.to_bytes())
+            );
 
             pt += EdwardsPoint::mul_base(&offset);
+            eprintln!(
+                "derive_offset:pt plus base: {:?}",
+                hex::encode(pt.compress().0)
+            );
+
             sum += offset;
             chain_code.copy_from_slice(&okm[64..]);
         }
@@ -882,7 +890,7 @@ impl DerivationPath {
     }
 
     /// Convert a 96 byte HKDF output to a Scalar
-    pub fn offset_from_okm(okm: &[u8;96]) -> Scalar {
+    pub fn offset_from_okm(okm: &[u8; 96]) -> Scalar {
         let mut offset = [0u8; 64];
         offset.copy_from_slice(&okm[0..64]);
         offset.reverse(); // dalek uses little endian
@@ -894,7 +902,7 @@ impl DerivationPath {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_offset_from_okm() {
         let test_vectors = vec![
