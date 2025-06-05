@@ -9,6 +9,14 @@
 					"derivation_path": "2/444/66666",
 					"expected_public_key": "024bf78e40bb51d2c6c14c11aa8f3af1549741de5acdf925e6dc230dfc5daa22d9",
 					"expected_chain_code": "bc35b8515f03aa1543081e2af4e878f28b27f3ce00c035f4068702d33ee88586"
+				},
+				{
+					"name": "caller_ecdsa_public_key:args.secp256k1.empty.did",
+					"public_key": "0291f38cada7f498d467a18527dc6706b6343b124062776a9996077820d2c76be2",
+					"chain_code": "9cfbcc11fbc2d401c3719785c31840a2bad151baf28c3795bc63f5fbc9cb26d7",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "024279ea3e07582bd07388725255b3806276f2997323cedbcfa78fea658740c8a2",
+					"expected_chain_code": "1b2cfa6fa9720fe41c730761d804577bdce4ec93098e44a4dc78746b4e8d2c5d"
 				}
 			]
 		}
