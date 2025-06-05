@@ -4,12 +4,19 @@
   "type": "module",
   "main": "index.js",
   "bin": {
-		"ic-pub-key": "./dist/cli.js"
+    "ic-pub-key": "./dist/cli.js"
   },
   "scripts": {
+    "format": "prettier --write './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
+    "format:check": "prettier --check './**/*.{ts,js,mjs,json,scss,css,html,md,yml}'",
+    "format:github": "prettier --write './.github/**/*.{yml,yaml}'",
+    "format:github:check": "prettier --check './.github/**/*.{yml,yaml}'",
     "build": "tsc && chmod +x dist/cli.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:report": "vitest run --coverage --reporter=html",
+    "start": "node dist/cli.js"
   },
   "keywords": [],
   "author": "",
@@ -19,14 +26,21 @@
     "@types/commander": "^2.12.0",
     "@types/node": "^22.15.21",
     "@vitest/coverage-v8": "^1.6.1",
+    "@vitest/ui": "^1.6.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "vitest": "^1.3.1"
   },
   "dependencies": {
+    "@dfinity/principal": "^2.4.1",
+    "@noble/ed25519": "^2.2.3",
+    "@noble/hashes": "^1.8.0",
+    "@noble/secp256k1": "^2.2.3",
     "commander": "^14.0.0"
   },
-	"engines": {
-		"node": ">=16.0.0"
-	}
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
