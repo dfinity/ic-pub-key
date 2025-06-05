@@ -207,7 +207,7 @@ export class DerivationPath {
 	}
 
 	static fromBlob(blob: string | undefined): DerivationPath {
-		if (blob === undefined) {
+		if (blob === undefined || blob === null) {
 			return new DerivationPath([]);
 		}
 		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
