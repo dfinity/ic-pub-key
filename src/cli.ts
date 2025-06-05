@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
 import {
@@ -9,7 +7,7 @@ import {
 	test_derive_public_key as test_derive_secp256k1_public_key
 } from './ecdsa/secp256k1.js';
 
-const program = new Command();
+export const program = new Command();
 
 program
 	.name('ic-pub-key')
@@ -73,8 +71,6 @@ ecdsa
 		};
 		console.log(JSON.stringify(ans, null, 2));
 	});
-
-program.parse(process.argv);
 
 function say_hello(name: string) {
 	console.log(`Hello, ${name}!`);
