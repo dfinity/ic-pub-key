@@ -131,4 +131,3 @@ fn key_derivation_works() {
         assert_eq!(derived_chain_code, expected_derived_key.chain_code.0);
     }
 }
-
