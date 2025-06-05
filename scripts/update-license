@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+print_help() {
+	cat <<-EOF
+	Gets the latest license from the IC repository.
+	EOF
+}
+
+[[ "${1:-}" != "--help" ]] || {
+	print_help
+	exit 0
+}
+curl -sSL https://raw.githubusercontent.com/dfinity/ic/refs/heads/master/licenses/IC-1.0.txt > LICENSE
+
