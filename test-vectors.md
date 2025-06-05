@@ -1,11 +1,11 @@
 # Test vectors
 
-There is a custom version of the chain fusion signer deployed to help with this; it passes through derivation paths wityhout adding the caller.
-
+There is a custom version of the chain fusion signer deployed to help with this; it passes through derivation paths without adding the caller.
 
 ## Secp256k1 test vectors
 
 The basic canister call is:
+
 ```
 dfx canister call signer --network staging ecdsa_public_key --argument-file args.XXX.did
 ```
@@ -24,7 +24,9 @@ cat <<EOF >args.secp256k1.empty.did
 )
 EOF
 ```
+
 Answer:
+
 ```
 $ dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.empty.did
 (
@@ -40,6 +42,7 @@ $ dfx canister call signer --network staging ecdsa_public_key --argument-file ar
 ```
 
 ### `secp256k1.123456`
+
 ```
 cat <<EOF >args.secp256k1.123456.did
 (
@@ -52,7 +55,9 @@ cat <<EOF >args.secp256k1.123456.did
 )
 EOF
 ```
+
 Answer:
+
 ```
 $ dfx canister call signer --network staging ecdsa_public_key --argument-file args.secp256k1.123456.did
 (
