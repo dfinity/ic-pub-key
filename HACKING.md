@@ -2,7 +2,7 @@
 
 This document lists information useful for development and deployment purposes.
 
-## Table of content
+## Table of Contents
 
 - [Demo](#demo)
 - [GitHub Release](#github-release)
