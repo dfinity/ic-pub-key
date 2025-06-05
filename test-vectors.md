@@ -1,6 +1,6 @@
 # Test vectors
 
-There is a custom version of the chain fusion signer deployed to help with this; it passes through derivation paths wityhout adding the caller.
+There is a custom version of the chain fusion signer deployed to help with this; it passes through derivation paths without adding the caller.
 
 ## Secp256k1 test vectors
 
