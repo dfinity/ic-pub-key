@@ -1,10 +1,21 @@
+# Added by typescript
 node_modules
 dist
+
+# Temporary files
 ,*
 
+# Added by cargo
+# Note: We include target directories outside the root as we will need to compile vendored dependencies in subdirectories.
+target
+
+# Added by typescript vitest code coverage tests
+/html
 /coverage
 
-# Added by cargo
+# Added by rust tarpaulin code coverage tests
+tarpaulin-report.html
 
-target
-/html
+# Git
+.git
+/branches
