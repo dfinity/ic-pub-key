@@ -1,0 +1,58 @@
+{
+	"ecdsa": {
+		"secp256k1": {
+			"test_vectors": [
+				{
+					"name": "canister_ecdsa_public_key:args.secp256k1.empty.did",
+					"public_key": "02b84ff3f88329a887657d0309bd1a1af9e37601e5d1a535d6fe7d42e37f79f40a",
+					"chain_code": "212891bc032f28d369bacf39dc369feb516eced9a3d83498246aead1546f8cd1",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "024bf78e40bb51d2c6c14c11aa8f3af1549741de5acdf925e6dc230dfc5daa22d9",
+					"expected_chain_code": "bc35b8515f03aa1543081e2af4e878f28b27f3ce00c035f4068702d33ee88586"
+				}
+			]
+		}
+	},
+	"schnorr": {
+		"ed25519": {
+			"test_vectors": [
+				{
+					"name": "caller_schnorr_public_key:args.schnorr.ed25519.empty.did",
+					"public_key": "5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b31691",
+					"chain_code": "96094ba65eb8d6e71797b837a27bf175d8ad2828fa508fab3d57041550dc0334",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "d41c15e8f8f718ada435d38c96a8f04ca342e70c9396642bc2c1c08da8cc0406",
+					"expected_chain_code": "541a8e8b26c80efcb462d036e88ae6e66e46876e3deceb2c54ddfecc94e2a1aa"
+				},
+				{
+					"name": "canister_schnorr_public_key:args.schnorr.ed25519.empty.did",
+					"public_key": "da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d",
+					"chain_code": "985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "7b3e64014987350f8ef9b89e0e804032c9c2de3b1825a789d0fd53266b5b0e71",
+					"expected_chain_code": "0816a73ea47f024698baab4c453f6381acc0b829384974eb96c611ab63837b05"
+				}
+			]
+		},
+		"bip340secp256k1": {
+			"test_vectors": [
+				{
+					"name": "canister_schnorr_public_key:args.schnorr.bip340secp256k1.empty.did",
+					"public_key": "030466da666fe067f52cb5337a72e7722123ab3fc82f92b8a5f92b89d0e9bbd6e1",
+					"chain_code": "8b51936ff7862e556e31f1116a657469f00083497062db2e8ee9573e3346a83a",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "0329d1f060d8225b2547abd7b7cdccc56ea675cfacd46a75863bd98d9a5dcafca7",
+					"expected_chain_code": "4741d01b413e340d0a253e8adf860fd28cea1eebfad71493bac7476e6d20b1ab"
+				},
+				{
+					"name": "caller_schnorr_public_key:args.schnorr.bip340secp256k1.empty.did",
+					"public_key": "03d81a2def33c99ce5e60138d66e68474ab3560ee26882c26ea790bf6ecfa2a213",
+					"chain_code": "4698afadc51f3b38434e66f35ae73d37347446cf0a0bcbda43ed7a7e0cd9efa7",
+					"derivation_path": "2/444/66666",
+					"expected_public_key": "024e1e180ae1a1b685a5834e40ecd239e1624bd2a8bdee4e7f0fa70e8de9804765",
+					"expected_chain_code": "2e04ed5006d04725fea1508a00c35da2f033b39d8a8ab3d86d0b66ed347656ce"
+				}
+			]
+		}
+	}
+}
