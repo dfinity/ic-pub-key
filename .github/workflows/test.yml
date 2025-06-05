@@ -43,7 +43,7 @@ jobs:
       - name: Upload coverage HTML report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-html
+          name: typescript-test-coverage-report
           path: coverage/
   rust:
     name: Test rust
