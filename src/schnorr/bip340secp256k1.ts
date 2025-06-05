@@ -1,6 +1,6 @@
-import * as curve from '@noble/secp256k1';
 import { hkdf as noble_hkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
+import * as curve from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 import { ChainCode } from '../chain_code';
@@ -137,12 +137,17 @@ export class DerivationPath {
 		let working_chain_code = new ChainCode(chain_code.bytes.slice());
 		let sum = BigInt(0);
 
+		let first = true;
+
 		for (let idx of this.path) {
 			console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
 			// First loop:
-			/*
-			assert.equal(pt.toHex(), '5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b31691');
-			*/
+			if (first) {
+				assert.equal(
+					pt.toHex(true),
+					'0466da666fe067f52cb5337a72e7722123ab3fc82f92b8a5f92b89d0e9bbd6e1'
+				);
+			}
 			let pt_bytes = pt.toRawBytes();
 			let ikm = new Uint8Array(pt_bytes.length + idx.length);
 			ikm.set(pt_bytes, 0);
@@ -191,6 +196,7 @@ export class DerivationPath {
             */
 
 			chain_code = new ChainCode(okm.subarray(64, 96));
+			first = false;
 		}
 		return [pt, sum, chain_code];
 	}
