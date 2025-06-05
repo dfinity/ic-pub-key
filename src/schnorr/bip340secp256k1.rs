@@ -91,7 +91,7 @@ impl PublicKeyWithChainCode {
     pub fn from_hex(public_key: &str, chain_code: &str) -> Result<Self, String> {
         let public_key_bytes =
             hex::decode(public_key).map_err(|e| format!("Invalid public key hex: {}", e))?;
-        let public_key = PublicKey::deserialize_bip340(&public_key_bytes)
+        let public_key = PublicKey::deserialize_sec1(&public_key_bytes) // The key type name is bip340secp256k1 but parsing is as sec1?
             .map_err(|e| format!("Invalid public key: {}", e))?;
         let chain_code = ChainCode::from_hex(chain_code)?;
         Ok(Self {
