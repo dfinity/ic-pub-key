@@ -1,4 +1,4 @@
-name: "Needed jobs succeeded"
+name: 'Needed jobs succeeded'
 description: |
   Checks that the jobs needed by the current job succeeded.
 
@@ -14,9 +14,9 @@ inputs:
     description: "JSON describing the needed jobs.  (use: `'$ {{ toJson(needs) }}'`)"
     required: true
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - name: "Check that we have inputs"
+    - name: 'Check that we have inputs'
       shell: bash
       run: |
         all_jobs="$(echo "$NEEDS" | jq 'to_entries[]')"
