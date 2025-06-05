@@ -25,6 +25,14 @@
 					"derivation_path": "bungee",
 					"expected_public_key": "02cc48da88c3b372cb5d5ac2665c92da65714de07ad148a5a838bb5e95fbddb591",
 					"expected_chain_code": "2dfe858431260fefb8b8093cfbf69bd1428c08757eee9131b901f9010238703b"
+				},
+				{
+					"name": "caller_ecdsa_public_key:args.secp256k1.blanketyblank.did",
+					"public_key": "0291f38cada7f498d467a18527dc6706b6343b124062776a9996077820d2c76be2",
+					"chain_code": "9cfbcc11fbc2d401c3719785c31840a2bad151baf28c3795bc63f5fbc9cb26d7",
+					"derivation_path": "/",
+					"expected_public_key": "03e204c5244fc5a7a98be3d643fca87b3f0b73db55cdd23abb197c191c89e4bfc6",
+					"expected_chain_code": "f28e1c6f888684f2a46ab564e648e08a45e27b2d5b7b799ffd6adbd424dc643f"
 				}
 			]
 		}
