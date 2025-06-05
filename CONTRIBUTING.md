@@ -1,6 +1,6 @@
-# Contributing to the Chain Fusion Signer
+# Contributing to IC Public Key
 
-Thank you for your interest in contributing to the Chain Fusion Signer ❤️
+Thank you for your interest in contributing to Ic Public Key ❤️
 
 ## Contributing code changes
 
