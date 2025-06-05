@@ -1,4 +1,4 @@
-import { ExtendedPoint } from '@noble/ed25519';
+import { ProjectivePoint } from '@noble/secp256k1';
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
@@ -35,7 +35,7 @@ describe('Test Vectors', () => {
 	testVectors.schnorr.bip340secp256k1.test_vectors.forEach((vector, index) => {
 		it(`should derive correct key for test vector ${index + 1}`, () => {
 			// Create the input key with chain code
-			const public_key = ExtendedPoint.fromHex(vector.public_key);
+			const public_key = ProjectivePoint.fromHex(vector.public_key);
 			const chain_code = ChainCode.fromHex(vector.chain_code);
 
 			const inputKey = new PublicKeyWithChainCode(public_key, chain_code);
