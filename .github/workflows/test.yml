@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Check GitHub workflow formatting
-        run: npm run format
+        run: npm run format:check
 
   typescript:
     name: Test typescript
