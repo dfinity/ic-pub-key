@@ -35,7 +35,7 @@ impl SerializedDerivationPath {
     /// use ic_pub_key_tests::test_vector::SerializedDerivationPath;
     /// let path = SerializedDerivationPath::from_blob(Some("part1/part2/part3")).unwrap();
     /// assert_eq!(path.elements, vec!["part1".as_bytes(), "part2".as_bytes(), "part3".as_bytes()]);
-    /// 
+    ///
     /// let path = SerializedDerivationPath::from_blob(None).unwrap();
     /// assert_eq!(path.elements, Vec::<Vec<u8>>::new());
     /// ```
