@@ -10,7 +10,7 @@ interface CkdTestVector {
 }
 
 // Source: These are arguments and corresponding outputs from calling the ckd function in Rust.
-// 
+//
 // See: [ic_secp256k1::DerivationPath::ckd](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L111)
 const testVectors: CkdTestVector[] = [
 	{

@@ -289,15 +289,14 @@ export class DerivationPath {
 		let next_chain_key = hmac_output.subarray(32, 64);
 		// Treat the bytes as an integer.
 		//
-		// Note: I don't see a better way of doing this in typescript than converting to a hex string and then
-		// parsing the hex string.  If better is possible, please update this!
+		// Note: I don't see a better way of converting bytes to a BigInt in typescript than converting to a hex string and then
+		// parsing the hex string.  That is embarassing.  If better is possible, please update this!
 		//
 		// Note: The Rust code performs this same check by reducing and checking whether the value has changed.
+		//
+		// Note: The modulus is so close to 2**256 that this branch will be taken extremely rarely.
 		let next_offset = BigInt(`0x${fb_hex}`);
-		// The k256 modulus:
-		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
-		// If iL >= order, try again with the "next" index as described in SLIP-10
-		if (next_offset >= MODULUS) {
+		if (next_offset >= DerivationPath.MODULUS) {
 			let next_input = new Uint8Array(33);
 			next_input[0] = 0x01;
 			next_input.set(next_chain_key, 1);
@@ -308,6 +307,11 @@ export class DerivationPath {
 
 		return [new ChainCode(next_chain_key_array), next_offset];
 	}
+
+	/**
+	 * The k256 modulus.
+	 */
+	static MODULUS = 2n ** 256n - 2n ** 32n - 977n;
 }
 
 // Translated from Rust: mkpubkey::ecdsa_public_key::secp256k1_public_key
