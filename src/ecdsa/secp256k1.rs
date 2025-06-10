@@ -38,13 +38,13 @@ impl PublicKeyWithChainCode {
 
 #[test]
 fn key_derivation_works() {
-    let test_vectors = load_test_vectors("schnorr", "bip340secp256k1");
+    let test_vectors = load_test_vectors("ecdsa", "secp256k1");
     for test_vector in test_vectors {
         let parent_key =
             PublicKeyWithChainCode::from_hex(&test_vector.public_key, &test_vector.chain_code)
                 .unwrap();
         let derivation_path: DerivationPath =
-            SerializedDerivationPath::from_blob(&test_vector.derivation_path)
+            SerializedDerivationPath::from_blob(test_vector.derivation_path.as_deref())
                 .unwrap()
                 .into();
         let expected_derived_key = PublicKeyWithChainCode::from_hex(

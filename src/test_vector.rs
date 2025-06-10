@@ -6,7 +6,7 @@ pub struct TestVector {
     pub name: String,
     pub public_key: String,
     pub chain_code: String,
-    pub derivation_path: String,
+    pub derivation_path: Option<String>,
     pub expected_public_key: String,
     pub expected_chain_code: String,
 }
@@ -16,10 +16,12 @@ pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
     let test_vectors = include_str!("../test/samples.json");
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
     let test_vectors = &samples[algorithm][curve]["test_vectors"];
-    serde_json::from_value(test_vectors.clone()).unwrap()
+    serde_json::from_value(test_vectors.clone()).unwrap_or_else(|e| {
+        panic!("Failed to parse test vectors for {algorithm}/{curve}: {e}");
+    })
 }
 
-
+/// Derivation path, as serialized in the test vectors.
 /// Derivation path, as serialized in the test vectors.
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SerializedDerivationPath {
@@ -31,16 +33,20 @@ impl SerializedDerivationPath {
     /// # Example
     /// ```
     /// use ic_pub_key_tests::test_vector::SerializedDerivationPath;
-    /// let path = SerializedDerivationPath::from_blob("part1/part2/part3").unwrap();
+    /// let path = SerializedDerivationPath::from_blob(Some("part1/part2/part3")).unwrap();
     /// assert_eq!(path.elements, vec!["part1".as_bytes(), "part2".as_bytes(), "part3".as_bytes()]);
     /// ```
-    pub fn from_blob(blob: &str) -> Result<Self, String> {
+    pub fn from_blob(blob: Option<&str>) -> Result<Self, String> {
+        if let Some(blob) = blob {
         // Split the string at '/' and parse each element:
         let elements = blob
             .split('/')
             .map(Self::element_from_blob)
             .collect::<Result<Vec<_>, _>>()?;
-        Ok(Self { elements })
+            Ok(Self { elements })
+        } else {
+            Ok(Self { elements: vec![] })
+        }
     }
     /// Parse a single derivation path element from a blob.
     ///
