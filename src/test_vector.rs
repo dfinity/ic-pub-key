@@ -67,3 +67,22 @@ impl SerializedDerivationPath {
         Ok(elements)
     }
 }
+
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ChainCode(pub [u8; ChainCode::LENGTH]);
+impl ChainCode {
+    const LENGTH: usize = 32;
+    pub fn from_hex(hex: &str) -> Result<Self, String> {
+        if hex.len() != Self::LENGTH * 2 {
+            return Err(format!(
+                "Invalid chain code hex length: Expected {}, got {}",
+                Self::LENGTH * 2,
+                hex.len()
+            ));
+        }
+        let bytes = hex::decode(hex).map_err(|e| format!("Invalid chain code hex: {}", e))?;
+        let mut chain_code = [0u8; Self::LENGTH];
+        chain_code.copy_from_slice(&bytes);
+        Ok(Self(chain_code))
+    }
+}

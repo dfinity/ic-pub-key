@@ -1,8 +1,7 @@
 use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
-use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::test_vector::{SerializedDerivationPath, TestVector};
+use crate::test_vector::{ChainCode, SerializedDerivationPath, TestVector};
 
 impl From<SerializedDerivationPath> for DerivationPath {
     fn from(path: SerializedDerivationPath) -> Self {
@@ -12,25 +11,6 @@ impl From<SerializedDerivationPath> for DerivationPath {
                 .map(|element| DerivationIndex(element.clone()))
                 .collect(),
         )
-    }
-}
-
-#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct ChainCode([u8; ChainCode::LENGTH]);
-impl ChainCode {
-    const LENGTH: usize = 32;
-    pub fn from_hex(hex: &str) -> Result<Self, String> {
-        if hex.len() != Self::LENGTH * 2 {
-            return Err(format!(
-                "Invalid chain code hex length: Expected {}, got {}",
-                Self::LENGTH * 2,
-                hex.len()
-            ));
-        }
-        let bytes = hex::decode(hex).map_err(|e| format!("Invalid chain code hex: {}", e))?;
-        let mut chain_code = [0u8; Self::LENGTH];
-        chain_code.copy_from_slice(&bytes);
-        Ok(Self(chain_code))
     }
 }
 
