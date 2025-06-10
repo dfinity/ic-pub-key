@@ -1,8 +1,8 @@
-use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
 use elliptic_curve::PrimeField;
+use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
 use pretty_assertions::assert_eq;
 
-use crate::test_vector::{load_test_vectors, ChainCode, SerializedDerivationPath, TestVector};
+use crate::test_vector::{ChainCode, SerializedDerivationPath, TestVector, load_test_vectors};
 
 /// Converts a derivation path from the test vectors into the equivalent type in the `ic_secp256k1` crate.
 impl From<SerializedDerivationPath> for DerivationPath {

@@ -38,11 +38,11 @@ impl SerializedDerivationPath {
     /// ```
     pub fn from_blob(blob: Option<&str>) -> Result<Self, String> {
         if let Some(blob) = blob {
-        // Split the string at '/' and parse each element:
-        let elements = blob
-            .split('/')
-            .map(Self::element_from_blob)
-            .collect::<Result<Vec<_>, _>>()?;
+            // Split the string at '/' and parse each element:
+            let elements = blob
+                .split('/')
+                .map(Self::element_from_blob)
+                .collect::<Result<Vec<_>, _>>()?;
             Ok(Self { elements })
         } else {
             Ok(Self { elements: vec![] })
