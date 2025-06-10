@@ -130,6 +130,9 @@ impl DerivationPath {
     }
 
     fn ckd(idx: &[u8], input: &[u8], chain_code: &[u8; 32]) -> ([u8; 32], Scalar) {
+        println!("ckd: idx: {:02x?}", idx);
+        println!("ckd: input: {:02x?}", input);
+        println!("ckd: chain_code: {:02x?}", chain_code);
         use hmac::{Hmac, Mac};
         use k256::{elliptic_curve::ops::Reduce, sha2::Sha512};
 
@@ -148,14 +151,16 @@ impl DerivationPath {
         let next_chain_key: [u8; 32] = hmac_output[32..].to_vec().try_into().expect("Correct size");
 
         // If iL >= order, try again with the "next" index as described in SLIP-10
-        if next_offset.to_bytes().to_vec() != hmac_output[..32] {
+        let ans = if next_offset.to_bytes().to_vec() != hmac_output[..32] {
             let mut next_input = [0u8; 33];
             next_input[0] = 0x01;
             next_input[1..].copy_from_slice(&next_chain_key);
             Self::ckd(idx, &next_input, chain_code)
         } else {
             (next_chain_key, next_offset)
-        }
+        };
+        println!("ckd: ans: {:02x?}", ans);
+        ans
     }
 
     fn ckd_pub(
