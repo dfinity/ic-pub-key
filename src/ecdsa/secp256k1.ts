@@ -67,7 +67,7 @@ export class DerivationPath {
 		assert.equal(hmac_output.length, 64);
 
 		let fb = hmac_output.subarray(0, 32);
-		let fb_hex = Buffer.from(fb).toString('hex');
+		let fb_hex = fb.toString('hex');
 		let next_chain_key = hmac_output.subarray(32, 64);
 		// Treat the bytes as an integer.
 		//
