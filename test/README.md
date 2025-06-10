@@ -4,7 +4,8 @@
 There is a custom version of the chain fusion signer deployed to help with this; it passes through derivation paths without adding the caller.
 =======
 The JSON test vectors were created by making canister calls on the ICP mainnet, using the staging [Chain Fusion Signer](https://github.com/dfinity/chain-fusion-signer). The process for creating them is described in detail for one curve; other curves are similar.
->>>>>>> origin/main:test/README.md
+
+> > > > > > > origin/main:test/README.md
 
 ## Secp256k1 test vectors
 

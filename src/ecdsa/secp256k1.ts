@@ -287,8 +287,13 @@ export class DerivationPath {
 		let fb = hmac_output.subarray(0, 32);
 		let fb_hex = Buffer.from(fb).toString('hex');
 		let next_chain_key = hmac_output.subarray(32, 64);
-		// Treat the bytes as an integer
-		let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
+		// Treat the bytes as an integer.
+		//
+		// Note: I don't see a better way of doing this in typescript than converting to a hex string and then
+		// parsing the hex string.  If better is possible, please update this!
+		//
+		// Note: The Rust code performs this same check by reducing and checking whether the value has changed.
+		let next_offset = BigInt(`0x${fb_hex}`);
 		// The k256 modulus:
 		const MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
 		// If iL >= order, try again with the "next" index as described in SLIP-10
