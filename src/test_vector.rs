@@ -22,7 +22,6 @@ pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
 }
 
 /// Derivation path, as serialized in the test vectors.
-/// Derivation path, as serialized in the test vectors.
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SerializedDerivationPath {
     pub elements: Vec<Vec<u8>>,
