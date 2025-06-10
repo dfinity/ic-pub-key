@@ -87,10 +87,20 @@ impl SerializedDerivationPath {
     }
 }
 
+/// An identifier for the public key, made by hashing the derivation path.
+///
+/// Note: The canister threshold key methods use the public key together with the chain code.
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ChainCode(pub [u8; ChainCode::LENGTH]);
 impl ChainCode {
     const LENGTH: usize = 32;
+    /// Parses a chain code from a hex string.
+    ///
+    /// # Example
+    /// ```
+    /// use ic_pub_key_tests::test_vector::ChainCode;
+    /// let chain_code = ChainCode::from_hex("0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef").unwrap();
+    /// assert_eq!(chain_code.0, [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
     pub fn from_hex(hex: &str) -> Result<Self, String> {
         if hex.len() != Self::LENGTH * 2 {
             return Err(format!(
@@ -104,4 +114,10 @@ impl ChainCode {
         chain_code.copy_from_slice(&bytes);
         Ok(Self(chain_code))
     }
+}
+
+#[test]
+fn can_load_test_vectors() {
+    let test_vectors = load_test_vectors("ecdsa", "secp256k1");
+    assert!(!test_vectors.is_empty());
 }
