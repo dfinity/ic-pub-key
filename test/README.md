@@ -1,6 +1,6 @@
 # Test vectors
 
-The JSON test vectors were created by making canister calls on the ICP mainnet, using the staging Chain Fusion Signer. The process for creating them is described in detail for one curve; other curves are similar.
+The JSON test vectors were created by making canister calls on the ICP mainnet, using the staging [Chain Fusion Signer](https://github.com/dfinity/chain-fusion-signer). The process for creating them is described in detail for one curve; other curves are similar.
 
 ## Secp256k1 test vectors
 
@@ -9,6 +9,10 @@ The basic canister call is:
 ```
 dfx canister call signer --network staging ecdsa_public_key --argument-file args.XXX.did
 ```
+
+The chain fusion signer acts as a proxy, making a call to the [`ecdsa_public_key()`](https://internetcomputer.org/docs/building-apps/network-features/signatures/t-ecdsa/) canister method.
+
+In the call, the arguments are modified by prefixing the derivation path with a caller's principal and a domain separator.  This ensures that one user cannot make signatures on behalf of another.  This doesn't matter for the purpose of generating test vectors, except that we cannot create test vectors with the maximum length supported by canisters as two elements of the derivation path are already used.
 
 ### `secp256k1.empty`
 
