@@ -287,7 +287,6 @@ export class DerivationPath {
 		let fb = hmac_output.subarray(0, 32);
 		let fb_hex = Buffer.from(fb).toString('hex');
 		let next_chain_key = hmac_output.subarray(32, 64);
-		let next_chain_key_hex = Buffer.from(next_chain_key).toString('hex');
 		// Treat the bytes as an integer
 		let next_offset = BigInt(`0x${fb_hex}`); // Note: Do NOT reduce here; the reduction is handled below.
 		// The k256 modulus:
