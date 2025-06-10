@@ -3,11 +3,38 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 /// Detivation path, as serialized in the test vectors.
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SerializedDerivationPath {
     pub elements: Vec<Vec<u8>>,
 }
 impl SerializedDerivationPath {
-    fn elements_from_blob(blob: &str) -> Result<Vec<u8>, String> {
+    /// Parse a derivation path from a blob.
+    /// 
+    /// # Example
+    /// ```
+    /// use ic_pub_key_tests::ecdsa::secp256k1::SerializedDerivationPath;
+    /// let path = SerializedDerivationPath::from_blob("part1/part2/part3").unwrap();
+    /// assert_eq!(path.elements, vec!["part1".as_bytes(), "part2".as_bytes(), "part3".as_bytes()]);
+    /// ```
+    pub fn from_blob(blob: &str) -> Result<Self, String> {
+        // Split the string at '/' and parse each element:
+        let elements = blob
+            .split('/')
+            .map(Self::element_from_blob)
+            .collect::<Result<Vec<_>, _>>()?;
+        Ok(Self { elements })
+    }
+    /// Parse a single derivation path element from a blob.
+    /// 
+    /// Note: A blob here refers to a candid string encoded blob, in which non-ASCII-alphanumeric characters are represented as hex escaped with a backslash.
+    /// 
+    /// # Example
+    /// ```
+    /// use ic_pub_key_tests::ecdsa::secp256k1::SerializedDerivationPath;
+    /// let element = SerializedDerivationPath::element_from_blob(r#"SETI\40home"#).unwrap();
+    /// assert_eq!(element, "SETI@home".as_bytes());
+    /// ```
+    pub fn element_from_blob(blob: &str) -> Result<Vec<u8>, String> {
         let mut elements = Vec::new();
         let mut chars = blob.chars();
         while let Some(next) = chars.next() {
@@ -30,14 +57,6 @@ impl SerializedDerivationPath {
             elements.push(byte);
         }
         Ok(elements)
-    }
-    pub fn from_blob(blob: &str) -> Result<Self, String> {
-        // Split the string at '/' and parse each element:
-        let elements = blob
-            .split('/')
-            .map(Self::elements_from_blob)
-            .collect::<Result<Vec<_>, _>>()?;
-        Ok(Self { elements })
     }
 }
 impl From<SerializedDerivationPath> for DerivationPath {
