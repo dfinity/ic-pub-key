@@ -28,13 +28,16 @@ pub struct SerializedDerivationPath {
     pub elements: Vec<Vec<u8>>,
 }
 impl SerializedDerivationPath {
-    /// Parse a derivation path from a blob.
+    /// Parses a derivation path from a blob.
     ///
     /// # Example
     /// ```
     /// use ic_pub_key_tests::test_vector::SerializedDerivationPath;
     /// let path = SerializedDerivationPath::from_blob(Some("part1/part2/part3")).unwrap();
     /// assert_eq!(path.elements, vec!["part1".as_bytes(), "part2".as_bytes(), "part3".as_bytes()]);
+    /// 
+    /// let path = SerializedDerivationPath::from_blob(None).unwrap();
+    /// assert_eq!(path.elements, Vec::<Vec<u8>>::new());
     /// ```
     pub fn from_blob(blob: Option<&str>) -> Result<Self, String> {
         if let Some(blob) = blob {
