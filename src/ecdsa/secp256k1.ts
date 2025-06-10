@@ -42,7 +42,9 @@ export class DerivationPath {
 	/**
 	 * The k256 modulus.
 	 */
-	static MODULUS = BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
+	static readonly MODULUS = BigInt(
+		'0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141'
+	);
 
 	constructor(public readonly path: PathComponent[]) {}
 

@@ -6,7 +6,7 @@ interface CkdTestVector {
 	input: Uint8Array;
 	chain_code: ChainCode;
 	expected_chain_code: ChainCode;
-	expected_scalar: BigInt;
+	expected_scalar: bigint;
 }
 
 // Source: These are arguments and corresponding outputs from calling the ckd function in Rust.
