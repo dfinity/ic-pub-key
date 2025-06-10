@@ -1,8 +1,11 @@
 use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
 use serde_json::Value;
+use elliptic_curve::PrimeField;
+use pretty_assertions::assert_eq;
 
 use crate::test_vector::{ChainCode, SerializedDerivationPath, TestVector};
 
+/// Converts a derivation path from the test vectors into the equivalent type in the `ic_secp256k1` crate.
 impl From<SerializedDerivationPath> for DerivationPath {
     fn from(path: SerializedDerivationPath) -> Self {
         Self::new(
@@ -14,6 +17,7 @@ impl From<SerializedDerivationPath> for DerivationPath {
     }
 }
 
+/// A public key together with the corresponding chain code.
 #[derive(Debug, PartialEq, Eq)]
 pub struct PublicKeyWithChainCode {
     pub public_key: PublicKey,
