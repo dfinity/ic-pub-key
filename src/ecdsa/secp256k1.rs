@@ -37,16 +37,16 @@ impl PublicKeyWithChainCode {
     }
 }
 
-pub fn load_test_vectors() -> Vec<TestVector> {
+pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
     let test_vectors = include_str!("../../test/samples.json");
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
-    let test_vectors = &samples["schnorr"]["bip340secp256k1"]["test_vectors"];
+    let test_vectors = &samples[algorithm][curve]["test_vectors"];
     serde_json::from_value(test_vectors.clone()).unwrap()
 }
 
 #[test]
 fn key_derivation_works() {
-    let test_vectors = load_test_vectors();
+    let test_vectors = load_test_vectors("schnorr", "bip340secp256k1");
     for test_vector in test_vectors {
         let parent_key =
             PublicKeyWithChainCode::from_hex(&test_vector.public_key, &test_vector.chain_code)
