@@ -1,9 +1,8 @@
 use ic_secp256k1::{DerivationIndex, DerivationPath, PublicKey};
-use serde_json::Value;
 use elliptic_curve::PrimeField;
 use pretty_assertions::assert_eq;
 
-use crate::test_vector::{ChainCode, SerializedDerivationPath, TestVector};
+use crate::test_vector::{load_test_vectors, ChainCode, SerializedDerivationPath, TestVector};
 
 /// Converts a derivation path from the test vectors into the equivalent type in the `ic_secp256k1` crate.
 impl From<SerializedDerivationPath> for DerivationPath {
@@ -35,13 +34,6 @@ impl PublicKeyWithChainCode {
             chain_code,
         })
     }
-}
-
-pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
-    let test_vectors = include_str!("../../test/samples.json");
-    let samples: Value = serde_json::from_str(test_vectors).unwrap();
-    let test_vectors = &samples[algorithm][curve]["test_vectors"];
-    serde_json::from_value(test_vectors.clone()).unwrap()
 }
 
 #[test]

@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TestVector {
@@ -9,6 +10,15 @@ pub struct TestVector {
     pub expected_public_key: String,
     pub expected_chain_code: String,
 }
+
+/// Loads the test vectors for a given algorithm and curve.
+pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
+    let test_vectors = include_str!("../test/samples.json");
+    let samples: Value = serde_json::from_str(test_vectors).unwrap();
+    let test_vectors = &samples[algorithm][curve]["test_vectors"];
+    serde_json::from_value(test_vectors.clone()).unwrap()
+}
+
 
 /// Derivation path, as serialized in the test vectors.
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
