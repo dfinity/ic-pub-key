@@ -7,7 +7,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  typescript:
+  format:
     name: Test typescript
     runs-on: ubuntu-latest
     steps:
@@ -26,10 +26,25 @@ jobs:
         run: npm ci
 
       - name: Check GitHub workflow formatting
-        run: npm run format:github:check
-
-      - name: Check formatting
         run: npm run format:check
+
+  typescript:
+    name: Test typescript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read .nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Type check
         run: npm run build
@@ -54,9 +69,6 @@ jobs:
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
-
       - name: Run Clippy
         run: cargo clippy -- -D warnings
 
@@ -66,7 +78,7 @@ jobs:
       - name: Build
         run: cargo build --verbose
   tests-pass:
-    needs: ['typescript', 'rust']
+    needs: ['format', 'typescript', 'rust']
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     permissions:
