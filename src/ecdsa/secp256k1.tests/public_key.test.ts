@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ChainCode, Sec1EncodedPublicKey } from '../secp256k1';
+import { ChainCode, PublicKeyWithChainCode, Sec1EncodedPublicKey } from '../secp256k1';
 
 describe('Sec1EncodedPublicKey', () => {
 	it('should create a new Sec1EncodedPublicKey', () => {
@@ -59,5 +59,15 @@ describe('ChainCode', () => {
 					Buffer.from('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20', 'hex')
 				)
 		).toThrow();
+	});
+});
+
+describe('PublicKeyWithChainCode', () => {
+	it('should hex decode and encode', () => {
+		const public_key = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20';
+		const chain_code = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f';
+		const public_key_with_chain_code = PublicKeyWithChainCode.fromHex({ public_key, chain_code });
+		const public_key_with_chain_code_hex = public_key_with_chain_code.toHex();
+		expect(public_key_with_chain_code_hex).toStrictEqual({ public_key, chain_code });
 	});
 });
