@@ -41,11 +41,9 @@ export type PathComponent = Uint8Array;
 
 export class DerivationPath {
 	/**
-	 * The k256 modulus.
+	 * The k256 group order (and scalar modulus).
 	 */
-	static readonly MODULUS = BigInt(
-		'0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141'
-	);
+	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
 
@@ -63,10 +61,10 @@ export class DerivationPath {
 			chain_code = next_chain_code;
 			pt = next_pt;
 			offset += next_offset;
-			// Note: In Rust, mod is applied on every iteration of this loop.
-			// Here we do it once at the end.
+			if (offset >= DerivationPath.ORDER) {
+				offset -= DerivationPath.ORDER;
+			}
 		}
-		offset = offset % DerivationPath.MODULUS;
 		return [pt, offset, chain_code];
 	}
 
@@ -130,7 +128,7 @@ export class DerivationPath {
 		//
 		// Note: The modulus is so close to 2**256 that this branch will be taken extremely rarely.
 		let next_offset = BigInt(`0x${fb_hex}`);
-		if (next_offset >= DerivationPath.MODULUS) {
+		if (next_offset >= DerivationPath.ORDER) {
 			let next_input = new Uint8Array(33);
 			next_input[0] = 0x01;
 			next_input.set(next_chain_key, 1);
