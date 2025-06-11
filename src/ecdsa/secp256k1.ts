@@ -248,7 +248,6 @@ export class DerivationPath {
 		chain_code: ChainCode
 	): [ChainCode, bigint, AffinePoint] {
 		let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
-		let projective_point = ProjectivePoint.fromAffine(pt);
 
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
@@ -311,7 +310,7 @@ export class DerivationPath {
 	/**
 	 * The k256 modulus.
 	 */
-	static MODULUS = 2n ** 256n - 2n ** 32n - 977n;
+	static MODULUS =  BigInt('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
 }
 
 // Translated from Rust: mkpubkey::ecdsa_public_key::secp256k1_public_key

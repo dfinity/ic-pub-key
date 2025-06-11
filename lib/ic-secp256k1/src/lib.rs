@@ -130,9 +130,9 @@ impl DerivationPath {
     }
 
     fn ckd(idx: &[u8], input: &[u8], chain_code: &[u8; 32]) -> ([u8; 32], Scalar) {
-        println!("ckd: idx: {:02x?}", idx);
-        println!("ckd: input: {:02x?}", input);
-        println!("ckd: chain_code: {:02x?}", chain_code);
+        let mut report = format!("ckd: idx: {}\n", hex::encode(idx));
+        report += &format!("ckd: input: {}\n", hex::encode(input));
+        report += &format!("ckd: chain_code: {}\n", hex::encode(chain_code));
         use hmac::{Hmac, Mac};
         use k256::{elliptic_curve::ops::Reduce, sha2::Sha512};
 
@@ -145,9 +145,9 @@ impl DerivationPath {
         let hmac_output: [u8; 64] = hmac.finalize().into_bytes().into();
 
         let fb = k256::FieldBytes::from_slice(&hmac_output[..32]);
-        println!("ckd: fb         : {}", hex::encode(fb));
+        //println!("ckd: fb         : {}", hex::encode(fb));
         let next_offset = <k256::Scalar as Reduce<k256::U256>>::reduce_bytes(fb);
-        println!("ckd: next_offset: {:02x?}", next_offset);
+        //println!("ckd: next_offset: {}", hex::encode(next_offset.to_bytes()));
         let next_chain_key: [u8; 32] = hmac_output[32..].to_vec().try_into().expect("Correct size");
 
         // If iL >= order, try again with the "next" index as described in SLIP-10
@@ -159,7 +159,8 @@ impl DerivationPath {
         } else {
             (next_chain_key, next_offset)
         };
-        println!("ckd: ans: {:02x?}", ans);
+        report += &format!("ckd: ans: {} {:?}\n", hex::encode(ans.0), ans.1);
+        println!("{}", report);
         ans
     }
 
