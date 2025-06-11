@@ -1,3 +1,4 @@
+#[cfg(test)]
 use elliptic_curve::ops::Reduce;
 use elliptic_curve::PrimeField;
 use ic_secp256k1::PublicKey;
