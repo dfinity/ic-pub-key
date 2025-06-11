@@ -14,6 +14,7 @@ use k256::{
     },
     AffinePoint, Scalar, Secp256k1,
 };
+use k256::elliptic_curve::group::GroupEncoding;
 use rand::{CryptoRng, Rng, RngCore, SeedableRng};
 use zeroize::ZeroizeOnDrop;
 
@@ -209,13 +210,9 @@ impl DerivationPath {
         pt: AffinePoint,
         chain_code: &[u8; 32],
     ) -> (AffinePoint, Scalar, [u8; 32]) {
-        println!("");
-        println!("derive_offset: arg: derivation_path: {}", self);
-        println!("derive_offset: arg: pt: {}", pt);
-        println!(
-            "derive_offset: arg: chain_code: {}",
-            hex::encode(chain_code)
-        );
+        let mut report = format!("\nderive_offset: arg: derivation_path: {}\n", self);
+        report += &format!("derive_offset: arg: pt: {}\n", hex::encode(pt.to_bytes()));
+        report += &format!("derive_offset: arg: chain_code: {}\n", hex::encode(chain_code));
 
         let mut offset = Scalar::ZERO;
         let mut pt = pt;
@@ -226,14 +223,17 @@ impl DerivationPath {
             chain_code = next_chain_code;
             pt = next_pt;
             offset = offset.add(&next_offset);
-            println!("derive_offset: after applying idx: {:02x?}", idx);
-            println!("derive_offset: after applying idx: pt: {}", pt);
-            println!("derive_offset: after applying idx: offset: {:?}", offset);
-            println!(
-                "derive_offset: after applying idx: chain_code: {}",
-                hex::encode(chain_code)
-            );
+            //println!("derive_offset: after applying idx: {:02x?}", idx);
+            //println!("derive_offset: after applying idx: pt: {}", pt);
+            //println!("derive_offset: after applying idx: offset: {:?}", offset);
+            //println!(
+            //    "derive_offset: after applying idx: chain_code: {}",
+            //    hex::encode(chain_code)
+            //);
         }
+
+        report += &format!("derive_offset: ans: {} {:?} {}\n", hex::encode(pt.to_bytes()), offset, hex::encode(chain_code));
+        println!("{}", report);
 
         (pt, offset, chain_code)
     }
