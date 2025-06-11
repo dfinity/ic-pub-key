@@ -1,12 +1,6 @@
 [package]
-name = "ic-pub-key-tests"
+name = "mkpubkey"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-ic-secp256k1 = "0.1.0"
-pretty_assertions = "1.4.1"
-hex = "0.4"
-serde_json = "1.0.140"
-serde = "1.0.219"
-serde_derive = "1.0.219"
