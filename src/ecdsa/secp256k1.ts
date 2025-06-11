@@ -49,7 +49,7 @@ export class DerivationPath {
 	constructor(public readonly path: PathComponent[]) {}
 
 	/**
-	 * Creates a new DerivationPath from / separated canndid blobs.
+	 * Creates a new DerivationPath from / separated candid blobs.
 	 * @param blob The / separated blobs to create the derivation path from.
 	 * @returns A new DerivationPath.
 	 */
