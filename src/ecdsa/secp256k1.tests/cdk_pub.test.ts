@@ -100,7 +100,7 @@ describe('DerivationPath', () => {
 					ProjectivePoint.fromHex(testVector.pt).toAffine(),
 					ChainCode.fromHex(testVector.chain_code)
 				);
-				expect(derived_chain_code.asHex()).toBe(testVector.expected_chain_code);
+				expect(derived_chain_code.toHex()).toBe(testVector.expected_chain_code);
 				expect(derived_offset).toBe(testVector.expected_offset);
 				expect(ProjectivePoint.fromAffine(derived_pt).toHex()).toBe(testVector.expected_pt);
 			}
