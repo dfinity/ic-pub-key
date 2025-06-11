@@ -1,3 +1,4 @@
+import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 
@@ -40,13 +41,70 @@ export type PathComponent = Uint8Array;
 
 export class DerivationPath {
 	/**
-	 * The k256 modulus.
+	 * The k256 group order (and scalar modulus).
 	 */
-	static readonly MODULUS = BigInt(
-		'0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141'
-	);
+	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
+
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived public key, the offset, and the chain code.
+	 *
+	 * Properties:
+	 * - The public key is not ProjectivePoint.ZERO.
+	 * - The offset is strictly less than DerivationPath.ORDER.
+	 */
+	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
+		return this.path.reduce(
+			([pt, offset, chain_code], idx) => {
+				let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
+				offset += next_offset;
+				// Note: next_offset _should_ be less than DerivationPath.ORDER, so at most one subtraction _should_ be necessary.
+				while (offset >= DerivationPath.ORDER) {
+					offset -= DerivationPath.ORDER;
+				}
+				return [next_pt, offset, next_chain_code];
+			},
+			[pt, 0n, chain_code]
+		);
+	}
+
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd_pub](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L138)
+	 * @param idx A part of the derivation path.
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived chain code, the offset, and the derived public key.
+	 *
+	 * Properties:
+	 * - The offset is strictly less than DerivationPath.ORDER.
+	 * - The public key is not ProjectivePoint.ZERO.
+	 */
+	static ckd_pub(
+		idx: PathComponent,
+		pt: AffinePoint,
+		chain_code: ChainCode
+	): [ChainCode, bigint, AffinePoint] {
+		let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
+
+		while (true) {
+			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
+
+			let base_mul = ProjectivePoint.BASE.multiply(next_offset);
+			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+
+			if (!next_pt.equals(ProjectivePoint.ZERO)) {
+				return [next_chain_code, next_offset, next_pt.toAffine()];
+			}
+
+			// Otherwise set up the next input as defined by SLIP-0010
+			ckd_input[0] = 0x01;
+			ckd_input.set(next_chain_code.bytes, 1);
+		}
+	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L111)
@@ -54,6 +112,9 @@ export class DerivationPath {
 	 * @param ckd_input The input to derive the offset from.
 	 * @param chain_code The chain code to derive the offset from.
 	 * @returns A tuple containing the derived chain code and the offset.
+	 *
+	 * Properties:
+	 * - The offset is strictly less than DerivationPath.ORDER.
 	 */
 	static ckd(
 		idx: PathComponent,
@@ -78,7 +139,7 @@ export class DerivationPath {
 		//
 		// Note: The modulus is so close to 2**256 that this branch will be taken extremely rarely.
 		let next_offset = BigInt(`0x${fb_hex}`);
-		if (next_offset >= DerivationPath.MODULUS) {
+		if (next_offset >= DerivationPath.ORDER) {
 			let next_input = new Uint8Array(33);
 			next_input[0] = 0x01;
 			next_input.set(next_chain_key, 1);
