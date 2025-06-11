@@ -21,6 +21,25 @@ export class PublicKeyWithChainCode {
 	) {}
 
 	/**
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key The public key as a 66 character hex string.
+	 * @param chain_code The chain code as a 64 character hex string.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromHex({
+		public_key,
+		chain_code
+	}: {
+		public_key: string;
+		chain_code: string;
+	}): PublicKeyWithChainCode {
+		return new PublicKeyWithChainCode(
+			Sec1EncodedPublicKey.fromHex(public_key),
+			ChainCode.fromHex(chain_code)
+		);
+	}
+
+	/**
 	 * @returns The public key as a 66 character hex string.
 	 */
 	toHex(): { public_key: string; chain_code: string } {
