@@ -40,7 +40,7 @@ export class PublicKeyWithChainCode {
 	}
 
 	/**
-	 * @returns The public key as a 66 character hex string.
+	 * @returns The public key and chain code as hex strings.
 	 */
 	toHex(): { public_key: string; chain_code: string } {
 		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.asHex() };
