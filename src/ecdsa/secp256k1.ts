@@ -1,3 +1,4 @@
+import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 
@@ -47,6 +48,36 @@ export class DerivationPath {
 	);
 
 	constructor(public readonly path: PathComponent[]) {}
+
+	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd_pub](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L138)
+	 * @param idx A part of the derivation path.
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived chain code, the offset, and the derived public key.
+	 */
+	static ckd_pub(
+		idx: PathComponent,
+		pt: AffinePoint,
+		chain_code: ChainCode
+	): [ChainCode, bigint, AffinePoint] {
+		let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
+
+		while (true) {
+			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
+
+			let base_mul = ProjectivePoint.BASE.mul(next_offset);
+			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+
+			if (!next_pt.equals(ProjectivePoint.ZERO)) {
+				return [next_chain_code, next_offset, next_pt.toAffine()];
+			}
+
+			// Otherwise set up the next input as defined by SLIP-0010
+			ckd_input[0] = 0x01;
+			ckd_input.set(next_chain_code.bytes, 1);
+		}
+	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::ckd](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L111)
