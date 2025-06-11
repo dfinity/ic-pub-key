@@ -1,6 +1,78 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
+import { blobDecode } from '../encoding';
+
+/**
+ * The response type for the ICP management canister's `ecdsa_public_key` method.
+ */
+export type EcdsaPublicKeyResponse = PublicKeyWithChainCode;
+
+/**
+ * A public key with its chain code.
+ */
+export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
+	constructor(
+		public readonly public_key: Sec1EncodedPublicKey,
+		public readonly chain_code: ChainCode
+	) {}
+
+	/**
+	 * Applies the given derivation path to obtain a new public key and chain code.
+	 */
+	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
+		return this.public_key.derive_subkey_with_chain_code(derivation_path, this.chain_code);
+	}
+}
+
+/**
+ * A public key, represented as a 33 byte array using sec1 encoding.
+ */
+export class Sec1EncodedPublicKey {
+	static readonly LENGTH = 33;
+
+	constructor(public readonly bytes: Uint8Array) {
+		if (bytes.length !== Sec1EncodedPublicKey.LENGTH) {
+			throw new Error(
+				`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH} bytes, got ${bytes.length}`
+			);
+		}
+	}
+
+	asAffinePoint(): AffinePoint {
+		return ProjectivePoint.fromHex(this.bytes).toAffine();
+	}
+
+	toHex(): string {
+		return Buffer.from(this.bytes).toString('hex');
+	}
+
+	static fromProjectivePoint(point: ProjectivePoint): Sec1EncodedPublicKey {
+		return new Sec1EncodedPublicKey(point.toRawBytes(true));
+	}
+
+	/**
+	 * A typescript translation of [ic_secp256k1::PublicKey::derive_subkey_with_chain_code](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L678)
+	 * @param derivation_path The derivation path to derive the subkey from.
+	 * @returns A tuple containing the derived subkey and the chain code.
+	 */
+	derive_subkey_with_chain_code(
+		derivation_path: DerivationPath,
+		chain_code: ChainCode
+	): PublicKeyWithChainCode {
+		let public_key = this.asAffinePoint();
+		let [affine_pt, _offset, new_chain_code] = derivation_path.derive_offset(
+			public_key,
+			chain_code
+		);
+		let pt = ProjectivePoint.fromAffine(affine_pt);
+		return new PublicKeyWithChainCode(Sec1EncodedPublicKey.fromProjectivePoint(pt), new_chain_code);
+	}
+}
 
 /**
  * A chain code is a 32 byte array
@@ -25,12 +97,12 @@ export class ChainCode {
 		return new ChainCode(new Uint8Array(array));
 	}
 
-	asHex(): string {
+	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
 	}
 
 	toJSON(): string {
-		return this.asHex();
+		return this.toHex();
 	}
 }
 
@@ -46,6 +118,13 @@ export class DerivationPath {
 	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
+
+	static fromBlob(blob: string | undefined): DerivationPath {
+		if (blob === undefined || blob === null) {
+			return new DerivationPath([]);
+		}
+		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
+	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
