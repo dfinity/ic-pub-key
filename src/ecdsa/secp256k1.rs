@@ -9,7 +9,7 @@ impl From<SerializedDerivationPath> for DerivationPath {
         Self::new(
             path.elements
                 .into_iter()
-                .map(|element| DerivationIndex(element.clone()))
+                .map(DerivationIndex)
                 .collect(),
         )
     }
