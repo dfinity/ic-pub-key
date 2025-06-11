@@ -17,7 +17,10 @@ pub fn load_test_vectors(algorithm: &str, curve: &str) -> Vec<TestVector> {
     let samples: Value = serde_json::from_str(test_vectors).unwrap();
     let test_vectors = &samples[algorithm][curve]["test_vectors"];
     serde_json::from_value(test_vectors.clone()).unwrap_or_else(|e| {
-        panic!("Failed to parse test vectors for {algorithm}/{curve}: {e}");
+        panic!(
+            "Failed to parse test vectors for {}/{}: {}",
+            algorithm, curve, e
+        );
     })
 }
 
