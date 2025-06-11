@@ -52,20 +52,24 @@ export class DerivationPath {
 	 * @param pt The public key to derive the offset from.
 	 * @param chain_code The chain code to derive the offset from.
 	 * @returns A tuple containing the derived public key, the offset, and the chain code.
+	 *
+	 * Properties:
+	 * - The public key is not ProjectivePoint.ZERO.
+	 * - The offset is strictly less than DerivationPath.ORDER.
 	 */
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
-		let offset = BigInt(0);
-
-		for (let idx of this.path) {
-			let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
-			chain_code = next_chain_code;
-			pt = next_pt;
-			offset += next_offset;
-			if (offset >= DerivationPath.ORDER) {
-				offset -= DerivationPath.ORDER;
-			}
-		}
-		return [pt, offset, chain_code];
+		return this.path.reduce(
+			([pt, offset, chain_code], idx) => {
+				let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
+				offset += next_offset;
+				// Note: next_offset _should_ be less than DerivationPath.ORDER, so at most one subtraction _should_ be necessary.
+				while (offset >= DerivationPath.ORDER) {
+					offset -= DerivationPath.ORDER;
+				}
+				return [next_pt, offset, next_chain_code];
+			},
+			[pt, 0n, chain_code]
+		);
 	}
 
 	/**
@@ -74,6 +78,10 @@ export class DerivationPath {
 	 * @param pt The public key to derive the offset from.
 	 * @param chain_code The chain code to derive the offset from.
 	 * @returns A tuple containing the derived chain code, the offset, and the derived public key.
+	 *
+	 * Properties:
+	 * - The offset is strictly less than DerivationPath.ORDER.
+	 * - The public key is not ProjectivePoint.ZERO.
 	 */
 	static ckd_pub(
 		idx: PathComponent,
@@ -104,6 +112,9 @@ export class DerivationPath {
 	 * @param ckd_input The input to derive the offset from.
 	 * @param chain_code The chain code to derive the offset from.
 	 * @returns A tuple containing the derived chain code and the offset.
+	 *
+	 * Properties:
+	 * - The offset is strictly less than DerivationPath.ORDER.
 	 */
 	static ckd(
 		idx: PathComponent,
