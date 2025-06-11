@@ -112,7 +112,7 @@ describe('DerivationPath', () => {
 					testVector.input,
 					testVector.chain_code
 				);
-				expect(derived_chain_code.asHex()).toBe(testVector.expected_chain_code.asHex());
+				expect(derived_chain_code.toHex()).toBe(testVector.expected_chain_code.toHex());
 				expect(derived_scalar.toString()).toBe(testVector.expected_scalar.toString());
 			}
 		});
