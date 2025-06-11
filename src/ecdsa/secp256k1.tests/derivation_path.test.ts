@@ -26,6 +26,16 @@ const blobEncodingTestVectors: BlobEncodingTestVector[] = [
 			Buffer.from('70617274', 'hex'),
 			Buffer.from('70617468', 'hex')
 		])
+	},
+	{
+		name: 'path with empty elements',
+		blob: '//aloha/',
+		path: new DerivationPath([
+			Buffer.alloc(0),
+			Buffer.alloc(0),
+			Buffer.from('616c6f6861', 'hex'),
+			Buffer.alloc(0)
+		])
 	}
 ];
 
