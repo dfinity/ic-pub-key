@@ -45,7 +45,7 @@ describe('DerivationPath', () => {
 				);
 				expect(ProjectivePoint.fromAffine(derived_pt).toHex(true)).toBe(testVector.expected_pt);
 				expect(derived_offset).toBe(testVector.expected_offset);
-				expect(derived_chain_code.toHex()).toBe(testVector.expected_chain_code);
+				expect(derived_chain_code.asHex()).toBe(testVector.expected_chain_code);
 			}
 		});
 	});

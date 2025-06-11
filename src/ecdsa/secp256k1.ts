@@ -109,7 +109,7 @@ export class ChainCode {
 	/**
 	 * @returns The chain code as a 64 character hex string.
 	 */
-	toHex(): string {
+	asHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
 	}
 }
