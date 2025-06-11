@@ -38,7 +38,7 @@ describe('DerivationPath', () => {
 					testVector.path.split('/').map((part) => Buffer.from(part, 'hex'))
 				);
 				const pt = ProjectivePoint.fromHex(testVector.pt).toAffine();
-				const chain_code = new ChainCode(Buffer.from(testVector.chain_code, 'hex'));
+				const chain_code = ChainCode.fromHex(testVector.chain_code);
 				const [derived_pt, derived_offset, derived_chain_code] = derivation_path.derive_offset(
 					pt,
 					chain_code
