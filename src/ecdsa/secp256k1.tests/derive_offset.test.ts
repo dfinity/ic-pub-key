@@ -19,6 +19,14 @@ const testVectors: DeriveOffsetTestVector[] = [
 		expected_pt: '024bf78e40bb51d2c6c14c11aa8f3af1549741de5acdf925e6dc230dfc5daa22d9',
 		expected_offset: 0x5846fde4ab7e56e02a9631b460221746a74e236a8a5dee9681b1b1c646d6b661n,
 		expected_chain_code: 'bc35b8515f03aa1543081e2af4e878f28b27f3ce00c035f4068702d33ee88586'
+	},
+	{
+		path: '32/343434/3636363636',
+		pt: '03d81a2def33c99ce5e60138d66e68474ab3560ee26882c26ea790bf6ecfa2a213',
+		chain_code: '4698afadc51f3b38434e66f35ae73d37347446cf0a0bcbda43ed7a7e0cd9efa7',
+		expected_pt: '024e1e180ae1a1b685a5834e40ecd239e1624bd2a8bdee4e7f0fa70e8de9804765',
+		expected_offset: 0xb27d2cfc949562ae96c73bbc6d99ca583fb6c9a8b726e376f51ec8d617319cb9n,
+		expected_chain_code: '2e04ed5006d04725fea1508a00c35da2f033b39d8a8ab3d86d0b66ed347656ce'
 	}
 ];
 
