@@ -87,7 +87,7 @@ export class DerivationPath {
 		while (true) {
 			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-			let base_mul = ProjectivePoint.BASE.mul(next_offset);
+			let base_mul = ProjectivePoint.BASE.multiply(next_offset);
 			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
 
 			if (!next_pt.equals(ProjectivePoint.ZERO)) {
