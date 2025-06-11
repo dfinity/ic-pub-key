@@ -43,7 +43,7 @@ export class PublicKeyWithChainCode {
 	 * @returns The public key as a 66 character hex string.
 	 */
 	toHex(): { public_key: string; chain_code: string } {
-		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.toHex() };
+		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.asHex() };
 	}
 }
 
@@ -126,18 +126,6 @@ export class DerivationPath {
 	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
-
-	/**
-	 * Creates a new DerivationPath from / separated canndid blobs.
-	 * @param blob The / separated blobs to create the derivation path from.
-	 * @returns A new DerivationPath.
-	 */
-	static fromBlob(blob: string | undefined): DerivationPath {
-		if (blob === undefined || blob === null) {
-			return new DerivationPath([]);
-		}
-		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
-	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
