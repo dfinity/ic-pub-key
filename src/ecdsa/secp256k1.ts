@@ -1,7 +1,7 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
-import { blobDecode } from '../encoding';
+import { blobDecode, blobEncode } from '../encoding';
 
 /**
  * A chain code is a 32 byte array
@@ -58,6 +58,16 @@ export class DerivationPath {
 			return new DerivationPath([]);
 		}
 		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
+	}
+
+	/**
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
+	 */
+	toBlob(): string | null {
+		if (this.path.length === 0) {
+			return null;
+		}
+		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
 	/**
