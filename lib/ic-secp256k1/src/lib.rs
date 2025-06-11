@@ -169,6 +169,9 @@ impl DerivationPath {
         pt: AffinePoint,
         chain_code: &[u8; 32],
     ) -> ([u8; 32], Scalar, AffinePoint) {
+        let mut report = format!("ckd_pub: idx: {}\n", hex::encode(idx));
+        report += &format!("ckd_pub: pt: {}\n", hex::encode(pt.to_bytes()));
+        report += &format!("ckd_pub: chain_code: {}\n", hex::encode(chain_code));
         use k256::elliptic_curve::{
             group::prime::PrimeCurveAffine, group::GroupEncoding, ops::MulByGenerator,
         };
@@ -178,24 +181,27 @@ impl DerivationPath {
 
         let pt: ProjectivePoint = pt.into();
 
-        loop {
+        let ans = loop {
             let (next_chain_code, next_offset) = Self::ckd(idx, &ckd_input, chain_code);
 
             let base_mul = k256::ProjectivePoint::mul_by_generator(&next_offset);
             let next_pt = (pt + base_mul).to_affine();
-            println!("ckd_pub: next_offset: {:02x?}", next_offset);
-            println!("ckd_pub: base_mul: {:02x?}", base_mul);
-            println!("ckd_pub: next_pt: {}", next_pt);
+            //println!("ckd_pub: next_offset: {:02x?}", next_offset);
+            //println!("ckd_pub: base_mul: {:02x?}", base_mul);
+            //println!("ckd_pub: next_pt: {}", next_pt);
 
             // If the new key is not infinity, we're done: return the new key
             if !bool::from(next_pt.is_identity()) {
-                return (next_chain_code, next_offset, next_pt);
+                break (next_chain_code, next_offset, next_pt);
             }
 
             // Otherwise set up the next input as defined by SLIP-0010
             ckd_input[0] = 0x01;
             ckd_input[1..].copy_from_slice(&next_chain_code);
-        }
+        };
+        report += &format!("ckd_pub: ans: {} {:?} {}\n", hex::encode(ans.0), ans.1, hex::encode(ans.2.to_bytes()));
+        println!("{}", report);
+        ans
     }
 
     fn derive_offset(
