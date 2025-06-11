@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ic-secp256k1 = { path = "lib/ic-secp256k1/" }
+ic-ed25519 = { path = "lib/ic-ed25519", version = "0.2.0" }
+k256 = { path = "lib/k256" }
+icrc-ledger-types = "0.1.9"
+pretty_assertions = "1.4.1"
+elliptic-curve = { version = "0.13.8" }
+hex = "0.4"
+serde_json = "1.0.140"
+serde = "1.0.219"

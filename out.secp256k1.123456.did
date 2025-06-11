@@ -1,0 +1,10 @@
+(
+  variant {
+    Ok = record {
+      record {
+        public_key = blob "\02\4b\f7\8e\40\bb\51\d2\c6\c1\4c\11\aa\8f\3a\f1\54\97\41\de\5a\cd\f9\25\e6\dc\23\0d\fc\5d\aa\22\d9";
+        chain_code = blob "\bc\35\b8\51\5f\03\aa\15\43\08\1e\2a\f4\e8\78\f2\8b\27\f3\ce\00\c0\35\f4\06\87\02\d3\3e\e8\85\86";
+      };
+    }
+  },
+)

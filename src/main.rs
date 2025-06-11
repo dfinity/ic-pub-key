@@ -1,3 +1,5 @@
+use mkpubkey::ecdsa::secp256k1;
+
 fn main() {
-    println!("Hello, world!");
+    secp256k1::print_test_vectors();
 }
