@@ -6,12 +6,7 @@ use crate::test_vector::{ChainCode, SerializedDerivationPath, load_test_vectors}
 /// Converts a derivation path from the test vectors into the equivalent type in the `ic_secp256k1` crate.
 impl From<SerializedDerivationPath> for DerivationPath {
     fn from(path: SerializedDerivationPath) -> Self {
-        Self::new(
-            path.elements
-                .into_iter()
-                .map(DerivationIndex)
-                .collect(),
-        )
+        Self::new(path.elements.into_iter().map(DerivationIndex).collect())
     }
 }
 
