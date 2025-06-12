@@ -1,6 +1,7 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
+import { blobDecode, blobEncode } from '../encoding';
 
 /**
  * The response type for the ICP management canister's `ecdsa_public_key` method.
@@ -126,6 +127,28 @@ export class DerivationPath {
 	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
+
+	/**
+	 * Creates a new DerivationPath from / separated candid blobs.
+	 * @param blob The / separated blobs to create the derivation path from.
+	 * @returns A new DerivationPath.
+	 */
+	static fromBlob(blob: string | undefined): DerivationPath {
+		if (blob === undefined || blob === null) {
+			return new DerivationPath([]);
+		}
+		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
+	}
+
+	/**
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
+	 */
+	toBlob(): string | null {
+		if (this.path.length === 0) {
+			return null;
+		}
+		return this.path.map((p) => blobEncode(p)).join('/');
+	}
 
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
