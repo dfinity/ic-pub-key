@@ -1,5 +1,4 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
-import { strict as assert } from 'assert';
 import createHmac from 'create-hmac';
 import { blobDecode, blobEncode } from '../encoding';
 
@@ -236,7 +235,9 @@ export class DerivationPath {
 		hmac.update(ckd_input);
 		hmac.update(idx);
 		let hmac_output = hmac.digest();
-		assert.equal(hmac_output.length, 64);
+		if (hmac_output.length !== 64) {
+			throw new Error('Invalid HMAC output length');
+		}
 
 		let fb = hmac_output.subarray(0, 32);
 		let fb_hex = fb.toString('hex');
