@@ -3,6 +3,86 @@ import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
 
 /**
+ * The response type for the ICP management canister's `ecdsa_public_key` method.
+ */
+export type EcdsaPublicKeyResponse = PublicKeyWithChainCode;
+
+/**
+ * A public key with its chain code.
+ */
+export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
+	constructor(
+		public readonly public_key: Sec1EncodedPublicKey,
+		public readonly chain_code: ChainCode
+	) {}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key The public key as a 66 character hex string.
+	 * @param chain_code The chain code as a 64 character hex string.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromHex({
+		public_key,
+		chain_code
+	}: {
+		public_key: string;
+		chain_code: string;
+	}): PublicKeyWithChainCode {
+		return new PublicKeyWithChainCode(
+			Sec1EncodedPublicKey.fromHex(public_key),
+			ChainCode.fromHex(chain_code)
+		);
+	}
+
+	/**
+	 * @returns The public key and chain code as hex strings.
+	 */
+	toHex(): { public_key: string; chain_code: string } {
+		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.asHex() };
+	}
+}
+
+/**
+ * A public key, represented as a 33 byte array using sec1 encoding.
+ */
+export class Sec1EncodedPublicKey {
+	static readonly LENGTH = 33;
+
+	/**
+	 * @param bytes The 33 sec1 bytes of the public key.
+	 */
+	constructor(public readonly bytes: Uint8Array) {
+		if (bytes.length !== Sec1EncodedPublicKey.LENGTH) {
+			throw new Error(
+				`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH} bytes, got ${bytes.length}`
+			);
+		}
+	}
+
+	/**
+	 * Creates a new Sec1EncodedPublicKey from a 66 character hex string.
+	 * @param hex The 66 character hex string.
+	 * @returns A new Sec1EncodedPublicKey.
+	 */
+	static fromHex(hex: string): Sec1EncodedPublicKey {
+		const bytes = Buffer.from(hex, 'hex');
+		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
+	/**
+	 * @returns The public key as a 66 character hex string.
+	 */
+	toHex(): string {
+		return Buffer.from(this.bytes).toString('hex');
+	}
+}
+
+/**
  * A chain code is a 32 byte array
  */
 export class ChainCode {
@@ -16,21 +96,21 @@ export class ChainCode {
 		}
 	}
 
+	/**
+	 * Creates a new ChainCode from a 64 character hex string.
+	 * @param hex The 64 character hex string.
+	 * @returns A new ChainCode.
+	 */
 	static fromHex(hex: string): ChainCode {
 		const bytes = Buffer.from(hex, 'hex');
 		return new ChainCode(new Uint8Array(bytes));
 	}
 
-	static fromArray(array: number[]): ChainCode {
-		return new ChainCode(new Uint8Array(array));
-	}
-
+	/**
+	 * @returns The chain code as a 64 character hex string.
+	 */
 	asHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
-	}
-
-	toJSON(): string {
-		return this.asHex();
 	}
 }
 
