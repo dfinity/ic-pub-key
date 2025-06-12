@@ -46,7 +46,7 @@ describe('Test Vectors', () => {
 			const derivationPath = DerivationPath.fromBlob(vector.derivation_path);
 
 			// Derive the new key
-			const derivedKey = inputKey.derive_subkey_with_chain_code(derivationPath);
+			const derivedKey = inputKey.deriveSubkeyWithChainCode(derivationPath);
 
 			// Check the results
 			expect(derivedKey.public_key.toHex()).toEqual(vector.expected_public_key);

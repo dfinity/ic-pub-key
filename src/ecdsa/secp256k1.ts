@@ -50,8 +50,8 @@ export class PublicKeyWithChainCode {
 	/**
 	 * Applies the given derivation path to obtain a new public key and chain code.
 	 */
-	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
-		return this.public_key.derive_subkey_with_chain_code(derivation_path, this.chain_code);
+	deriveSubkeyWithChainCode(derivation_path: DerivationPath): PublicKeyWithChainCode {
+		return this.public_key.deriveSubkeyWithChainCode(derivation_path, this.chain_code);
 	}
 }
 
@@ -85,7 +85,7 @@ export class Sec1EncodedPublicKey {
 	 * @param derivation_path The derivation path to derive the subkey from.
 	 * @returns A tuple containing the derived subkey and the chain code.
 	 */
-	derive_subkey_with_chain_code(
+	deriveSubkeyWithChainCode(
 		derivation_path: DerivationPath,
 		chain_code: ChainCode
 	): PublicKeyWithChainCode {
