@@ -48,7 +48,7 @@ fn key_derivation_works() {
         .unwrap();
         let (derived_key, derived_chain_code) = parent_key
             .public_key
-            .deriveSubkeyWithChainCode(&derivation_path, &parent_key.chain_code.0);
+            .derive_subkey_with_chain_code(&derivation_path, &parent_key.chain_code.0);
         assert_eq!(derived_key, expected_derived_key.public_key);
         assert_eq!(derived_chain_code, expected_derived_key.chain_code.0);
     }
