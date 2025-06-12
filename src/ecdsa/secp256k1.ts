@@ -72,7 +72,7 @@ export class Sec1EncodedPublicKey {
 		}
 	}
 
-	asAffinePoint(): AffinePoint {
+	toAffinePoint(): AffinePoint {
 		return ProjectivePoint.fromHex(this.bytes).toAffine();
 	}
 
@@ -89,7 +89,7 @@ export class Sec1EncodedPublicKey {
 		derivation_path: DerivationPath,
 		chain_code: ChainCode
 	): PublicKeyWithChainCode {
-		let public_key = this.asAffinePoint();
+		let public_key = this.toAffinePoint();
 		let [affine_pt, _offset, new_chain_code] = derivation_path.derive_offset(
 			public_key,
 			chain_code
