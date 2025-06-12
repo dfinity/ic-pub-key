@@ -40,7 +40,7 @@ describe('Sec1EncodedPublicKey', () => {
 
 describe('ChainCode', () => {
 	it('should create a new ChainCode from 32 bytes', () => {
-		const chainCode = new ChainCode(
+		const _chainCode = new ChainCode(
 			Buffer.from('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f', 'hex')
 		);
 	});

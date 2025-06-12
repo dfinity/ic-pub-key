@@ -44,7 +44,7 @@ export class PublicKeyWithChainCode {
 	 * @returns The public key and chain code as hex strings.
 	 */
 	toHex(): { public_key: string; chain_code: string } {
-		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.asHex() };
+		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.toHex() };
 	}
 }
 
@@ -107,11 +107,19 @@ export class ChainCode {
 		return new ChainCode(new Uint8Array(bytes));
 	}
 
+	static fromArray(array: number[]): ChainCode {
+		return new ChainCode(new Uint8Array(array));
+	}
+
 	/**
 	 * @returns The chain code as a 64 character hex string.
 	 */
-	asHex(): string {
+	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
+	}
+
+	toJSON(): string {
+		return this.toHex();
 	}
 }
 
