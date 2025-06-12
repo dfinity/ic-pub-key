@@ -34,6 +34,10 @@ export function blobDecode(s: string): Uint8Array {
 		}
 		ans.push(char.charCodeAt(0));
 	}
+	// Handle incomplete escape sequences
+	if (skip > 0) {
+		throw new Error('Incomplete escape sequence at the end of the input string.');
+	}
 	return new Uint8Array(ans);
 }
 

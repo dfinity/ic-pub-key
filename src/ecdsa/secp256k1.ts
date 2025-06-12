@@ -1,7 +1,7 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { strict as assert } from 'assert';
 import { createHmac } from 'crypto';
-import { blobDecode } from '../encoding';
+import { blobDecode, blobEncode } from '../encoding';
 
 /**
  * The response type for the ICP management canister's `ecdsa_public_key` method.
@@ -22,6 +22,32 @@ export class PublicKeyWithChainCode {
 	) {}
 
 	/**
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key The public key as a 66 character hex string.
+	 * @param chain_code The chain code as a 64 character hex string.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromHex({
+		public_key,
+		chain_code
+	}: {
+		public_key: string;
+		chain_code: string;
+	}): PublicKeyWithChainCode {
+		return new PublicKeyWithChainCode(
+			Sec1EncodedPublicKey.fromHex(public_key),
+			ChainCode.fromHex(chain_code)
+		);
+	}
+
+	/**
+	 * @returns The public key and chain code as hex strings.
+	 */
+	toHex(): { public_key: string; chain_code: string } {
+		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.toHex() };
+	}
+
+	/**
 	 * Applies the given derivation path to obtain a new public key and chain code.
 	 */
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
@@ -35,6 +61,9 @@ export class PublicKeyWithChainCode {
 export class Sec1EncodedPublicKey {
 	static readonly LENGTH = 33;
 
+	/**
+	 * @param bytes The 33 sec1 bytes of the public key.
+	 */
 	constructor(public readonly bytes: Uint8Array) {
 		if (bytes.length !== Sec1EncodedPublicKey.LENGTH) {
 			throw new Error(
@@ -45,10 +74,6 @@ export class Sec1EncodedPublicKey {
 
 	asAffinePoint(): AffinePoint {
 		return ProjectivePoint.fromHex(this.bytes).toAffine();
-	}
-
-	toHex(): string {
-		return Buffer.from(this.bytes).toString('hex');
 	}
 
 	static fromProjectivePoint(point: ProjectivePoint): Sec1EncodedPublicKey {
@@ -72,6 +97,23 @@ export class Sec1EncodedPublicKey {
 		let pt = ProjectivePoint.fromAffine(affine_pt);
 		return new PublicKeyWithChainCode(Sec1EncodedPublicKey.fromProjectivePoint(pt), new_chain_code);
 	}
+
+	/**
+	 * Creates a new Sec1EncodedPublicKey from a 66 character hex string.
+	 * @param hex The 66 character hex string.
+	 * @returns A new Sec1EncodedPublicKey.
+	 */
+	static fromHex(hex: string): Sec1EncodedPublicKey {
+		const bytes = Buffer.from(hex, 'hex');
+		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+	}
+
+	/**
+	 * @returns The public key as a 66 character hex string.
+	 */
+	toHex(): string {
+		return Buffer.from(this.bytes).toString('hex');
+	}
 }
 
 /**
@@ -88,6 +130,11 @@ export class ChainCode {
 		}
 	}
 
+	/**
+	 * Creates a new ChainCode from a 64 character hex string.
+	 * @param hex The 64 character hex string.
+	 * @returns A new ChainCode.
+	 */
 	static fromHex(hex: string): ChainCode {
 		const bytes = Buffer.from(hex, 'hex');
 		return new ChainCode(new Uint8Array(bytes));
@@ -97,6 +144,9 @@ export class ChainCode {
 		return new ChainCode(new Uint8Array(array));
 	}
 
+	/**
+	 * @returns The chain code as a 64 character hex string.
+	 */
 	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
 	}
@@ -119,11 +169,26 @@ export class DerivationPath {
 
 	constructor(public readonly path: PathComponent[]) {}
 
+	/**
+	 * Creates a new DerivationPath from / separated candid blobs.
+	 * @param blob The / separated blobs to create the derivation path from.
+	 * @returns A new DerivationPath.
+	 */
 	static fromBlob(blob: string | undefined): DerivationPath {
 		if (blob === undefined || blob === null) {
 			return new DerivationPath([]);
 		}
 		return new DerivationPath(blob.split('/').map((p) => blobDecode(p)));
+	}
+
+	/**
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
+	 */
+	toBlob(): string | null {
+		if (this.path.length === 0) {
+			return null;
+		}
+		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
 	/**
