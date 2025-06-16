@@ -47,6 +47,25 @@ export class PublicKeyWithChainCode {
 	}
 
 	/**
+	 * Creates a new PublicKeyWithChainCode from two strings.
+	 * @param public_key The public key in any supported format.
+	 * @param chain_code The chain code in any supported format.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromString({
+		public_key,
+		chain_code
+	}: {
+		public_key: string;
+		chain_code: string;
+	}): PublicKeyWithChainCode {
+		return new PublicKeyWithChainCode(
+			Sec1EncodedPublicKey.fromString(public_key),
+			ChainCode.fromString(chain_code)
+		);
+	}
+
+	/**
 	 * Applies the given derivation path to obtain a new public key and chain code.
 	 */
 	deriveSubkeyWithChainCode(derivation_path: DerivationPath): PublicKeyWithChainCode {
@@ -113,6 +132,34 @@ export class Sec1EncodedPublicKey {
 	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
 	}
+
+	/**
+	 * Creates a new Sec1EncodedPublicKey from a Candid blob.
+	 * @param blob The blob to create the public key from.
+	 * @returns A new Sec1EncodedPublicKey.
+	 */
+	static fromBlob(blob: string): Sec1EncodedPublicKey {
+		return new Sec1EncodedPublicKey(blobDecode(blob));
+	}
+
+	/**
+	 * @returns The public key as a Candid blob.
+	 */
+	toBlob(): string {
+		return blobEncode(this.bytes);
+	}
+
+	/**
+	 * Creates a new Sec1EncodedPublicKey from a string.
+	 * @param str The string to create the public key from.
+	 * @returns A new Sec1EncodedPublicKey.
+	 */
+	static fromString(str: string): Sec1EncodedPublicKey {
+		if (str.length === Sec1EncodedPublicKey.LENGTH * 2 && str.match(/^[0-9A-Fa-f]+$/)) {
+			return Sec1EncodedPublicKey.fromHex(str);
+		}
+		return Sec1EncodedPublicKey.fromBlob(str);
+	}
 }
 
 /**
@@ -148,6 +195,34 @@ export class ChainCode {
 	 */
 	toHex(): string {
 		return Buffer.from(this.bytes).toString('hex');
+	}
+
+	/**
+	 * Creates a new ChainCode from a Candid blob.
+	 * @param blob The blob to create the chain code from.
+	 * @returns A new ChainCode.
+	 */
+	static fromBlob(blob: string): ChainCode {
+		return new ChainCode(blobDecode(blob));
+	}
+
+	/**
+	 * @returns The chain code as a Candid blob.
+	 */
+	toBlob(): string {
+		return blobEncode(this.bytes);
+	}
+
+	/**
+	 * Creates a new ChainCode from a string.
+	 * @param str The chain code as a hex string or Candid blob.
+	 * @returns A new ChainCode.
+	 */
+	static fromString(str: string): ChainCode {
+		if (str.length === ChainCode.LENGTH * 2 && str.match(/^[0-9A-Fa-f]+$/)) {
+			return ChainCode.fromHex(str);
+		}
+		return ChainCode.fromBlob(str);
 	}
 
 	toJSON(): string {

@@ -36,6 +36,22 @@ describe('Sec1EncodedPublicKey', () => {
 		const publicKey = Sec1EncodedPublicKey.fromHex(hex_key);
 		expect(publicKey.toHex()).toBe(hex_key);
 	});
+	it('should blob decode and encode back to the same key', () => {
+		const blob_key =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f\\20';
+		const key = Sec1EncodedPublicKey.fromBlob(blob_key);
+		const blob_encoded = key.toBlob();
+		expect(blob_encoded).toBe(blob_key);
+	});
+	it('should parse both hex and blob keys', () => {
+		const hex_key = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20';
+		const blob_key =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f\\20';
+		const blob2hex = Sec1EncodedPublicKey.fromString(blob_key).toHex();
+		const hex2blob = Sec1EncodedPublicKey.fromString(hex_key).toBlob();
+		expect(blob2hex).toBe(hex_key);
+		expect(hex2blob).toBe(blob_key);
+	});
 });
 
 describe('ChainCode', () => {
