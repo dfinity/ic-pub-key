@@ -76,6 +76,27 @@ describe('ChainCode', () => {
 				)
 		).toThrow();
 	});
+	it('should hex decode and encode', () => {
+		const chain_code = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f';
+		const chain_code_from_hex = ChainCode.fromHex(chain_code);
+		expect(chain_code_from_hex.toHex()).toBe(chain_code);
+	});
+	it('should blob decode and encode', () => {
+		const chain_code =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
+		const chain_code_from_blob = ChainCode.fromBlob(chain_code);
+		const chain_code_from_blob_encoded = chain_code_from_blob.toBlob();
+		expect(chain_code_from_blob_encoded).toBe(chain_code);
+	});
+	it('should parse both hex and blob chain codes', () => {
+		const hex_chain_code = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f';
+		const blob_chain_code =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
+		const blob2hex = ChainCode.fromString(blob_chain_code).toHex();
+		const hex2blob = ChainCode.fromString(hex_chain_code).toBlob();
+		expect(blob2hex).toBe(hex_chain_code);
+		expect(hex2blob).toBe(blob_chain_code);
+	});
 });
 
 describe('PublicKeyWithChainCode', () => {
@@ -85,5 +106,38 @@ describe('PublicKeyWithChainCode', () => {
 		const public_key_with_chain_code = PublicKeyWithChainCode.fromHex({ public_key, chain_code });
 		const public_key_with_chain_code_hex = public_key_with_chain_code.toHex();
 		expect(public_key_with_chain_code_hex).toStrictEqual({ public_key, chain_code });
+	});
+	it('should blob decode and encode', () => {
+		const public_key =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f\\20';
+		const chain_code =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
+		const public_key_with_chain_code = PublicKeyWithChainCode.fromBlob({ public_key, chain_code });
+	});
+	it('should parse both hex and blob public keys and chain codes', () => {
+		const hex_public_key = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20';
+		const blob_public_key =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f\\20';
+		const hex_chain_code = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f';
+		const blob_chain_code =
+			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
+		for (const public_key of [hex_public_key, blob_public_key]) {
+			for (const chain_code of [hex_chain_code, blob_chain_code]) {
+				let public_key_with_chain_code = PublicKeyWithChainCode.fromString({
+					public_key,
+					chain_code
+				});
+				let public_key_with_chain_code_hex = public_key_with_chain_code.toHex();
+				let public_key_with_chain_code_blob = public_key_with_chain_code.toBlob();
+				expect(public_key_with_chain_code_hex).toStrictEqual({
+					public_key: hex_public_key,
+					chain_code: hex_chain_code
+				});
+				expect(public_key_with_chain_code_blob).toStrictEqual({
+					public_key: blob_public_key,
+					chain_code: blob_chain_code
+				});
+			}
+		}
 	});
 });

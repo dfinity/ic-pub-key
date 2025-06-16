@@ -47,6 +47,32 @@ export class PublicKeyWithChainCode {
 	}
 
 	/**
+	 * @returns The public key and chain code as Candid blobs.
+	 */
+	toBlob(): { public_key: string; chain_code: string } {
+		return { public_key: this.public_key.toBlob(), chain_code: this.chain_code.toBlob() };
+	}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two Candid blobs.
+	 * @param public_key The public key as a Candid blob.
+	 * @param chain_code The chain code as a Candid blob.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromBlob({
+		public_key,
+		chain_code
+	}: {
+		public_key: string;
+		chain_code: string;
+	}): PublicKeyWithChainCode {
+		return new PublicKeyWithChainCode(
+			Sec1EncodedPublicKey.fromBlob(public_key),
+			ChainCode.fromBlob(chain_code)
+		);
+	}
+
+	/**
 	 * Creates a new PublicKeyWithChainCode from two strings.
 	 * @param public_key The public key in any supported format.
 	 * @param chain_code The chain code in any supported format.
@@ -122,6 +148,11 @@ export class Sec1EncodedPublicKey {
 	 * @returns A new Sec1EncodedPublicKey.
 	 */
 	static fromHex(hex: string): Sec1EncodedPublicKey {
+		if (hex.length !== Sec1EncodedPublicKey.LENGTH * 2) {
+			throw new Error(
+				`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH * 2} characters, got ${hex.length}`
+			);
+		}
 		const bytes = Buffer.from(hex, 'hex');
 		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
 	}
@@ -178,11 +209,16 @@ export class ChainCode {
 
 	/**
 	 * Creates a new ChainCode from a 64 character hex string.
-	 * @param hex The 64 character hex string.
+	 * @param hex_str The 64 character hex string.
 	 * @returns A new ChainCode.
 	 */
-	static fromHex(hex: string): ChainCode {
-		const bytes = Buffer.from(hex, 'hex');
+	static fromHex(hex_str: string): ChainCode {
+		if (hex_str.length !== ChainCode.LENGTH * 2) {
+			throw new Error(
+				`Invalid ChainCode length: expected ${ChainCode.LENGTH * 2} characters, got ${hex_str.length}`
+			);
+		}
+		const bytes = Buffer.from(hex_str, 'hex');
 		return new ChainCode(new Uint8Array(bytes));
 	}
 
