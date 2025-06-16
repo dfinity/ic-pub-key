@@ -45,6 +45,13 @@ export class PublicKeyWithChainCode {
 	toHex(): { public_key: string; chain_code: string } {
 		return { public_key: this.public_key.toHex(), chain_code: this.chain_code.toHex() };
 	}
+
+	/**
+	 * Applies the given derivation path to obtain a new public key and chain code.
+	 */
+	deriveSubkeyWithChainCode(derivation_path: DerivationPath): PublicKeyWithChainCode {
+		return this.public_key.deriveSubkeyWithChainCode(derivation_path, this.chain_code);
+	}
 }
 
 /**
@@ -62,6 +69,32 @@ export class Sec1EncodedPublicKey {
 				`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH} bytes, got ${bytes.length}`
 			);
 		}
+	}
+
+	toAffinePoint(): AffinePoint {
+		return ProjectivePoint.fromHex(this.bytes).toAffine();
+	}
+
+	static fromProjectivePoint(point: ProjectivePoint): Sec1EncodedPublicKey {
+		return new Sec1EncodedPublicKey(point.toRawBytes(true));
+	}
+
+	/**
+	 * A typescript translation of [ic_secp256k1::PublicKey::derive_subkey_with_chain_code](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L678)
+	 * @param derivation_path The derivation path to derive the subkey from.
+	 * @returns A tuple containing the derived subkey and the chain code.
+	 */
+	deriveSubkeyWithChainCode(
+		derivation_path: DerivationPath,
+		chain_code: ChainCode
+	): PublicKeyWithChainCode {
+		let public_key = this.toAffinePoint();
+		let [affine_pt, _offset, new_chain_code] = derivation_path.derive_offset(
+			public_key,
+			chain_code
+		);
+		let pt = ProjectivePoint.fromAffine(affine_pt);
+		return new PublicKeyWithChainCode(Sec1EncodedPublicKey.fromProjectivePoint(pt), new_chain_code);
 	}
 
 	/**
