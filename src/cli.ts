@@ -100,7 +100,7 @@ eth
 		let principal = Principal.fromText(user);
 		let principal_as_bytes = principal.toUint8Array();
 		let derivation_path = new DerivationPath([
-			Uint8Array.from([0x80]),
+			Uint8Array.from([0x01]),
 			principal_as_bytes
 		]);
 		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
