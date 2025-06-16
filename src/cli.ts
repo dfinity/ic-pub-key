@@ -109,6 +109,8 @@ eth
         console.log("root key:", signer_pubkey_with_chain_code.public_key.asHex());
 		console.log("derivation_path", derivation_path.toHex());
 		console.log("eth_pubkey", eth_pubkey.asHex());
+		let eth_point = eth_pubkey.asProjectivePoint();
+		console.log("compressed", eth_point.toHex(true));
 		let eth_address = computeAddress("0x" + eth_pubkey.asHex());
 		console.log(eth_address);
 	});
