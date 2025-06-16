@@ -7,6 +7,7 @@ import {
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode,
 	test_derive_public_key as test_derive_secp256k1_public_key
 } from './ecdsa/secp256k1.js';
+import { keccak256 } from 'ethers/crypto';
 
 export const program = new Command();
 
@@ -115,7 +116,7 @@ function pubkey_bytes_to_address(key: Sec1EncodedPublicKey): string {
         if (decompressed[0] !== 0x04) {
             throw new Error('Invalid public key');
         }
-		//let hash = keccak256(decompressed.slice(1));
+		let hash = keccak256(decompressed.slice(1));
 		//let checksum = to_checksum(hash.slice(12));
 		//return checksum;
 		//assert_eq!(point_bytes[0], 0x04);
