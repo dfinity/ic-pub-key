@@ -113,4 +113,9 @@ eth
 		console.log("compressed", eth_point.toHex(true));
 		let eth_address = computeAddress("0x" + eth_pubkey.asHex());
 		console.log(eth_address);
+
+        let canister_pubkey = "023a6d3464bf0c3224a8f3c16d5709d5084946a2430fb4b0afeb6a4de89786d12b";
+		let canister_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromString(canister_pubkey, "0000000000000000000000000000000000000000000000000000000000000000");
+		let canister_address = computeAddress("0x" + canister_pubkey_with_chain_code.public_key.asHex());
+		console.log("canister_address", canister_address);
 	});
