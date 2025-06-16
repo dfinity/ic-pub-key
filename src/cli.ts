@@ -105,7 +105,7 @@ eth
 			principal_as_bytes
 		]);
 		console.log("derivation_path", derivation_path.toHex());
-		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
+		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromString(pubkey, chaincode);
         let eth_pubkey_with_chaincode = signer_pubkey_with_chain_code.derive_subkey_with_chain_code(derivation_path);
 		let eth_pubkey = eth_pubkey_with_chaincode.public_key;
 		console.log("eth_pubkey", eth_pubkey.asHex());

@@ -47,6 +47,12 @@ export class PublicKeyWithChainCode {
 		return new PublicKeyWithChainCode(public_key, chain_code);
 	}
 
+	static fromString(public_key_str: string, chain_code_str: string): PublicKeyWithChainCode {
+		let public_key = Sec1EncodedPublicKey.fromString(public_key_str);
+		let chain_code = ChainCode.fromString(chain_code_str);
+		return new PublicKeyWithChainCode(public_key, chain_code);
+	}
+
 	derive_subkey_with_chain_code(derivation_path: DerivationPath): PublicKeyWithChainCode {
 		let public_key = this.public_key.asAffinePoint();
 		let [affine_pt, _offset, chain_code] = derivation_path.derive_offset(
@@ -150,6 +156,18 @@ export class ChainCode {
 				`Invalid ChainCode length: expected ${ChainCode.LENGTH} bytes, got ${bytes.length}`
 			);
 		}
+	}
+
+	static fromString(str: string): ChainCode {
+		if (str.length === ChainCode.LENGTH * 2 && /^[0-9A-Fa-f]+$/.test(str)) {
+			return ChainCode.fromHex(str);
+		}
+		return ChainCode.fromBlob(str);
+	}
+
+	static fromBlob(blob: string): ChainCode {
+		const bytes = blobDecode(blob);
+		return new ChainCode(new Uint8Array(bytes));
 	}
 
 	static fromHex(hex: string): ChainCode {
