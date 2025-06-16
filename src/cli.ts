@@ -99,6 +99,7 @@ eth
 		console.log({ pubkey, chaincode, user });
 		let principal = Principal.fromText(user);
 		let principal_as_bytes = principal.toUint8Array();
+		console.log(principal_as_bytes);
 		let derivation_path = new DerivationPath([
 			Uint8Array.from([0x01]),
 			principal_as_bytes
