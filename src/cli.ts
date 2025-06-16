@@ -110,7 +110,7 @@ eth
 		console.log("derivation_path", derivation_path.toHex());
 		console.log("eth_pubkey", eth_pubkey.asHex());
 		let eth_point = eth_pubkey.asProjectivePoint();
-		console.log("compressed", eth_point.toHex(true));
+		console.log("compressed", eth_point.toHex(false));
 		let eth_address = computeAddress("0x" + eth_pubkey.asHex());
 		console.log(eth_address);
 	});
