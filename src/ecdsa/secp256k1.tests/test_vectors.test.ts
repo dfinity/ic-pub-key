@@ -19,7 +19,7 @@ interface TestVector {
 interface TestVectors {
 	ecdsa: {
 		secp256k1: {
-			test_vectors: TestVector[];
+			test_vectors: TestVector[]; // Populated by `loadTestVectors()`.
 		};
 	};
 }
