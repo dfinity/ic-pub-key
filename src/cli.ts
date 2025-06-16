@@ -81,3 +81,25 @@ function principal_derivation_path(principal: Principal): DerivationPath {
 	let principal_bytes = principal.toUint8Array();
 	return new DerivationPath([schema, principal_bytes]);
 }
+
+
+
+let eth = program.command('eth').description('Get Ethereum address');
+
+eth
+	.command('address')
+	.description("Get a user's Ethereum address")
+	.requiredOption('-p, --pubkey <pubkey>', 'The signer canister\'s public key', String)
+	.requiredOption('-c, --chaincode <chaincode>', 'The signer\'s chain code', String)
+	.requiredOption('-u, --user <user>', 'The user\'s principal', String)
+	.action(({ pubkey, chaincode, user }) => {
+		console.log({ pubkey, chaincode, user });
+		let principal = Principal.fromText(user);
+		let principal_as_bytes = principal.toUint8Array();
+		let derivation_path = new DerivationPath([
+			Uint8Array.from([0x80]),
+			principal_as_bytes
+		]);
+		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
+        let eth_pubkey_with_chaincode = signer_pubkey_with_chain_code.derive_subkey_with_chain_code(derivation_path);
+	});

@@ -72,7 +72,8 @@ use elliptic_curve::{
 const ORDER_HEX: &str = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141";
 
 /// Order of the secp256k1 elliptic curve.
-const ORDER: U256 = U256::from_be_hex(ORDER_HEX);
+const 
+ORDER: U256 = U256::from_be_hex(ORDER_HEX);
 
 /// secp256k1 (K-256) elliptic curve.
 ///
