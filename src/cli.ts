@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import {
 	DerivationPath,
 	derive_public_key as derive_secp256k1_public_key,
+	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode,
 	test_derive_public_key as test_derive_secp256k1_public_key
 } from './ecdsa/secp256k1.js';
@@ -90,7 +91,7 @@ eth
 	.command('address')
 	.description("Get a user's Ethereum address")
 	.requiredOption('-p, --pubkey <pubkey>', 'The signer canister\'s public key', String)
-	.requiredOption('-c, --chaincode <chaincode>', 'The signer\'s chain code', String)
+	.requiredOption('-c, --chaincode <chaincode>', 'The signer canister\'s chain code', String)
 	.requiredOption('-u, --user <user>', 'The user\'s principal', String)
 	.action(({ pubkey, chaincode, user }) => {
 		console.log({ pubkey, chaincode, user });
@@ -102,4 +103,25 @@ eth
 		]);
 		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromBlob(pubkey, chaincode);
         let eth_pubkey_with_chaincode = signer_pubkey_with_chain_code.derive_subkey_with_chain_code(derivation_path);
+		let eth_pubkey = eth_pubkey_with_chaincode.public_key;
+		let eth_address = pubkey_bytes_to_address(eth_pubkey);
 	});
+
+function pubkey_bytes_to_address(key: Sec1EncodedPublicKey): string {
+		//use k256::elliptic_curve::sec1::ToEncodedPoint;
+
+		let projective_point = key.asProjectivePoint();
+		let decompressed = projective_point.toRawBytes(false);
+        if (decompressed[0] !== 0x04) {
+            throw new Error('Invalid public key');
+        }
+		//let hash = keccak256(decompressed.slice(1));
+		//let checksum = to_checksum(hash.slice(12));
+		//return checksum;
+		//assert_eq!(point_bytes[0], 0x04);
+	
+		//let hash = keccak256(&point_bytes[1..]);
+	
+		//ethers_core::utils::to_checksum(&Address::from_slice(&hash[12..32]), None)
+		return "";
+	}
