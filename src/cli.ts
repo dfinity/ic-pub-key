@@ -55,7 +55,7 @@ eth
 		'after',
 		`
 
-This is typically a cheap and fast way of obtaining a user's Chain Fusion Signer Etherum address.  It is equivalent to API calls such as:
+This is a cheap and fast way of obtaining a user's Chain Fusion Signer Etherum address.  It is equivalent to API calls such as:
 
 $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "principal" = opt principal "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"}, null)' --wallet "$(dfx identity get-wallet --ic)"
 (
