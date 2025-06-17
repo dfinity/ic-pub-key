@@ -75,5 +75,12 @@ eth
 		let eth_pubkey = eth_pubkey_with_chaincode.public_key;
 
 		let eth_address = computeAddress('0x' + eth_pubkey.toHex());
-		console.log('eth_address', eth_address);
+		let ans = {
+			request: {
+				key: signer_pubkey_with_chain_code,
+				derivation_path: derivation_path
+			},
+			response: eth_address
+		};
+		console.log(JSON.stringify(ans, null, 2));
 	});
