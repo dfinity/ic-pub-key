@@ -1,6 +1,6 @@
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import createHmac from 'create-hmac';
-import { blobDecode, blobEncode } from '../encoding';
+import { blobDecode, blobEncode } from '../encoding.js';
 
 /**
  * The response type for the ICP management canister's `ecdsa_public_key` method.
