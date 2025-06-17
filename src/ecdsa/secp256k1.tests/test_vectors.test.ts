@@ -9,6 +9,7 @@ import {
 } from '../secp256k1';
 
 interface TestVector {
+	name: string;
 	public_key: string;
 	chain_code: string;
 	derivation_path: string;
@@ -35,8 +36,8 @@ export function loadTestVectors(): TestVectors {
 describe('Test Vectors', () => {
 	const testVectors = loadTestVectors();
 
-	testVectors.ecdsa.secp256k1.test_vectors.forEach((vector, index) => {
-		it(`should derive correct key for test vector ${index + 1}`, () => {
+	testVectors.ecdsa.secp256k1.test_vectors.forEach((vector) => {
+		it(`should derive correct key for test vector ${vector.name}`, () => {
 			// Create the input key with chain code
 			const public_key = new Sec1EncodedPublicKey(Buffer.from(vector.public_key, 'hex'));
 			const chain_code = ChainCode.fromHex(vector.chain_code);

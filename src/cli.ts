@@ -37,9 +37,7 @@ function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpat
 			key: pubkey_with_chain_code,
 			derivation_path: parsed_derivationpath
 		},
-		response: {
-			key: derived_pubkey
-		}
+		response: derived_pubkey.toHex()
 	};
 	return JSON.stringify(ans, null, 2);
 }
