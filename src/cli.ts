@@ -1,9 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
-<<<<<<< HEAD
 import { computeAddress } from 'ethers';
-=======
->>>>>>> origin/main
 import {
 	DerivationPath,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
