@@ -57,11 +57,11 @@ eth
 	.action(({ pubkey, chaincode, user }) => {
 		pubkey =
 			pubkey == null
-				? '0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0'
+				? '0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0' // Production chain fusion signer's public key.
 				: pubkey;
 		chaincode =
 			chaincode == null
-				? 'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0'
+				? 'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0' // Production chain fusion signer's chain code.  It doesn't really matter if this is wrong.
 				: chaincode;
 		let principal = Principal.fromText(user);
 		let principal_as_bytes = principal.toUint8Array();
