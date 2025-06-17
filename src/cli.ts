@@ -22,20 +22,24 @@ ecdsa
 	.requiredOption('-c, --chaincode <chaincode>', 'The parent chain code', String)
 	.option('-d, --derivationpath <derivationpath>', 'The derivation path', String)
 	.action(({ pubkey, chaincode, derivationpath }) => {
-		let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromString({
-			public_key: pubkey,
-			chain_code: chaincode
-		});
-		let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
-		let derived_pubkey = pubkey_with_chain_code.deriveSubkeyWithChainCode(parsed_derivationpath);
-		let ans = {
-			request: {
-				key: pubkey_with_chain_code,
-				derivation_path: parsed_derivationpath
-			},
-			response: {
-				key: derived_pubkey
-			}
-		};
-		console.log(JSON.stringify(ans, null, 2));
+		console.log(ecdsa_secp256k1_derive(pubkey, chaincode, derivationpath));
 	});
+
+function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpath: string): string {
+	let pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromString({
+		public_key: pubkey,
+		chain_code: chaincode
+	});
+	let parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
+	let derived_pubkey = pubkey_with_chain_code.deriveSubkeyWithChainCode(parsed_derivationpath);
+	let ans = {
+		request: {
+			key: pubkey_with_chain_code,
+			derivation_path: parsed_derivationpath
+		},
+		response: {
+			key: derived_pubkey
+		}
+	};
+	return JSON.stringify(ans, null, 2);
+}

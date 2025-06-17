@@ -39,4 +39,8 @@ describe('CLI', () => {
 		expect(helpText).toContain('--version');
 		expect(helpText).toContain('--help');
 	});
+
+	it('should derive ecdsa/secp256k1 public keyc correctly', () => {
+		// FOr every entry in th etest vectors, verify that the output matches.
+	});
 });
