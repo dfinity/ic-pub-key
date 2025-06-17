@@ -53,7 +53,10 @@ describe('CLI', () => {
 				expected_public_key,
 				expected_chain_code
 			} = vector;
-			let command = `node ${cliPath} derive ecdsa secp256k1 --pubkey ${public_key} --chaincode ${chain_code} --derivationpath ${derivation_path}`;
+			let command = `node ${cliPath} derive ecdsa secp256k1 --pubkey ${public_key} --chaincode ${chain_code}`;
+			if (derivation_path !== null) {
+				command += ` --derivationpath ${derivation_path}`;
+			}
 			console.log(command);
 			const output = execSync(command).toString();
 			const parsedOutput = JSON.parse(output);
