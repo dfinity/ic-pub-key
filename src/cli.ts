@@ -79,7 +79,7 @@ eth
 			request: {
 				pubkey,
 				chaincode,
-				principal
+				principal: principal.toText()
 			},
 			response: { eth_address }
 		};
