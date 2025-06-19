@@ -23,7 +23,7 @@ jobs:
         run: ./scripts/setup shellcheck
 
       - name: Lint shell scripts
-        run: scripts/lint.sh.sh
+        run: scripts/lint-sh
 
   lint-github-actions:
     runs-on: ubuntu-24.04
