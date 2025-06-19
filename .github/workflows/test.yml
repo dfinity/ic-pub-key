@@ -42,6 +42,29 @@ jobs:
         run: scripts/lint.github.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Read .nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check GitHub workflow formatting
+        run: npm run format:check
+
   typescript:
     name: Test typescript
     runs-on: ubuntu-latest
@@ -57,16 +80,10 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Check GitHub workflow formatting
-        run: npm run format:github:check
-
-      - name: Check formatting
-        run: npm run format:check
 
       - name: Type check
         run: npm run build
@@ -93,9 +110,6 @@ jobs:
       - name: Cache dependencies
         uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
-
       - name: Run Clippy
         run: cargo clippy -- -D warnings
 
@@ -105,7 +119,7 @@ jobs:
       - name: Build
         run: cargo build --verbose
   tests-pass:
-    needs: ["typescript", "rust", "lint-shell", "lint-gihub-actions"]
+    needs: ["format", "typescript", "rust", "lint-shell", "lint-gihub-actions"]
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     permissions:
@@ -116,4 +130,4 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/needs_success
         with:
-          needs: "${{ toJson(needs) }}"
+          needs: '${{ toJson(needs) }}'
