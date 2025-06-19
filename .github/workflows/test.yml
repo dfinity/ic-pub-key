@@ -119,7 +119,7 @@ jobs:
       - name: Build
         run: cargo build --verbose
   tests-pass:
-    needs: ['format', 'typescript', 'rust', 'lint-shell', 'lint-gihub-actions']
+    needs: ['format', 'typescript', 'rust', 'lint-shell', 'lint-github-actions']
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     permissions:
