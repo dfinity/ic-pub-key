@@ -1,7 +1,7 @@
 {
 	"rustup": {
 		"method": "curl",
-		"version": "1.28.1",
+		"version": "1.28.2",
 		"url": "https://raw.githubusercontent.com/rust-lang/rustup/${VERSION}/rustup-init.sh",
 		"pipe": [["sh"]]
 	},
