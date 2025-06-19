@@ -1,7 +1,6 @@
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import prettier from 'eslint-config-prettier';
 
 export default [
   js.configs.recommended,
@@ -14,11 +13,16 @@ export default [
       '*.bundle.js',
       'coverage/',
       '.vitest/',
-      '*.d.ts'
-    ]
+      '*.d.ts',
+    ],
   },
   {
-    files: ['src/**/*.ts', 'src/**/*.tsx', 'src/__tests__/**/*.ts', 'src/__tests__/**/*.tsx'],
+    files: [
+      'src/**/*.ts',
+      'src/**/*.tsx',
+      'src/__tests__/**/*.ts',
+      'src/__tests__/**/*.tsx',
+    ],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -45,7 +49,10 @@ export default [
     rules: {
       ...typescript.configs.recommended.rules,
       ...typescript.configs['recommended-requiring-type-checking'].rules,
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -61,5 +68,4 @@ export default [
       'no-console': 'off',
     },
   },
-  prettier,
-]; 
+];

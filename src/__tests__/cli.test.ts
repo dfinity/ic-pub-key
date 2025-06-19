@@ -1,30 +1,30 @@
-import { execSync } from "child_process";
-import * as path from "path";
-import { describe, expect, it } from "vitest";
-import { program } from "../cli";
+import { execSync } from 'child_process';
+import * as path from 'path';
+import { describe, expect, it } from 'vitest';
+import { program } from '../cli';
 
-describe("CLI", () => {
-  const cliPath = path.join(process.cwd(), "dist", "main.js");
+describe('CLI', () => {
+  const cliPath = path.join(process.cwd(), 'dist', 'main.js');
 
   /**
    * Note: This directly calls the CLI and checks the output, however the test coverage report cannot capture which lines are tested.
    */
-  it("should show help message", () => {
+  it('should show help message', () => {
     const output = execSync(`node ${cliPath} --help`).toString();
     expect(output).toContain(
-      "Tools for Internet Computer Protocol public keys",
+      'Tools for Internet Computer Protocol public keys'
     );
   });
 
   /**
    * Note: This uses mocks to provide test coverage reports.
    */
-  it("should show help message - mocked", () => {
+  it('should show help message - mocked', () => {
     // Mock console.log
     const originalConsoleLog = console.log;
-    let output = ""; // eslint-disable-line
+    let output = ''; // eslint-disable-line
     console.log = (msg: string) => {
-      output += msg + "\n";
+      output += msg + '\n';
     };
 
     // Get help text without exiting
@@ -34,13 +34,13 @@ describe("CLI", () => {
     console.log = originalConsoleLog;
 
     // Check that the help text contains expected content
-    expect(helpText).toContain("Usage:");
-    expect(helpText).toContain("ic-pub-key");
+    expect(helpText).toContain('Usage:');
+    expect(helpText).toContain('ic-pub-key');
     expect(helpText).toContain(
-      "Tools for Internet Computer Protocol public keys",
+      'Tools for Internet Computer Protocol public keys'
     );
-    expect(helpText).toContain("Options:");
-    expect(helpText).toContain("--version");
-    expect(helpText).toContain("--help");
+    expect(helpText).toContain('Options:');
+    expect(helpText).toContain('--version');
+    expect(helpText).toContain('--help');
   });
 });
