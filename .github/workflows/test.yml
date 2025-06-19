@@ -6,7 +6,8 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   lint-shell:
