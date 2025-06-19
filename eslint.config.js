@@ -14,6 +14,8 @@ export default [
       'coverage/',
       '.vitest/',
       '*.d.ts',
+      'vitest.config.js',
+      'vitest.config.ts',
     ],
   },
   {
