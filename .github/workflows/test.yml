@@ -63,6 +63,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install rust
+        run: ./scripts/setup rust
+
       - name: Check GitHub workflow formatting
         run: npm run format:check
 
