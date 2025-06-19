@@ -22,7 +22,7 @@ describe("CLI", () => {
   it("should show help message - mocked", () => {
     // Mock console.log
     const originalConsoleLog = console.log;
-    let output = "";
+    let output = ""; // eslint-disable-line
     console.log = (msg: string) => {
       output += msg + "\n";
     };
