@@ -39,7 +39,7 @@ jobs:
         run: ./scripts/setup cargo-binstall zizmor
 
       - name: Lint GitHub workflows
-        run: scripts/lint.github.sh
+        run: scripts/lint-gh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   format:
