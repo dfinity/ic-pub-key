@@ -380,7 +380,7 @@ export class DerivationPath {
 		let message = new Uint8Array(ckd_input.length + idx.length);
 		message.set(ckd_input);
 		message.set(idx, ckd_input.length);
-		let hmac_output = hmac(sha512, Buffer.from(chain_code.bytes), message);
+		let hmac_output = hmac(sha512, chain_code.bytes, message);
 		if (hmac_output.length !== 64) {
 			throw new Error('Invalid HMAC output length');
 		}
