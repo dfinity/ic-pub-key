@@ -1,5 +1,7 @@
+import { hmac } from '@noble/hashes/hmac';
+import { sha512 } from '@noble/hashes/sha2';
+import { bytesToHex } from '@noble/hashes/utils';
 import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
-import createHmac from 'create-hmac';
 import { blobDecode, blobEncode } from '../encoding.js';
 
 /**
@@ -375,16 +377,16 @@ export class DerivationPath {
 		ckd_input: Uint8Array,
 		chain_code: ChainCode
 	): [ChainCode, bigint] {
-		let hmac = createHmac('sha512', Buffer.from(chain_code.bytes));
-		hmac.update(ckd_input);
-		hmac.update(idx);
-		let hmac_output = hmac.digest();
+		let message = new Uint8Array(ckd_input.length + idx.length);
+		message.set(ckd_input);
+		message.set(idx, ckd_input.length);
+		let hmac_output = hmac(sha512, chain_code.bytes, message);
 		if (hmac_output.length !== 64) {
 			throw new Error('Invalid HMAC output length');
 		}
 
 		let fb = hmac_output.subarray(0, 32);
-		let fb_hex = fb.toString('hex');
+		let fb_hex = bytesToHex(fb);
 		let next_chain_key = hmac_output.subarray(32, 64);
 		// Treat the bytes as an integer.
 		//
