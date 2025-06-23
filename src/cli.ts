@@ -73,7 +73,11 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
 	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
 	.requiredOption('-u, --user <user>', "The user's principal", String)
-	.addOption(new Option('-n, --network <network>', 'The Bitcoin network').choices(BITCOIN_NETWORKS))
+	.addOption(
+		new Option('-n, --network <network>', 'The Bitcoin network')
+			.choices(BITCOIN_NETWORKS)
+			.makeOptionMandatory()
+	)
 	.action(({ pubkey, chaincode, user, network }) => {
 		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
 		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
