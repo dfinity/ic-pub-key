@@ -8,16 +8,6 @@ import {
 } from '../ecdsa/secp256k1.js';
 
 /**
- * The supported Bitcoin networks for the Chain Fusion Signer.
- */
-export const BITCOIN_NETWORKS = ['mainnet', 'testnet', 'regtest'] as const;
-
-/**
- * The type of the Bitcoin networks that are supported by the Chain Fusion Signer.
- */
-export type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
-
-/**
  * The public key of the chain fusion signer canister.
  */
 export let CHAIN_FUSION_SIGNER_PUBKEY = Sec1EncodedPublicKey.fromHex(
@@ -72,6 +62,16 @@ class ChainFusionSignerBtcAddressForResponse {
 		};
 	}
 }
+
+/**
+ * The supported Bitcoin networks for the Chain Fusion Signer.
+ */
+export const BITCOIN_NETWORKS = ['mainnet', 'testnet', 'regtest'] as const;
+
+/**
+ * The type of the Bitcoin networks that are supported by the Chain Fusion Signer.
+ */
+export type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
 
 /**
  * Maps a Bitcoin network type to the corresponding bitcoinjs-lib network.
