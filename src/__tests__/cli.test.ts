@@ -69,7 +69,7 @@ describe('CLI', () => {
 		// For every entry in the test vectors, verify that the output matches.
 		const testVectors = loadEllipticCurveTestVectors();
 		testVectors.ecdsa.secp256k1.test_vectors.forEach((vector) => {
-			let {
+			const {
 				name,
 				public_key,
 				chain_code,
@@ -94,7 +94,7 @@ describe('CLI', () => {
 	it('should derive eth address correctly', () => {
 		const testVectors = loadCliTestVectors()['signer']['eth']['address'];
 		testVectors.forEach((vector) => {
-			let { name, args, request, response } = vector;
+			const { name, args, request, response } = vector;
 			const output = execSync(`node ${cliPath} signer eth address ${args.join(' ')}`).toString();
 			const parsedOutput = JSON.parse(output);
 			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
