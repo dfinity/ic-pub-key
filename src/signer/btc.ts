@@ -1,6 +1,5 @@
 import { Principal } from '@dfinity/principal';
-import { networks, payments } from 'bitcoinjs-lib';
-import { Network } from 'bitcoinjs-lib/src/networks';
+import { Network, networks, payments } from 'bitcoinjs-lib';
 import {
 	ChainCode,
 	DerivationPath,
