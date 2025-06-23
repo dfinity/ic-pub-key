@@ -1,10 +1,12 @@
 import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
-import { computeAddress } from 'ethers';
 import {
+	ChainCode,
 	DerivationPath,
+	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
+import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
 
 export const program = new Command();
 
@@ -70,33 +72,10 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
 	.requiredOption('-u, --user <user>', "The user's principal", String)
 	.action(({ pubkey, chaincode, user }) => {
-		pubkey =
-			pubkey == null
-				? '0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0' // Production chain fusion signer's public key.
-				: pubkey;
-		chaincode =
-			chaincode == null
-				? 'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0' // Production chain fusion signer's chain code.  It doesn't really matter if this is wrong.
-				: chaincode;
-		let principal = Principal.fromText(user);
-		let principal_as_bytes = principal.toUint8Array();
-		let derivation_path = new DerivationPath([Uint8Array.from([0x01]), principal_as_bytes]);
-		let signer_pubkey_with_chain_code = Secp256k1PublicKeyWithChainCode.fromString({
-			public_key: pubkey,
-			chain_code: chaincode
-		});
-		let eth_pubkey_with_chaincode =
-			signer_pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
-		let eth_pubkey = eth_pubkey_with_chaincode.public_key;
+		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
+		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
+		user = Principal.fromText(user);
 
-		let eth_address = computeAddress('0x' + eth_pubkey.toHex());
-		let ans = {
-			request: {
-				pubkey,
-				chaincode,
-				principal: principal.toText()
-			},
-			response: { eth_address }
-		};
+		let ans = chain_fusion_signer_eth_address_for(user, pubkey, chaincode);
 		console.log(JSON.stringify(ans, null, 2));
 	});
