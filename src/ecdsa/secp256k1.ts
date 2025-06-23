@@ -145,6 +145,13 @@ export class Sec1EncodedPublicKey {
 	}
 
 	/**
+	 * @returns The public key as a Buffer.
+	 */
+	toBuffer(): Buffer {
+		return Buffer.from(this.bytes);
+	}
+
+	/**
 	 * Creates a new Sec1EncodedPublicKey from a 66 character hex string.
 	 * @param hex The 66 character hex string.
 	 * @returns A new Sec1EncodedPublicKey.
@@ -160,10 +167,10 @@ export class Sec1EncodedPublicKey {
 	}
 
 	/**
-	 * @returns The public key as a 66 character hex string.
+	 * @returns The public key as a 66-character hex string.
 	 */
 	toHex(): string {
-		return Buffer.from(this.bytes).toString('hex');
+		return this.toBuffer().toString('hex');
 	}
 
 	/**

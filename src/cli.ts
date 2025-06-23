@@ -2,9 +2,20 @@ import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
 import { computeAddress } from 'ethers';
 import {
+	ChainCode,
 	DerivationPath,
+	PublicKeyWithChainCode,
+	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
+// import {
+// 	BitcoinNetwork,
+// 	chain_fusion_signer_btc_address_for, CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR,
+// 	CHAIN_FUSION_SIGNER_CHAINCODE,
+// 	CHAIN_FUSION_SIGNER_PUBKEY
+// } from './signer/btc';
+import { networks, payments } from 'bitcoinjs-lib';
+import { Network } from 'bitcoinjs-lib/src/networks';
 
 export const program = new Command();
 
@@ -97,6 +108,115 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 				principal: principal.toText()
 			},
 			response: { eth_address }
+		};
+		console.log(JSON.stringify(ans, null, 2));
+	});
+
+/**
+ * The Bitcoin network type that are supported by the Chain Fusion Signer.
+ */
+export type BitcoinNetwork = 'testnet' | 'mainnet' | 'regtest';
+
+/**
+ * The public key of the chain fusion signer canister.
+ */
+export let CHAIN_FUSION_SIGNER_PUBKEY = Sec1EncodedPublicKey.fromHex(
+	'0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0'
+);
+
+/**
+ * The chain code of the chain fusion signer canister.
+ */
+export let CHAIN_FUSION_SIGNER_CHAINCODE = ChainCode.fromHex(
+	'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0'
+);
+
+/**
+ * The domain separator used by the chain fusion signer for Bitcoin addresses.
+ */
+export let CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR = Uint8Array.from([0x00]);
+
+function mapBitcoinNetworkToBitcoinJS(network: BitcoinNetwork): Network {
+	switch (network) {
+		case 'testnet':
+			return networks.testnet;
+		case 'mainnet':
+			return networks.bitcoin;
+		case 'regtest':
+			return networks.regtest;
+		default:
+			throw new Error(`Unsupported Bitcoin network: ${network}`);
+	}
+}
+
+let btc = signer.command('btc').description('Get Bitcoin address');
+
+btc
+	.command('address')
+	.description("Get a user's Bitcoin address")
+	.addHelpText(
+		'after',
+		`
+
+This is a cheap and fast way of obtaining a user's Chain Fusion Signer Bitcoin address.  It is equivalent to API calls such as:
+
+// TODO: write the correct example, since the Signer Canister does not have an endpoint for principals as input.
+$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "principal" = opt principal "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"}, null)' --wallet "$(dfx identity get-wallet --ic)"
+(
+  variant {
+    Ok = record { address = "0xf53e047376e37eAc56d48245B725c47410cf6F1e" }
+  },
+)
+
+`
+	)
+	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
+	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
+	.requiredOption('-u, --user <user>', "The user's principal", String)
+	// TODO: limit network options to type BitcoinNetwork
+	.requiredOption('-n, --network <network>', 'The Bitcoin network', String)
+	.action(({ pubkey, chaincode, user, network }) => {
+		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
+		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
+		user = Principal.fromText(user);
+		//
+		// let ans = chain_fusion_signer_btc_address_for(user, network, pubkey, chaincode);
+		// console.log(JSON.stringify(ans, null, 2));
+
+		if (pubkey === undefined || pubkey === null) {
+			pubkey = CHAIN_FUSION_SIGNER_PUBKEY;
+		}
+		if (chaincode === undefined || chaincode === null) {
+			chaincode = CHAIN_FUSION_SIGNER_CHAINCODE;
+		}
+		let pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
+		let principal_as_bytes = user.toUint8Array();
+		let derivation_path = new DerivationPath([
+			CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR,
+			principal_as_bytes
+		]);
+		let btc_pubkey_with_chaincode =
+			pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
+		let btc_pubkey = btc_pubkey_with_chaincode.public_key;
+
+		let networkJs = mapBitcoinNetworkToBitcoinJS(network);
+
+		let { address: btc_address } = payments.p2wpkh({
+			pubkey: btc_pubkey.toBuffer(),
+			network: networkJs
+		});
+
+		if (btc_address === undefined) {
+			throw new Error('Failed to derive Bitcoin address from public key.');
+		}
+
+		let ans = {
+			request: {
+				pubkey,
+				chaincode,
+				principal: user.toText()
+			},
+			response: { btc_address }
 		};
 		console.log(JSON.stringify(ans, null, 2));
 	});
