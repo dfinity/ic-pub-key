@@ -2,8 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
 import {
 	ChainCode,
-	Sec1EncodedPublicKey,
-	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
+	Sec1EncodedPublicKey
 } from './ecdsa/secp256k1.js';
 import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
 
