@@ -2,7 +2,6 @@ import { Principal } from '@dfinity/principal';
 import { Command } from 'commander';
 import {
 	ChainCode,
-	DerivationPath,
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
