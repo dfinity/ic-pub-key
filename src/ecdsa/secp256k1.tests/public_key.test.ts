@@ -3,9 +3,11 @@ import { ChainCode, PublicKeyWithChainCode, Sec1EncodedPublicKey } from '../secp
 
 describe('Sec1EncodedPublicKey', () => {
 	it('should create a new Sec1EncodedPublicKey', () => {
-		const _publicKey = new Sec1EncodedPublicKey(
+		const publicKey = new Sec1EncodedPublicKey(
 			Buffer.from('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20', 'hex')
 		);
+		expect(publicKey).toBeDefined();
+		expect(publicKey).toBeInstanceOf(Sec1EncodedPublicKey);
 	});
 	it('should throw an exception if the key is less than 33 bytes', () => {
 		expect(
@@ -56,9 +58,11 @@ describe('Sec1EncodedPublicKey', () => {
 
 describe('ChainCode', () => {
 	it('should create a new ChainCode from 32 bytes', () => {
-		const _chainCode = new ChainCode(
+		const chainCode = new ChainCode(
 			Buffer.from('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f', 'hex')
 		);
+		expect(chainCode).toBeDefined();
+		expect(chainCode).toBeInstanceOf(ChainCode);
 	});
 	it('should fail to create a chain code from less than 32 bytes', () => {
 		expect(
