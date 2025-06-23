@@ -1,7 +1,5 @@
 import { Principal } from '@dfinity/principal';
 import { Command, Option } from 'commander';
-import { computeAddress } from 'ethers';
-import { Command } from 'commander';
 import {
 	ChainCode,
 	DerivationPath,
@@ -51,38 +49,6 @@ function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpat
 
 let signer = program.command('signer').description('Get chain fusion signer token address');
 
-let eth = signer.command('eth').description('Get Ethereum address');
-
-eth
-	.command('address')
-	.description("Get a user's Ethereum address")
-	.addHelpText(
-		'after',
-		`
-
-This is a cheap and fast way of obtaining a user's Chain Fusion Signer Ethereum address.  It is equivalent to API calls such as:
-
-$ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "principal" = opt principal "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"}, null)' --wallet "$(dfx identity get-wallet --ic)"
-(
-  variant {
-    Ok = record { address = "0xf53e047376e37eAc56d48245B725c47410cf6F1e" }
-  },
-)
-
-`
-	)
-	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
-	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
-	.requiredOption('-u, --user <user>', "The user's principal", String)
-	.action(({ pubkey, chaincode, user }) => {
-		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
-		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
-		user = Principal.fromText(user);
-
-		let ans = chain_fusion_signer_eth_address_for(user, pubkey, chaincode);
-		console.log(JSON.stringify(ans, null, 2));
-	});
-
 let btc = signer.command('btc').description('Get Bitcoin address');
 
 // TODO: write the correct example, since the Signer Canister does not have an endpoint for principals as input.
@@ -114,5 +80,37 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 		user = Principal.fromText(user);
 
 		let ans = chain_fusion_signer_btc_address_for(user, network, pubkey, chaincode);
+		console.log(JSON.stringify(ans, null, 2));
+	});
+
+let eth = signer.command('eth').description('Get Ethereum address');
+
+eth
+	.command('address')
+	.description("Get a user's Ethereum address")
+	.addHelpText(
+		'after',
+		`
+
+This is a cheap and fast way of obtaining a user's Chain Fusion Signer Ethereum address.  It is equivalent to API calls such as:
+
+$ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "principal" = opt principal "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"}, null)' --wallet "$(dfx identity get-wallet --ic)"
+(
+  variant {
+    Ok = record { address = "0xf53e047376e37eAc56d48245B725c47410cf6F1e" }
+  },
+)
+
+`
+	)
+	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
+	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
+	.requiredOption('-u, --user <user>', "The user's principal", String)
+	.action(({ pubkey, chaincode, user }) => {
+		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
+		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
+		user = Principal.fromText(user);
+
+		let ans = chain_fusion_signer_eth_address_for(user, pubkey, chaincode);
 		console.log(JSON.stringify(ans, null, 2));
 	});
