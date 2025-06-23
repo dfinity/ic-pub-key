@@ -24,6 +24,7 @@ export let CHAIN_FUSION_SIGNER_PUBKEY = Sec1EncodedPublicKey.fromHex(
  * The chain code of the chain fusion signer canister.
  */
 export let CHAIN_FUSION_SIGNER_CHAINCODE = ChainCode.fromHex(
+	// TODO: Check if this chaincode is technically correct. For now it should not matter, and it works everything correctly.
 	'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0'
 );
 
