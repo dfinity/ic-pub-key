@@ -8,9 +8,14 @@ import {
 } from '../ecdsa/secp256k1.js';
 
 /**
- * The Bitcoin networks that are supported by the Chain Fusion Signer.
+ * The supported Bitcoin networks for the Chain Fusion Signer.
  */
-export type BitcoinNetwork = 'testnet' | 'mainnet' | 'regtest';
+export const BITCOIN_NETWORKS = ['mainnet', 'testnet', 'regtest'] as const;
+
+/**
+ * The type of the Bitcoin networks that are supported by the Chain Fusion Signer.
+ */
+type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
 
 /**
  * The public key of the chain fusion signer canister.

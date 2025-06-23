@@ -1,5 +1,5 @@
 import { Principal } from '@dfinity/principal';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import { computeAddress } from 'ethers';
 import {
 	ChainCode,
@@ -7,7 +7,7 @@ import {
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
-import { chain_fusion_signer_btc_address_for } from './signer/btc.js';
+import { BITCOIN_NETWORKS, chain_fusion_signer_btc_address_for } from './signer/btc.js';
 
 export const program = new Command();
 
@@ -128,8 +128,7 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
 	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
 	.requiredOption('-u, --user <user>', "The user's principal", String)
-	// TODO: limit network options to type BitcoinNetwork
-	.requiredOption('-n, --network <network>', 'The Bitcoin network', String)
+	.addOption(new Option('-n, --network <network>', 'The Bitcoin network').choices(BITCOIN_NETWORKS))
 	.action(({ pubkey, chaincode, user, network }) => {
 		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
 		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
