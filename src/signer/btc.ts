@@ -15,7 +15,7 @@ export const BITCOIN_NETWORKS = ['mainnet', 'testnet', 'regtest'] as const;
 /**
  * The type of the Bitcoin networks that are supported by the Chain Fusion Signer.
  */
-type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
+export type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
 
 /**
  * The public key of the chain fusion signer canister.
