@@ -61,7 +61,7 @@ btc
 
 This is a cheap and fast way of obtaining a user's Chain Fusion Signer Bitcoin address.  It is equivalent to API calls such as:
 
-$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "principal" = network "mainnet"}, null)' --wallet "$(dfx identity get-wallet --ic)"
+$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "network" = "mainnet"}, null)' --wallet "$(dfx identity get-wallet --ic)"
 (
   variant {
     Ok = record { address = "bc1qwug6tj9z7tgvsp4u8sfzvjzatzs9rmwwck6qky" }
