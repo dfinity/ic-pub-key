@@ -9,7 +9,8 @@ import {
 import {
 	BITCOIN_ADDRESS_TYPES,
 	BITCOIN_NETWORKS,
-	chain_fusion_signer_btc_address_for
+	chain_fusion_signer_btc_address_for,
+	DEFAULT_BITCOIN_ADDRESS_TYPE
 } from './signer/btc.js';
 import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
 
@@ -83,9 +84,9 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 			.makeOptionMandatory()
 	)
 	.addOption(
-		new Option('-t, --address-type <network>', 'The Bitcoin address type').choices(
-			BITCOIN_ADDRESS_TYPES
-		)
+		new Option('-t, --address-type <network>', 'The Bitcoin address type')
+			.choices(BITCOIN_ADDRESS_TYPES)
+			.default(DEFAULT_BITCOIN_ADDRESS_TYPE)
 	)
 	.action(({ pubkey, chaincode, user, network }) => {
 		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);

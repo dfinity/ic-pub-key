@@ -84,6 +84,11 @@ export const BITCOIN_ADDRESS_TYPES = ['p2wpkh'] as const;
 export type BitcoinAddressType = (typeof BITCOIN_ADDRESS_TYPES)[number];
 
 /**
+ * The default Bitcoin address type.
+ */
+export const DEFAULT_BITCOIN_ADDRESS_TYPE: BitcoinAddressType = 'p2wpkh';
+
+/**
  * Maps a Bitcoin network type to the corresponding bitcoinjs-lib network.
  *
  * @param {BitcoinNetwork} network The Bitcoin network type.
@@ -115,7 +120,7 @@ export function chain_fusion_signer_btc_address_for(
 	response: ChainFusionSignerBtcAddressForResponse;
 } {
 	if (addressType === undefined || addressType === null) {
-		addressType = 'p2wpkh';
+		addressType = DEFAULT_BITCOIN_ADDRESS_TYPE;
 	}
 	if (pubkey === undefined || pubkey === null) {
 		pubkey = CHAIN_FUSION_SIGNER_PUBKEY;
