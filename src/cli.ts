@@ -88,12 +88,12 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 			.choices(BITCOIN_ADDRESS_TYPES)
 			.default(DEFAULT_BITCOIN_ADDRESS_TYPE)
 	)
-	.action(({ pubkey, chaincode, user, network }) => {
+	.action(({ pubkey, chaincode, user, network, addressType }) => {
 		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
 		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
 		user = Principal.fromText(user);
 
-		let ans = chain_fusion_signer_btc_address_for(user, network, pubkey, chaincode);
+		let ans = chain_fusion_signer_btc_address_for(user, network, addressType, pubkey, chaincode);
 		console.log(JSON.stringify(ans, null, 2));
 	});
 
