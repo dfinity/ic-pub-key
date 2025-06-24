@@ -26,7 +26,47 @@
 						"--user",
 						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
 						"--network",
+						"mainnet",
+						"--address-type",
+						"p2wpkh"
+					],
+					"request": {
+						"pubkey": "0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0",
+						"chaincode": "f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0",
+						"principal": "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"
+					},
+					"response": {
+						"btc_address": "bc1qwug6tj9z7tgvsp4u8sfzvjzatzs9rmwwck6qky",
+						"network": "mainnet"
+					}
+				},
+				{
+					"name": "A chain fusion signer BTC address",
+					"args": [
+						"--user",
+						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
+						"--network",
 						"testnet"
+					],
+					"request": {
+						"pubkey": "0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0",
+						"chaincode": "f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0",
+						"principal": "nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae"
+					},
+					"response": {
+						"btc_address": "tb1qwug6tj9z7tgvsp4u8sfzvjzatzs9rmwwjspndh",
+						"network": "testnet"
+					}
+				},
+				{
+					"name": "A chain fusion signer BTC address",
+					"args": [
+						"--user",
+						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
+						"--network",
+						"testnet",
+						"--address-type",
+						"p2wpkh"
 					],
 					"request": {
 						"pubkey": "0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0",
