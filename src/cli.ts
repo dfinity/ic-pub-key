@@ -6,7 +6,11 @@ import {
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
-import { BITCOIN_NETWORKS, chain_fusion_signer_btc_address_for } from './signer/btc.js';
+import {
+	BITCOIN_ADDRESS_TYPES,
+	BITCOIN_NETWORKS,
+	chain_fusion_signer_btc_address_for
+} from './signer/btc.js';
 import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
 
 export const program = new Command();
@@ -61,7 +65,7 @@ btc
 
 This is a cheap and fast way of obtaining a user's Chain Fusion Signer Bitcoin address.  It is equivalent to API calls such as:
 
-$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "network" = "mainnet"}, null)' --wallet "$(dfx identity get-wallet --ic)"
+$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "network" = "mainnet"; address_type = { P2WPKH: null }}, null)' --wallet "$(dfx identity get-wallet --ic)"
 (
   variant {
     Ok = record { address = "bc1qwug6tj9z7tgvsp4u8sfzvjzatzs9rmwwck6qky" }
@@ -77,6 +81,11 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 		new Option('-n, --network <network>', 'The Bitcoin network')
 			.choices(BITCOIN_NETWORKS)
 			.makeOptionMandatory()
+	)
+	.addOption(
+		new Option('-t, --address-type <network>', 'The Bitcoin address type').choices(
+			BITCOIN_ADDRESS_TYPES
+		)
 	)
 	.action(({ pubkey, chaincode, user, network }) => {
 		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);

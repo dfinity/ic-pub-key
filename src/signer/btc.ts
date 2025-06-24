@@ -74,6 +74,16 @@ export const BITCOIN_NETWORKS = ['mainnet', 'testnet', 'regtest'] as const;
 export type BitcoinNetwork = (typeof BITCOIN_NETWORKS)[number];
 
 /**
+ * The supported Bitcoin address for the Chain Fusion Signer.
+ */
+export const BITCOIN_ADDRESS_TYPES = ['p2wpkh'] as const;
+
+/**
+ * The type of Bitcoin addresses that are supported by the Chain Fusion Signer.
+ */
+export type BitcoinAddressType = (typeof BITCOIN_ADDRESS_TYPES)[number];
+
+/**
  * Maps a Bitcoin network type to the corresponding bitcoinjs-lib network.
  *
  * @param {BitcoinNetwork} network The Bitcoin network type.
@@ -97,12 +107,16 @@ function mapBitcoinNetworkToBitcoinJS(network: BitcoinNetwork): Network {
 export function chain_fusion_signer_btc_address_for(
 	user: Principal,
 	network: BitcoinNetwork,
+	addressType?: BitcoinAddressType,
 	pubkey?: Sec1EncodedPublicKey,
 	chaincode?: ChainCode
 ): {
 	request: ChainFusionSignerBtcAddressForRequest;
 	response: ChainFusionSignerBtcAddressForResponse;
 } {
+	if (addressType === undefined || addressType === null) {
+		addressType = 'p2wpkh';
+	}
 	if (pubkey === undefined || pubkey === null) {
 		pubkey = CHAIN_FUSION_SIGNER_PUBKEY;
 	}
@@ -120,10 +134,16 @@ export function chain_fusion_signer_btc_address_for(
 
 	let networkJs = mapBitcoinNetworkToBitcoinJS(network);
 
-	let { address: btc_address } = payments.p2wpkh({
-		pubkey: btc_pubkey.toBuffer(),
-		network: networkJs
-	});
+	let btc_address: string | undefined;
+
+	if (addressType === 'p2wpkh') {
+		({ address: btc_address } = payments.p2wpkh({
+			pubkey: btc_pubkey.toBuffer(),
+			network: networkJs
+		}));
+	} else {
+		throw new Error(`Unsupported Bitcoin address type: ${addressType}`);
+	}
 
 	if (btc_address === undefined) {
 		throw new Error('Failed to derive Bitcoin address from public key.');
