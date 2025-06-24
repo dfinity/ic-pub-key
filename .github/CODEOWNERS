@@ -1,10 +1,14 @@
 # IMPORTANT: The last matching entry has the highest precedence.
 
-# The GIX team members who maintain this repo.
+# The team members who maintain this repo:
+# @bitdivine - original author and to blame for all the bugs.
+# @randombit - crypto team member; please ask him for reviews when changing core crypt.
+# @AntonioVentilii - GIX team lead.
+#
 # Note: These users will receive GitHub notifications for PRs.
 #       The list is kept short to avoid spamming the whole team.
 #       If standard maintainers are not available, please contact GIX.
-* @bitdivine
+* @bitdivine @randombit @AntonioVentilii
 
 # The codebase is owned by the Governance & Identity Experience team at DFINITY,
 # supported by the crypto team.
