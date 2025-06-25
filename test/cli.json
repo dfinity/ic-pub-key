@@ -3,7 +3,7 @@
 		"btc": {
 			"address": [
 				{
-					"name": "A chain fusion signer BTC address",
+					"name": "A chain fusion signer BTC mainnet address",
 					"args": [
 						"--user",
 						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
@@ -21,7 +21,7 @@
 					}
 				},
 				{
-					"name": "A chain fusion signer BTC address",
+					"name": "A chain fusion signer BTC mainnet address (P2WPKH)",
 					"args": [
 						"--user",
 						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
@@ -41,7 +41,7 @@
 					}
 				},
 				{
-					"name": "A chain fusion signer BTC address",
+					"name": "A chain fusion signer BTC testnet address",
 					"args": [
 						"--user",
 						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
@@ -59,7 +59,7 @@
 					}
 				},
 				{
-					"name": "A chain fusion signer BTC address",
+					"name": "A chain fusion signer BTC testnet address (P2WPKH)",
 					"args": [
 						"--user",
 						"nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae",
