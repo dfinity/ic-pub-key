@@ -95,7 +95,7 @@ describe('DerivationPath', () => {
 	describe('ckd', () => {
 		it('should return values matching rust', () => {
 			for (const testVector of testVectors) {
-				let [derived_chain_code, derived_offset, derived_pt] = DerivationPath.ckd_pub(
+				const [derived_chain_code, derived_offset, derived_pt] = DerivationPath.ckd_pub(
 					Buffer.from(testVector.idx, 'hex'),
 					ProjectivePoint.fromHex(testVector.pt).toAffine(),
 					ChainCode.fromHex(testVector.chain_code)

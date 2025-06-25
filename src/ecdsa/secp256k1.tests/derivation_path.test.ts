@@ -43,7 +43,7 @@ describe('DerivationPath', () => {
 	describe('toBlob', () => {
 		for (const testVector of blobEncodingTestVectors) {
 			it(testVector.name, () => {
-				let encoded = testVector.path.toBlob();
+				const encoded = testVector.path.toBlob();
 				expect(encoded).toBe(testVector.blob);
 			});
 		}

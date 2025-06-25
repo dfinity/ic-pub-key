@@ -107,7 +107,7 @@ describe('DerivationPath', () => {
 	describe('ckd', () => {
 		it('should return values matching rust', () => {
 			for (const testVector of testVectors) {
-				let [derived_chain_code, derived_scalar] = DerivationPath.ckd(
+				const [derived_chain_code, derived_scalar] = DerivationPath.ckd(
 					testVector.idx,
 					testVector.input,
 					testVector.chain_code

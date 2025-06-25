@@ -71,16 +71,16 @@ export function chain_fusion_signer_eth_address_for(
 	if (chaincode === undefined || chaincode === null) {
 		chaincode = CHAIN_FUSION_SIGNER_CHAINCODE;
 	}
-	let pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
-	let principal_as_bytes = user.toUint8Array();
-	let derivation_path = new DerivationPath([
+	const pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
+	const principal_as_bytes = user.toUint8Array();
+	const derivation_path = new DerivationPath([
 		CHAIN_FUSION_SIGNER_ETH_DOMAIN_SEPARATOR,
 		principal_as_bytes
 	]);
-	let eth_pubkey_with_chaincode = pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
-	let eth_pubkey = eth_pubkey_with_chaincode.public_key;
+	const eth_pubkey_with_chaincode = pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
+	const eth_pubkey = eth_pubkey_with_chaincode.public_key;
 
-	let eth_address = computeAddress('0x' + eth_pubkey.toHex());
+	const eth_address = computeAddress('0x' + eth_pubkey.toHex());
 
 	return {
 		request: new ChainFusionSignerEthAddressForRequest(pubkey, chaincode, user),
