@@ -77,7 +77,8 @@ export function chain_fusion_signer_eth_address_for(
 		CHAIN_FUSION_SIGNER_ETH_DOMAIN_SEPARATOR,
 		principal_as_bytes
 	]);
-	const eth_pubkey_with_chaincode = pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
+	const eth_pubkey_with_chaincode =
+		pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
 	const eth_pubkey = eth_pubkey_with_chaincode.public_key;
 
 	const eth_address = computeAddress('0x' + eth_pubkey.toHex());
