@@ -34,3 +34,9 @@ The command line also includes tools for working with the [Chain Fusion Signer](
 ```
 npx ic-pub-key signer eth address -u nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae
 ```
+
+Or to get the Bitcoin mainnet address of a principal on the chain fusion signer:
+
+```
+npx ic-pub-key signer btc address -u nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae -n mainnet
+```
