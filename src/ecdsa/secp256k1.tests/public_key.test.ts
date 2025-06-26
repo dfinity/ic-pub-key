@@ -123,12 +123,12 @@ describe('PublicKeyWithChainCode', () => {
 			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
 		for (const public_key of [hex_public_key, blob_public_key]) {
 			for (const chain_code of [hex_chain_code, blob_chain_code]) {
-				let public_key_with_chain_code = PublicKeyWithChainCode.fromString({
+				const public_key_with_chain_code = PublicKeyWithChainCode.fromString({
 					public_key,
 					chain_code
 				});
-				let public_key_with_chain_code_hex = public_key_with_chain_code.toHex();
-				let public_key_with_chain_code_blob = public_key_with_chain_code.toBlob();
+				const public_key_with_chain_code_hex = public_key_with_chain_code.toHex();
+				const public_key_with_chain_code_blob = public_key_with_chain_code.toBlob();
 				expect(public_key_with_chain_code_hex).toStrictEqual({
 					public_key: hex_public_key,
 					chain_code: hex_chain_code

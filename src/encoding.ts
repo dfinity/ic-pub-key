@@ -12,10 +12,10 @@ export function blobEncode(bytes: Uint8Array): string {
  * @returns
  */
 export function blobDecode(s: string): Uint8Array {
-	let ans = [];
+	const ans = [];
 	let skip = 0;
 	let byte = 0;
-	for (let char of s) {
+	for (const char of s) {
 		if (skip == 2) {
 			byte = parseInt(char, 16);
 			skip--;

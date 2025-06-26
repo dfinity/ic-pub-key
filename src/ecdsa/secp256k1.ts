@@ -135,12 +135,12 @@ export class Sec1EncodedPublicKey {
 		derivation_path: DerivationPath,
 		chain_code: ChainCode
 	): PublicKeyWithChainCode {
-		let public_key = this.toAffinePoint();
-		let [affine_pt, _offset, new_chain_code] = derivation_path.derive_offset(
+		const public_key = this.toAffinePoint();
+		const [affine_pt, _offset, new_chain_code] = derivation_path.derive_offset(
 			public_key,
 			chain_code
 		);
-		let pt = ProjectivePoint.fromAffine(affine_pt);
+		const pt = ProjectivePoint.fromAffine(affine_pt);
 		return new PublicKeyWithChainCode(Sec1EncodedPublicKey.fromProjectivePoint(pt), new_chain_code);
 	}
 
@@ -323,7 +323,7 @@ export class DerivationPath {
 	derive_offset(pt: AffinePoint, chain_code: ChainCode): [AffinePoint, bigint, ChainCode] {
 		return this.path.reduce(
 			([pt, offset, chain_code], idx) => {
-				let [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
+				const [next_chain_code, next_offset, next_pt] = DerivationPath.ckd_pub(idx, pt, chain_code);
 				offset += next_offset;
 				// Note: next_offset _should_ be less than DerivationPath.ORDER, so at most one subtraction _should_ be necessary.
 				while (offset >= DerivationPath.ORDER) {
@@ -351,13 +351,13 @@ export class DerivationPath {
 		pt: AffinePoint,
 		chain_code: ChainCode
 	): [ChainCode, bigint, AffinePoint] {
-		let ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
+		const ckd_input = ProjectivePoint.fromAffine(pt).toRawBytes(true);
 
 		while (true) {
-			let [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
+			const [next_chain_code, next_offset] = DerivationPath.ckd(idx, ckd_input, chain_code);
 
-			let base_mul = ProjectivePoint.BASE.multiply(next_offset);
-			let next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
+			const base_mul = ProjectivePoint.BASE.multiply(next_offset);
+			const next_pt = ProjectivePoint.fromAffine(pt).add(base_mul);
 
 			if (!next_pt.equals(ProjectivePoint.ZERO)) {
 				return [next_chain_code, next_offset, next_pt.toAffine()];
@@ -384,17 +384,17 @@ export class DerivationPath {
 		ckd_input: Uint8Array,
 		chain_code: ChainCode
 	): [ChainCode, bigint] {
-		let message = new Uint8Array(ckd_input.length + idx.length);
+		const message = new Uint8Array(ckd_input.length + idx.length);
 		message.set(ckd_input);
 		message.set(idx, ckd_input.length);
-		let hmac_output = hmac(sha512, chain_code.bytes, message);
+		const hmac_output = hmac(sha512, chain_code.bytes, message);
 		if (hmac_output.length !== 64) {
 			throw new Error('Invalid HMAC output length');
 		}
 
-		let fb = hmac_output.subarray(0, 32);
-		let fb_hex = bytesToHex(fb);
-		let next_chain_key = hmac_output.subarray(32, 64);
+		const fb = hmac_output.subarray(0, 32);
+		const fb_hex = bytesToHex(fb);
+		const next_chain_key = hmac_output.subarray(32, 64);
 		// Treat the bytes as an integer.
 		//
 		// Note: I don't see a better way of converting bytes to a BigInt in typescript than converting to a hex string and then
@@ -403,15 +403,15 @@ export class DerivationPath {
 		// Note: The Rust code performs this same check by reducing and checking whether the value has changed.
 		//
 		// Note: The modulus is so close to 2**256 that this branch will be taken extremely rarely.
-		let next_offset = BigInt(`0x${fb_hex}`);
+		const next_offset = BigInt(`0x${fb_hex}`);
 		if (next_offset >= DerivationPath.ORDER) {
-			let next_input = new Uint8Array(33);
+			const next_input = new Uint8Array(33);
 			next_input[0] = 0x01;
 			next_input.set(next_chain_key, 1);
 			return DerivationPath.ckd(idx, next_input, chain_code);
 		}
 		// Change the next_chain_key into a Uint8Array
-		let next_chain_key_array = new Uint8Array(next_chain_key);
+		const next_chain_key_array = new Uint8Array(next_chain_key);
 
 		return [new ChainCode(next_chain_key_array), next_offset];
 	}
