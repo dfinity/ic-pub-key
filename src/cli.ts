@@ -54,7 +54,7 @@ function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpat
 
 const signer = program.command('signer').description('Get chain fusion signer token address');
 
-let btc = signer.command('btc').description('Get Bitcoin address');
+const btc = signer.command('btc').description('Get Bitcoin address');
 
 // TODO: write the correct example, since the Signer Canister does not have an endpoint for principals as input.
 btc
@@ -93,7 +93,7 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
 		user = Principal.fromText(user);
 
-		let ans = chain_fusion_signer_btc_address_for(user, network, addressType, pubkey, chaincode);
+		const ans = chain_fusion_signer_btc_address_for(user, network, addressType, pubkey, chaincode);
 		console.log(JSON.stringify(ans, null, 2));
 	});
 

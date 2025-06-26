@@ -10,14 +10,14 @@ import {
 /**
  * The public key of the chain fusion signer canister.
  */
-export let CHAIN_FUSION_SIGNER_PUBKEY = Sec1EncodedPublicKey.fromHex(
+export const CHAIN_FUSION_SIGNER_PUBKEY = Sec1EncodedPublicKey.fromHex(
 	'0259761672ec7ee3bdc5eca95ba5f6a493d1133b86a76163b68af30c06fe3b75c0'
 );
 
 /**
  * The chain code of the chain fusion signer canister.
  */
-export let CHAIN_FUSION_SIGNER_CHAINCODE = ChainCode.fromHex(
+export const CHAIN_FUSION_SIGNER_CHAINCODE = ChainCode.fromHex(
 	// TODO: Check if this chaincode is technically correct. For now it should not matter, and it works everything correctly.
 	'f666a98c7f70fe281ca8142f14eb4d1e0934a439237da83869e2cfd924b270c0'
 );
@@ -25,7 +25,7 @@ export let CHAIN_FUSION_SIGNER_CHAINCODE = ChainCode.fromHex(
 /**
  * The domain separator used by the chain fusion signer for Bitcoin addresses.
  */
-export let CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR = Uint8Array.from([0x00]);
+export const CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR = Uint8Array.from([0x00]);
 
 /**
  * A pretty-printable version of the `chain_fusion_signer_btc_address_for` request.
@@ -128,16 +128,17 @@ export function chain_fusion_signer_btc_address_for(
 	if (chaincode === undefined || chaincode === null) {
 		chaincode = CHAIN_FUSION_SIGNER_CHAINCODE;
 	}
-	let pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
-	let principal_as_bytes = user.toUint8Array();
-	let derivation_path = new DerivationPath([
+	const pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
+	const principal_as_bytes = user.toUint8Array();
+	const derivation_path = new DerivationPath([
 		CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR,
 		principal_as_bytes
 	]);
-	let btc_pubkey_with_chaincode = pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
-	let btc_pubkey = btc_pubkey_with_chaincode.public_key;
+	const btc_pubkey_with_chaincode =
+		pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
+	const btc_pubkey = btc_pubkey_with_chaincode.public_key;
 
-	let networkJs = mapBitcoinNetworkToBitcoinJS(network);
+	const networkJs = mapBitcoinNetworkToBitcoinJS(network);
 
 	let btc_address: string | undefined;
 
