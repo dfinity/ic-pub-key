@@ -2,30 +2,29 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
+import * as z from 'zod/v4';
 import { program } from '../cli';
 import { loadTestVectors as loadEllipticCurveTestVectors } from '../ecdsa/secp256k1.tests/test_vectors.test';
+import { CliTestVectorsSchema } from './cli_test_vectors.schema';
+
+type CliTestVectors = z.infer<typeof CliTestVectorsSchema>;
 
 /**
  * Loads the cli test vectors
  */
 export function loadCliTestVectors(): CliTestVectors {
 	const cliTestVectorsPath = path.join(process.cwd(), 'test', 'cli.json');
-	return JSON.parse(fs.readFileSync(cliTestVectorsPath, 'utf-8'));
-}
 
-interface CliTestVectors {
-	signer: {
-		eth: {
-			address: CliTestVector[];
-		};
-	};
-}
+	const cliTestVectorsContent = fs.readFileSync(cliTestVectorsPath, 'utf-8');
+	const { success, data, error } = CliTestVectorsSchema.safeParse(
+		JSON.parse(cliTestVectorsContent)
+	);
 
-interface CliTestVector {
-	name: string;
-	args: string[];
-	request: any;
-	response: any;
+	if (!success) {
+		throw new Error(`Invalid CLI test vectors: ${JSON.stringify(error, null, 2)}`);
+	}
+
+	return data;
 }
 
 describe('CLI', () => {

@@ -41,7 +41,8 @@
 		"prettier-plugin-organize-imports": "^4.1.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.8.3",
-		"vitest": "^3.2.4"
+		"vitest": "^3.2.4",
+		"zod": "^3.25.67"
 	},
 	"dependencies": {
 		"@dfinity/principal": "^2.4.1",
