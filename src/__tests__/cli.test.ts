@@ -15,6 +15,9 @@ export function loadCliTestVectors(): CliTestVectors {
 
 interface CliTestVectors {
 	signer: {
+		btc: {
+			address: CliTestVector[];
+		};
 		eth: {
 			address: CliTestVector[];
 		};
@@ -87,6 +90,19 @@ describe('CLI', () => {
 			expect(parsedOutput.response, `Failed for vector ${name}: ${command}`).toEqual({
 				public_key: expected_public_key,
 				chain_code: expected_chain_code
+			});
+		});
+	});
+
+	it('should derive btc address correctly', () => {
+		const testVectors = loadCliTestVectors()['signer']['btc']['address'];
+		testVectors.forEach((vector) => {
+			const { name, args, request, response } = vector;
+			const output = execSync(`node ${cliPath} signer btc address ${args.join(' ')}`).toString();
+			const parsedOutput = JSON.parse(output);
+			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
+				request,
+				response
 			});
 		});
 	});
