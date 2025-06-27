@@ -4,7 +4,7 @@ const TestVectorSchema = z.object({
 	name: z.string(),
 	public_key: z.string(),
 	chain_code: z.string(),
-	derivation_path: z.string(),
+	derivation_path: z.union([z.string(), z.null()]),
 	expected_public_key: z.string(),
 	expected_chain_code: z.string()
 });
