@@ -10,7 +10,7 @@ import { loadTestVectors as loadEllipticCurveTestVectors } from '../ecdsa/secp25
  */
 export function loadCliTestVectors(): CliTestVectors {
 	const cliTestVectorsPath = path.join(process.cwd(), 'test', 'cli.json');
-	return JSON.parse(fs.readFileSync(cliTestVectorsPath, 'utf-8'));
+	return JSON.parse(fs.readFileSync(cliTestVectorsPath, 'utf-8')) as CliTestVectors;
 }
 
 interface CliTestVectors {
@@ -45,6 +45,7 @@ describe('CLI', () => {
 	it('should show help message - mocked', () => {
 		// Mock console.log
 		const originalConsoleLog = console.log;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		let output = '';
 		console.log = (msg: string) => {
 			output += msg + '\n';
@@ -83,7 +84,9 @@ describe('CLI', () => {
 			}
 			console.log(command);
 			const output = execSync(command).toString();
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const parsedOutput = JSON.parse(output);
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			expect(parsedOutput.response, `Failed for vector ${name}: ${command}`).toEqual({
 				public_key: expected_public_key,
 				chain_code: expected_chain_code
@@ -94,11 +97,15 @@ describe('CLI', () => {
 	it('should derive eth address correctly', () => {
 		const testVectors = loadCliTestVectors()['signer']['eth']['address'];
 		testVectors.forEach((vector) => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const { name, args, request, response } = vector;
 			const output = execSync(`node ${cliPath} signer eth address ${args.join(' ')}`).toString();
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const parsedOutput = JSON.parse(output);
 			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				request,
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				response
 			});
 		});

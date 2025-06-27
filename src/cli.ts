@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
+
 import { Principal } from '@dfinity/principal';
+import { isNullish } from '@dfinity/utils';
 import { Command, Option } from 'commander';
 import {
 	ChainCode,
@@ -32,6 +35,8 @@ ecdsa
 	.requiredOption('-c, --chaincode <chaincode>', 'The parent chain code', String)
 	.option('-d, --derivationpath <derivationpath>', 'The derivation path', String)
 	.action(({ pubkey, chaincode, derivationpath }) => {
+		// TODO: Make this call type-safe
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		console.log(ecdsa_secp256k1_derive(pubkey, chaincode, derivationpath));
 	});
 
@@ -88,14 +93,36 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 			.choices(BITCOIN_ADDRESS_TYPES)
 			.default(DEFAULT_BITCOIN_ADDRESS_TYPE)
 	)
-	.action(({ pubkey, chaincode, user, network, addressType }) => {
-		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
-		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
-		user = Principal.fromText(user);
+	.action(
+		({
+			pubkey,
+			chaincode,
+			user,
+			network,
+			addressType
+		}: {
+			pubkey?: string;
+			chaincode?: string;
+			user: string;
+			network: string;
+			addressType?: string;
+		}) => {
+			const decodedPubkey = isNullish(pubkey) ? undefined : Sec1EncodedPublicKey.fromString(pubkey);
+			const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
+			const userPrincipal = Principal.fromText(user);
+			const btcNetwork = network as (typeof BITCOIN_NETWORKS)[number];
+			const addressTypeValue = addressType as (typeof BITCOIN_ADDRESS_TYPES)[number];
 
-		const ans = chain_fusion_signer_btc_address_for(user, network, addressType, pubkey, chaincode);
-		console.log(JSON.stringify(ans, null, 2));
-	});
+			const ans = chain_fusion_signer_btc_address_for(
+				userPrincipal,
+				btcNetwork,
+				addressTypeValue,
+				decodedPubkey,
+				decodedChaincode
+			);
+			console.log(JSON.stringify(ans, null, 2));
+		}
+	);
 
 const eth = signer.command('eth').description('Get Ethereum address');
 
@@ -120,11 +147,11 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
 	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
 	.requiredOption('-u, --user <user>', "The user's principal", String)
-	.action(({ pubkey, chaincode, user }) => {
-		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
-		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
-		user = Principal.fromText(user);
+	.action(({ pubkey, chaincode, user }: { pubkey?: string; chaincode?: string; user: string }) => {
+		const decodedPubkey = isNullish(pubkey) ? undefined : Sec1EncodedPublicKey.fromString(pubkey);
+		const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
+		const userPrincipal = Principal.fromText(user);
 
-		const ans = chain_fusion_signer_eth_address_for(user, pubkey, chaincode);
+		const ans = chain_fusion_signer_eth_address_for(userPrincipal, decodedPubkey, decodedChaincode);
 		console.log(JSON.stringify(ans, null, 2));
 	});

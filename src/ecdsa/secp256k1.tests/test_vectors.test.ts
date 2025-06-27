@@ -30,7 +30,7 @@ interface TestVectors {
  */
 export function loadTestVectors(): TestVectors {
 	const samplesPath = path.join(process.cwd(), 'test', 'samples.json');
-	return JSON.parse(fs.readFileSync(samplesPath, 'utf-8'));
+	return JSON.parse(fs.readFileSync(samplesPath, 'utf-8')) as TestVectors;
 }
 
 describe('Test Vectors', () => {

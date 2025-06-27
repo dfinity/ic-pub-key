@@ -104,6 +104,7 @@ function mapBitcoinNetworkToBitcoinJS(network: BitcoinNetwork): Network {
 		case 'regtest':
 			return networks.regtest;
 		default:
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- This is just a fail-safe error message.
 			throw new Error(`Unsupported Bitcoin network: ${network}`);
 	}
 }
@@ -148,6 +149,7 @@ export function chain_fusion_signer_btc_address_for(
 			network: networkJs
 		}));
 	} else {
+		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- This is just a fail-safe error message.
 		throw new Error(`Unsupported Bitcoin address type: ${addressType}`);
 	}
 
