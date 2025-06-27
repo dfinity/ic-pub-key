@@ -1,11 +1,17 @@
 import { Principal } from '@dfinity/principal';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import {
 	ChainCode,
 	DerivationPath,
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
+import {
+	BITCOIN_ADDRESS_TYPES,
+	BITCOIN_NETWORKS,
+	chain_fusion_signer_btc_address_for,
+	DEFAULT_BITCOIN_ADDRESS_TYPE
+} from './signer/btc.js';
 import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
 
 export const program = new Command();
@@ -47,6 +53,49 @@ function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpat
 }
 
 const signer = program.command('signer').description('Get chain fusion signer token address');
+
+const btc = signer.command('btc').description('Get Bitcoin address');
+
+// TODO: write the correct example, since the Signer Canister does not have an endpoint for principals as input.
+btc
+	.command('address')
+	.description("Get a user's Bitcoin address")
+	.addHelpText(
+		'after',
+		`
+
+This is a cheap and fast way of obtaining a user's Chain Fusion Signer Bitcoin address.  It is equivalent to API calls such as:
+
+$ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(record{ "network" = "mainnet"; address_type = { P2WPKH: null }}, null)' --wallet "$(dfx identity get-wallet --ic)"
+(
+  variant {
+    Ok = record { address = "bc1qwug6tj9z7tgvsp4u8sfzvjzatzs9rmwwck6qky" }
+  },
+)
+
+`
+	)
+	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
+	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
+	.requiredOption('-u, --user <user>', "The user's principal", String)
+	.addOption(
+		new Option('-n, --network <network>', 'The Bitcoin network')
+			.choices(BITCOIN_NETWORKS)
+			.makeOptionMandatory()
+	)
+	.addOption(
+		new Option('-t, --address-type <network>', 'The Bitcoin address type')
+			.choices(BITCOIN_ADDRESS_TYPES)
+			.default(DEFAULT_BITCOIN_ADDRESS_TYPE)
+	)
+	.action(({ pubkey, chaincode, user, network, addressType }) => {
+		pubkey = pubkey == null ? null : Sec1EncodedPublicKey.fromString(pubkey);
+		chaincode = chaincode == null ? null : ChainCode.fromString(chaincode);
+		user = Principal.fromText(user);
+
+		const ans = chain_fusion_signer_btc_address_for(user, network, addressType, pubkey, chaincode);
+		console.log(JSON.stringify(ans, null, 2));
+	});
 
 const eth = signer.command('eth').description('Get Ethereum address');
 
