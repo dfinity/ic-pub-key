@@ -11,7 +11,9 @@ This library contains TypeScript translations of the following functions:
 
 ## `npm`
 
-This library will be published on npm after the source code has been open sourced.
+```
+npm install @dfinity/ic-pub-key
+```
 
 ## Command line
 
