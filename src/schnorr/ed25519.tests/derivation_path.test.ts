@@ -52,7 +52,7 @@ describe('DerivationPath', () => {
 		for (const testVector of blobEncodingTestVectors) {
 			it(testVector.name, () => {
 				const decoded = DerivationPath.fromBlob(testVector.blob);
-				const encoded = decoded.toBlob();
+				const encoded = decoded.toBlob(); // TODO: Implement equality on derivation paths.
 				expect(encoded).toBe(testVector.blob);
 			});
 		}
