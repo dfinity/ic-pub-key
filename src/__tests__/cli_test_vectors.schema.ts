@@ -1,33 +1,34 @@
 import * as z from 'zod/v4';
 
-const EthCommandSchema = z.object({
+const EthCommandSchema = z.strictObject({
 	address: z.array(
-		z.object({
+		z.strictObject({
 			name: z.string(),
 			args: z.array(z.string()),
-			request: z.object({
+			request: z.strictObject({
 				pubkey: z.string(),
 				chaincode: z.string(),
 				principal: z.string()
 			}),
-			response: z.object({
+			response: z.strictObject({
 				eth_address: z.string()
 			})
 		})
 	)
 });
 
-const BtcCommandSchema = z.object({
+const BtcCommandSchema = z.strictObject({
 	address: z.array(
-		z.object({
+		z.strictObject({
 			name: z.string(),
 			args: z.array(z.string()),
-			request: z.object({
+			request: z.strictObject({
 				pubkey: z.string(),
 				chaincode: z.string(),
-				principal: z.string()
+				principal: z.string(),
+				network: z.string()
 			}),
-			response: z.object({
+			response: z.strictObject({
 				btc_address: z.string(),
 				network: z.string()
 			})
@@ -35,8 +36,8 @@ const BtcCommandSchema = z.object({
 	)
 });
 
-export const CliTestVectorsSchema = z.object({
-	signer: z.object({
+export const CliTestVectorsSchema = z.strictObject({
+	signer: z.strictObject({
 		btc: BtcCommandSchema,
 		eth: EthCommandSchema
 	})
