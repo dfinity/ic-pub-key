@@ -101,11 +101,11 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 			network,
 			addressType
 		}: {
-			pubkey?: string;
-			chaincode?: string;
+			pubkey?: string | null;
+			chaincode?: string | null;
 			user: string;
 			network: string;
-			addressType?: string;
+			addressType: string;
 		}) => {
 			const decodedPubkey = isNullish(pubkey) ? undefined : Sec1EncodedPublicKey.fromString(pubkey);
 			const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
@@ -147,11 +147,25 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 	.option('-p, --pubkey <pubkey>', "The signer canister's public key", String)
 	.option('-c, --chaincode <chaincode>', "The signer canister's chain code", String)
 	.requiredOption('-u, --user <user>', "The user's principal", String)
-	.action(({ pubkey, chaincode, user }: { pubkey?: string; chaincode?: string; user: string }) => {
-		const decodedPubkey = isNullish(pubkey) ? undefined : Sec1EncodedPublicKey.fromString(pubkey);
-		const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
-		const userPrincipal = Principal.fromText(user);
+	.action(
+		({
+			pubkey,
+			chaincode,
+			user
+		}: {
+			pubkey?: string | null;
+			chaincode?: string | null;
+			user: string;
+		}) => {
+			const decodedPubkey = isNullish(pubkey) ? undefined : Sec1EncodedPublicKey.fromString(pubkey);
+			const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
+			const userPrincipal = Principal.fromText(user);
 
-		const ans = chain_fusion_signer_eth_address_for(userPrincipal, decodedPubkey, decodedChaincode);
-		console.log(JSON.stringify(ans, null, 2));
-	});
+			const ans = chain_fusion_signer_eth_address_for(
+				userPrincipal,
+				decodedPubkey,
+				decodedChaincode
+			);
+			console.log(JSON.stringify(ans, null, 2));
+		}
+	);
