@@ -21,7 +21,7 @@ export class DerivationPath {
 	}
 
 	/**
-	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.
+	 * @returns A string representation of the derivation path: Candid blob encoded with a '/' between each path component.  Or `null` for a derivation path with no components.
 	 */
 	toBlob(): string | null {
 		if (this.path.length === 0) {
