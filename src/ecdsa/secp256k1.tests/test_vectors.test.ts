@@ -1,36 +1,31 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
+import * as z from 'zod/v4';
 import {
 	ChainCode,
 	DerivationPath,
 	PublicKeyWithChainCode,
 	Sec1EncodedPublicKey
 } from '../secp256k1';
+import { TestVectorsSchema } from './test_vectors.schema';
 
-interface TestVector {
-	name: string;
-	public_key: string;
-	chain_code: string;
-	derivation_path: string;
-	expected_public_key: string;
-	expected_chain_code: string;
-}
-
-interface TestVectors {
-	ecdsa: {
-		secp256k1: {
-			test_vectors: TestVector[]; // Populated by `loadTestVectors()`.
-		};
-	};
-}
+type TestVectors = z.infer<typeof TestVectorsSchema>;
 
 /**
  * Loads the test vectors from the samples.json file.
  */
 export function loadTestVectors(): TestVectors {
 	const samplesPath = path.join(process.cwd(), 'test', 'samples.json');
-	return JSON.parse(fs.readFileSync(samplesPath, 'utf-8'));
+
+	const samplesContent = fs.readFileSync(samplesPath, 'utf-8');
+	const { success, data, error } = TestVectorsSchema.safeParse(JSON.parse(samplesContent));
+
+	if (!success) {
+		throw new Error(`Invalid test vectors: ${JSON.stringify(error, null, 2)}`);
+	}
+
+	return data;
 }
 
 describe('Test Vectors', () => {
