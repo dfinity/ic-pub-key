@@ -117,8 +117,8 @@ describe('PublicKeyWithChainCode', () => {
 		const chain_code =
 			'\\00\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\\11\\12\\13\\14\\15\\16\\17\\18\\19\\1a\\1b\\1c\\1d\\1e\\1f';
 		const public_key_with_chain_code = PublicKeyWithChainCode.fromBlob({ public_key, chain_code });
-		const public_key_with_chain_code_hex = public_key_with_chain_code.toBlob();
-		expect(public_key_with_chain_code_hex).toStrictEqual({ public_key, chain_code });
+		const public_key_with_chain_code_blob = public_key_with_chain_code.toBlob();
+		expect(public_key_with_chain_code_blob).toStrictEqual({ public_key, chain_code });
 	});
 	it('should parse both hex and blob public keys and chain codes', () => {
 		const hex_public_key = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20';

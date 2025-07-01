@@ -19,3 +19,6 @@ tarpaulin-report.html
 # Git
 .git
 /branches
+
+# Intellij IDEA
+.idea

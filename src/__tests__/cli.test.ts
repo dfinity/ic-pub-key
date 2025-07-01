@@ -2,30 +2,29 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
+import * as z from 'zod/v4';
 import { program } from '../cli';
 import { loadTestVectors as loadEllipticCurveTestVectors } from '../ecdsa/secp256k1.tests/test_vectors.test';
+import { CliTestVectorsSchema } from './cli_test_vectors.schema';
+
+type CliTestVectors = z.infer<typeof CliTestVectorsSchema>;
 
 /**
  * Loads the cli test vectors
  */
 export function loadCliTestVectors(): CliTestVectors {
 	const cliTestVectorsPath = path.join(process.cwd(), 'test', 'cli.json');
-	return JSON.parse(fs.readFileSync(cliTestVectorsPath, 'utf-8')) as CliTestVectors;
-}
 
-interface CliTestVectors {
-	signer: {
-		eth: {
-			address: CliTestVector[];
-		};
-	};
-}
+	const cliTestVectorsContent = fs.readFileSync(cliTestVectorsPath, 'utf-8');
+	const { success, data, error } = CliTestVectorsSchema.safeParse(
+		JSON.parse(cliTestVectorsContent)
+	);
 
-interface CliTestVector {
-	name: string;
-	args: string[];
-	request: any;
-	response: any;
+	if (!success) {
+		throw new Error(`Invalid CLI test vectors: ${JSON.stringify(error, null, 2)}`);
+	}
+
+	return data;
 }
 
 describe('CLI', () => {
@@ -90,6 +89,19 @@ describe('CLI', () => {
 			expect(parsedOutput.response, `Failed for vector ${name}: ${command}`).toEqual({
 				public_key: expected_public_key,
 				chain_code: expected_chain_code
+			});
+		});
+	});
+
+	it('should derive btc address correctly', () => {
+		const testVectors = loadCliTestVectors()['signer']['btc']['address'];
+		testVectors.forEach((vector) => {
+			const { name, args, request, response } = vector;
+			const output = execSync(`node ${cliPath} signer btc address ${args.join(' ')}`).toString();
+			const parsedOutput = JSON.parse(output);
+			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
+				request,
+				response
 			});
 		});
 	});
