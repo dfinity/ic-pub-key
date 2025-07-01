@@ -116,7 +116,6 @@ describe('CLI', () => {
 			const parsedOutput = JSON.parse(output);
 			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
 				request,
-
 				response
 			});
 		});
