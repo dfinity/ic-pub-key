@@ -37,16 +37,16 @@ fn key_derivation_works() {
     for test_vector in test_vectors {
         let parent_key =
             PublicKeyWithChainCode::from_hex(&test_vector.public_key, &test_vector.chain_code)
-                .unwrap();
+                .expect(&format!("Failed to parse parent public key hex: {}", test_vector.public_key));
         let derivation_path: DerivationPath =
             SerializedDerivationPath::from_blob(test_vector.derivation_path.as_deref())
-                .unwrap()
+                .expect(&format!("Failed to parse derivation path for test vector: {:?}", test_vector.derivation_path))
                 .into();
         let expected_derived_key = PublicKeyWithChainCode::from_hex(
             &test_vector.expected_public_key,
             &test_vector.expected_chain_code,
         )
-        .unwrap();
+        .expect(&format!("Failed to parse expected derived public key hex: {}", test_vector.expected_public_key));
         let (derived_key, derived_chain_code) = parent_key
             .public_key
             .derive_subkey_with_chain_code(&derivation_path, &parent_key.chain_code.0);
