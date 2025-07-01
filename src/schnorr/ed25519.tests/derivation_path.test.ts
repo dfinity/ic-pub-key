@@ -48,4 +48,13 @@ describe('DerivationPath', () => {
 			});
 		}
 	});
+	describe('fromBlob', () => {
+		for (const testVector of blobEncodingTestVectors) {
+			it(testVector.name, () => {
+				const decoded = DerivationPath.fromBlob(testVector.blob);
+				const encoded = decoded.toBlob();
+				expect(encoded).toBe(testVector.blob);
+			});
+		}
+	});
 });
