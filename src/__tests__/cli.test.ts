@@ -90,6 +90,19 @@ describe('CLI', () => {
 		});
 	});
 
+	it('should derive btc address correctly', () => {
+		const testVectors = loadCliTestVectors()['signer']['btc']['address'];
+		testVectors.forEach((vector) => {
+			const { name, args, request, response } = vector;
+			const output = execSync(`node ${cliPath} signer btc address ${args.join(' ')}`).toString();
+			const parsedOutput = JSON.parse(output);
+			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
+				request,
+				response
+			});
+		});
+	});
+
 	it('should derive eth address correctly', () => {
 		const testVectors = loadCliTestVectors()['signer']['eth']['address'];
 		testVectors.forEach((vector) => {

@@ -293,7 +293,7 @@ export class DerivationPath {
 	 * @param blob The / separated blobs to create the derivation path from.
 	 * @returns A new DerivationPath.
 	 */
-	static fromBlob(blob: string | undefined): DerivationPath {
+	static fromBlob(blob: string | undefined | null): DerivationPath {
 		if (blob === undefined || blob === null) {
 			return new DerivationPath([]);
 		}
