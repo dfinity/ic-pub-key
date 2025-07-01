@@ -98,6 +98,7 @@ describe('CLI', () => {
 		testVectors.forEach((vector) => {
 			const { name, args, request, response } = vector;
 			const output = execSync(`node ${cliPath} signer btc address ${args.join(' ')}`).toString();
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const parsedOutput = JSON.parse(output);
 			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
 				request,
@@ -109,15 +110,13 @@ describe('CLI', () => {
 	it('should derive eth address correctly', () => {
 		const testVectors = loadCliTestVectors()['signer']['eth']['address'];
 		testVectors.forEach((vector) => {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const { name, args, request, response } = vector;
 			const output = execSync(`node ${cliPath} signer eth address ${args.join(' ')}`).toString();
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const parsedOutput = JSON.parse(output);
 			expect(parsedOutput, `Failed for vector ${name}: ${args.join(' ')}`).toEqual({
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				request,
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
 				response
 			});
 		});
