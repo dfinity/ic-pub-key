@@ -1,7 +1,7 @@
-import { ExtendedPoint } from '@noble/ed25519';
-import { blobDecode, blobEncode } from '../encoding.js';
-import { ChainCode } from '../chain_code.js';
 import * as ed from '@noble/ed25519';
+import { ExtendedPoint } from '@noble/ed25519';
+import { ChainCode } from '../chain_code.js';
+import { blobDecode, blobEncode } from '../encoding.js';
 
 /**
  * One part of a derivation path.
@@ -65,7 +65,7 @@ export class DerivationPath {
 		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
-    	/**
+	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
 	 * @param pt The public key to derive the offset from.
 	 * @param chain_code The chain code to derive the offset from.
@@ -75,6 +75,23 @@ export class DerivationPath {
 		pt: ed.ExtendedPoint,
 		chain_code: ChainCode
 	): [ed.ExtendedPoint, bigint, ChainCode] {
-        throw new Error('Not implemented');
-    }
+		return this.path.reduce(derive_offset_for_component, [pt, 0n, chain_code]);
+	}
+}
+
+	/**
+     * One iteration of the main loop of `DerivationPath.derive_offset`.
+	 * 
+     * This should also correspond to the main loop of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168).
+	 * @param pt The public key to derive the offset from.
+     * @param sum The sum of the offsets of the previous iterations.
+	 * @param chain_code The chain code to derive the offset from.
+     * @param derivation_path_component The next component or index of the derivation path.
+	 * @returns A tuple containing the derived public key, the offset, and the chain code.
+	 */
+function derive_offset_for_component(
+	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
+	derivation_path_component: PathComponent
+): [ed.ExtendedPoint, bigint, ChainCode] {
+	throw new Error('Not implemented');
 }
