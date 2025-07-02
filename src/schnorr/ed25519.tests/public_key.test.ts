@@ -15,4 +15,12 @@ describe('PublicKey', () => {
 			expect(() => new PublicKey(ExtendedPoint.ZERO)).toThrow();
 		});
 	});
+	describe('fromHex', () => {
+		it('should be able to hex decode and encode', () => {
+			const hex = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+			const publicKey = PublicKey.fromHex(hex);
+			const encoded = publicKey.toHex();
+			expect(encoded).toBe(hex);
+		});
+	});
 });
