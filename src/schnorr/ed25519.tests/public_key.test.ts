@@ -1,6 +1,7 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { PublicKey } from '../ed25519';
+
 describe('PublicKey', () => {
 	describe('constructor', () => {
 		it('should succeed for a valid point', () => {
