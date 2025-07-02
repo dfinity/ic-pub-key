@@ -30,22 +30,5 @@ export class DerivationPath {
 		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
-	/**
-	 * Compares this DerivationPath with another to check for equality.
-	 * @param other The DerivationPath to compare with.
-	 * @returns True if both paths are equal, false otherwise.
-	 */
-	equals(other: DerivationPath): boolean {
-		if (!(other instanceof DerivationPath)) {
-			return false;
-		}
-		if (this.path.length !== other.path.length) {
-			return false;
-		}
-		return this.path.every((component, index) =>
-			component.length === other.path[index].length &&
-			component.every((byte, byteIndex) => byte === other.path[index][byteIndex])
-		);
-	}
 	// TODO: Curve-specific methods.
 }
