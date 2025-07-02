@@ -1,4 +1,5 @@
 // Elliptic curves:
+export { ChainCode } from './chain_code';
 export * as ecdsa from './ecdsa/index';
 export * as schnorr from './schnorr/index';
 
