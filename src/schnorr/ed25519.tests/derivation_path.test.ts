@@ -111,7 +111,7 @@ function offset_test_vectors(): OffsetTestVector[] {
 	let parsed = steps.map(({ pt, sum, chain_code, idx }) => {
 		return {
 			pt: ExtendedPoint.fromHex(pt),
-			sum: BigInt(sum),
+			sum: BigInt('0x' + sum),
 			chain_code: ChainCode.fromHex(chain_code),
 			idx: Buffer.from(idx, 'hex')
 		};
