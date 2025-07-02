@@ -28,6 +28,7 @@ describe('PublicKey', () => {
 		});
 		it('should fail for a hex string that is too short', () => {
 			const hex = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde';
+			expect(() => PublicKey.fromHex(hex)).toThrow();
 		});
 	});
 });
