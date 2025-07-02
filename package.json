@@ -1,8 +1,11 @@
 {
-	"name": "ic-pub-key",
+	"name": "@dfinity/ic-pub-key",
 	"version": "1.0.0",
 	"type": "module",
 	"main": "index.js",
+	"publishConfig": {
+		"access": "public"
+	},
 	"bin": {
 		"ic-pub-key": "./dist/main.js"
 	},
