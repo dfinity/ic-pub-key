@@ -61,36 +61,23 @@ export class PublicKeyWithChainCode {
 	) {}
 
 	/**
-	 * A convenience function that accepts the format provided by dfx calls to the signer canister.
-	 * @param public_key_array The public key as a byte array.
-	 * @param chain_code_array The chain code as a byte array.
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key_hex The public key in hex format.
+	 * @param chain_code_hex The chain code in hex format.
+	 * @returns A new PublicKeyWithChainCode.
 	 */
-	static fromArray(public_key_array: number[], chain_code_array: number[]): PublicKeyWithChainCode {
-		const public_key_hex = public_key_array.map((p) => p.toString(16).padStart(2, '0')).join('');
-		return new PublicKeyWithChainCode(
-			PublicKey.fromHex(public_key_hex),
-			ChainCode.fromArray(chain_code_array)
-		);
-	}
-	static fromUint8Array(
-		public_key_array: Uint8Array,
-		chain_code_array: Uint8Array
-	): PublicKeyWithChainCode {
-		return PublicKeyWithChainCode.fromArray([...public_key_array], [...chain_code_array]);
-	}
-
 	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
 		const public_key = PublicKey.fromHex(public_key_hex);
 		const chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
 		return new PublicKeyWithChainCode(public_key, chain_key);
 	}
 
-	static fromBlob(public_key_blob: string, chain_code_blob: string): PublicKeyWithChainCode {
-		const public_key_array = blobDecode(public_key_blob);
-		const chain_code_array = blobDecode(chain_code_blob);
-		return PublicKeyWithChainCode.fromUint8Array(public_key_array, chain_code_array);
-	}
-
+	/**
+	 * Creates a new PublicKeyWithChainCode from two strings.
+	 * @param public_key_string The public key in any format supported by PublicKey.fromString.
+	 * @param chain_code_string The chain code in any format supported by ChainCode.fromString.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
 	static fromString(public_key_string: string, chain_code_string: string): PublicKeyWithChainCode {
 		const public_key = PublicKey.fromString(public_key_string);
 		const chain_code = ChainCode.fromString(chain_code_string);
