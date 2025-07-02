@@ -1,5 +1,7 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import { blobDecode, blobEncode } from '../encoding.js';
+import { ChainCode } from '../chain_code.js';
+import * as ed from '@noble/ed25519';
 
 /**
  * One part of a derivation path.
@@ -63,5 +65,16 @@ export class DerivationPath {
 		return this.path.map((p) => blobEncode(p)).join('/');
 	}
 
-	// TODO: Curve-specific methods.
+    	/**
+	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
+	 * @param pt The public key to derive the offset from.
+	 * @param chain_code The chain code to derive the offset from.
+	 * @returns A tuple containing the derived public key, the offset, and the chain code.
+	 */
+	derive_offset(
+		pt: ed.ExtendedPoint,
+		chain_code: ChainCode
+	): [ed.ExtendedPoint, bigint, ChainCode] {
+        throw new Error('Not implemented');
+    }
 }
