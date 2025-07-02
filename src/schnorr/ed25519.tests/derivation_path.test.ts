@@ -1,7 +1,7 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
-import { DerivationPath, PathComponent } from '../ed25519';
+import { DerivationPath, derive_one_offset, PathComponent } from '../ed25519';
 
 interface BlobEncodingTestVector {
 	name: string;
@@ -60,15 +60,17 @@ describe('DerivationPath', () => {
 		}
 	});
 	describe('derive_offset', () => {
-		it('the helper should be able to derive one offset', () => {
-			let pt = ExtendedPoint.fromHex(
-				'5dc497e58f2eaaa2acb80f8f235e754ea243ab2c1d5683d55eec5b3275b31691'
-			);
-			let sum = 0n;
-			const path = new DerivationPath([Buffer.from('68656c6c6f', 'hex')]);
-			const offset = derive_one_offset(new ExtendedPoint(0, 0), 0, new ChainCode(0));
-			expect(offset).toBe(0);
-		});
+		for (const test_vector of offset_test_vectors()) {
+			it(`the helper should be able to derive one offset for ${test_vector.name}`, () => {
+				const [pt, sum, chain_code] = derive_one_offset(
+					[test_vector.input.pt, test_vector.input.sum, test_vector.input.chain_code],
+					test_vector.idx
+				);
+				expect(pt).toBe(test_vector.expected_output.pt);
+				expect(sum).toBe(test_vector.expected_output.sum);
+				expect(chain_code).toBe(test_vector.expected_output.chain_code);
+			});
+		}
 	});
 });
 
@@ -78,6 +80,7 @@ interface OffsetState {
 	chain_code: ChainCode;
 }
 interface OffsetTestVector {
+	name: string;
 	input: OffsetState;
 	idx: PathComponent;
 	expected_output: OffsetState;
@@ -115,13 +118,10 @@ function offset_test_vectors(): OffsetTestVector[] {
 	});
 	return parsed.slice(1).map((expected_output, index) => {
 		return {
+			name: `step ${index}`,
 			input: parsed[index],
 			idx: parsed[index].idx,
 			expected_output: expected_output
 		};
 	});
-}
-
-function derive_one_offset(arg0: ExtendedPoint, arg1: number, arg2: ChainCode) {
-	throw new Error('Function not implemented.');
 }

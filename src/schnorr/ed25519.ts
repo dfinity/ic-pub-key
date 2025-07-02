@@ -89,7 +89,7 @@ export class DerivationPath {
  * @param derivation_path_component The next component or index of the derivation path.
  * @returns A tuple containing the derived public key, the offset, and the chain code.
  */
-function derive_one_offset(
+export function derive_one_offset(
 	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
 	derivation_path_component: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
