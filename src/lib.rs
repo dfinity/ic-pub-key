@@ -2,4 +2,7 @@
 #[cfg(test)]
 pub mod ecdsa;
 
+#[cfg(test)]
+pub mod schnorr;
+
 pub mod test_vector;

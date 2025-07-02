@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+git checkout .
+git clean -dfx
+npm ci
+npm run build
+npm link
+VERSION="$(jq -r .version package.json)"
+[ "$(git rev-parse "v$VERSION")" = "$(git rev-parse HEAD)" ] || {
+git tag "v$VERSION"
+git push origin "tags/v$VERSION"
+}
+npm pack
+npx --yes "./dfinity-ic-pub-key-${VERSION}.tgz"
+npx @dfinity/ic-pub-key --help
+npx @dfinity/ic-pub-key --version
+echo "Now you may consider running: npm publish"
