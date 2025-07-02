@@ -22,5 +22,12 @@ describe('PublicKey', () => {
 			const encoded = publicKey.toHex();
 			expect(encoded).toBe(hex);
 		});
+		it('should fail for a hex string that is too long', () => {
+			const hex = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0';
+			expect(() => PublicKey.fromHex(hex)).toThrow();
+		});
+		it('should fail for a hex string that is too short', () => {
+			const hex = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde';
+		});
 	});
 });
