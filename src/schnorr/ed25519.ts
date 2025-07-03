@@ -104,34 +104,20 @@ export function derive_one_offset(
 	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
-	console.error(`derive_one_offset:args:`);
-	console.error(`    pt: ${pt.toHex()}`);
-	console.error(`    sum: 0x${sum.toString(16)}`);
-	console.error(`    chain_code: ${chain_code.toHex()}`);
-	console.error(`    idx: ${pathComponentHex(idx)}`);
-	console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
 	let ikm_hex = pt.toHex() + pathComponentHex(idx);
 	let ikm = Buffer.from(ikm_hex, 'hex');
 
-	console.error(`derive_offset:ikm: ${ikm_hex}`);
-
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 	let okm_hex = [...okm].map((c) => c.toString(16).padStart(2, '0')).join('');
-	console.error(`derive_offset:okm: ${okm_hex}`);
 
 	let offset = offset_from_okm(okm);
-	console.error(`derive_offset:offset: ${offset.toString(16)}  > mod? ${offset > ORDER}`);
 	offset = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
-	console.error(`derive_offset:offset: ${offset.toString(16)}`);
 
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
-	console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
 	sum = sum + offset;
 	sum = sum % ORDER;
-	console.error(`derive_offset:sum+offset: 0x${sum.toString(16)}`);
 
 	chain_code = new ChainCode(okm.subarray(64, 96));
-	console.error(`derive_offset:chain_code: ${chain_code.toHex()}`);
 
 	return [pt, sum, chain_code];
 }
@@ -139,10 +125,8 @@ export function derive_one_offset(
 export function offset_from_okm(okm: Uint8Array): bigint {
 	let offset_bytes = new Uint8Array(okm.subarray(0, 64));
 	let big_endian_hex = '0x' + Buffer.from(offset_bytes).toString('hex');
-	console.error(`offset_from_okm:big_endian: ${big_endian_hex}`);
 	// Interpret those bytes as a big endian number:
 	let offset = BigInt(big_endian_hex);
 	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
-	console.error(`offset_from_okm:reduced: 0x${reduced.toString(16)}`);
 	return reduced;
 }
