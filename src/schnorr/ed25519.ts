@@ -15,10 +15,6 @@ const ORDER = 2n ** 252n + 27742317777372353535851937790883648493n;
  */
 export type PathComponent = Uint8Array;
 
-function pathComponentHex(component: PathComponent): string {
-	return Buffer.from(component).toString('hex');
-}
-
 export class PublicKey {
 	/**
 	 * The length of a public key in bytes.  As hex it is twice this.
@@ -110,13 +106,13 @@ export function derive_one_offset(
 	ikm.set(pt_bytes, 0);
 	ikm.set(idx, pt_bytes.length);
 
-    // Hash
+	// Hash
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 
 	// Interpret the first 64 bytes of the okm as an ed25519 scalar.
 	let offset = offset_from_okm(okm);
 
-    // Get the outputs
+	// Get the outputs
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
 	sum = (sum + offset) % ORDER;
 	chain_code = new ChainCode(okm.subarray(64, 96));

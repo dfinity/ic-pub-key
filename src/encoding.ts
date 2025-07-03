@@ -83,3 +83,12 @@ export function bigint_from_little_endian_hex(hex: string): bigint {
 	let big_endian_hex = '0x' + Buffer.from(hex, 'hex').reverse().toString('hex');
 	return BigInt(big_endian_hex);
 }
+
+/**
+ * Convert an array of bytes to a hex string.
+ * @param array The array to convert.
+ * @returns The converted string.
+ */
+export function arrayAsHex(array: Uint8Array): string {
+	return Buffer.from(array).toString('hex');
+}
