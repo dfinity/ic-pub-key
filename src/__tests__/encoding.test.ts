@@ -87,6 +87,12 @@ describe('encoding', () => {
 			const result = bigintFromBigEndianBytes(bytes);
 			expect(result).toBe(0x0123456789abcdefn);
 		});
+
+		it('should handle empty array', () => {
+			const bytes = new Uint8Array([]);
+			const result = bigintFromBigEndianBytes(bytes);
+			expect(result).toBe(0n);
+		});
 	});
 
 	describe('bigintFromLittleEndianHex', () => {
@@ -95,6 +101,12 @@ describe('encoding', () => {
 			const result = bigintFromLittleEndianHex(hex);
 			expect(result).toBe(0xefcdab8967452301n);
 		});
+
+		it('should handle empty string', () => {
+			const hex = '';
+			const result = bigintFromLittleEndianHex(hex);
+			expect(result).toBe(0n);
+		});
 	});
 
 	describe('arrayAsHex', () => {
@@ -102,6 +114,12 @@ describe('encoding', () => {
 			const bytes = new Uint8Array([0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
 			const result = arrayAsHex(bytes);
 			expect(result).toBe('0123456789abcdef');
+		});
+
+		it('should handle empty array', () => {
+			const bytes = new Uint8Array([]);
+			const result = arrayAsHex(bytes);
+			expect(result).toBe('');
 		});
 	});
 });
