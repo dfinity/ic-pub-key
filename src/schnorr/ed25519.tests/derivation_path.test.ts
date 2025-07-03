@@ -61,7 +61,7 @@ describe('DerivationPath', () => {
 		}
 	});
 	describe('derive_offset', () => {
-		for (const test_vector of offset_test_vectors()) {
+		for (const test_vector of offsetTestVectors()) {
 			it(`the helper should be able to derive one offset for ${test_vector.name}`, () => {
 				const [pt, sum, chain_code] = derive_one_offset(
 					[test_vector.input.pt, test_vector.input.sum, test_vector.input.chain_code],
@@ -95,7 +95,7 @@ interface OffsetTestVector {
 	expected_output: OffsetState;
 }
 
-function offset_test_vectors(): OffsetTestVector[] {
+function offsetTestVectors(): OffsetTestVector[] {
 	// Sequential states from a derivation, as computed in Rust:
 	let steps = [
 		{
