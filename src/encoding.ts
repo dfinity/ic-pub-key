@@ -73,8 +73,8 @@ export function bigintFromBigEndianBytes(bytes: Uint8Array): bigint {
 	if (bytes.length === 0) {
 		return BigInt(0);
 	}
-	const big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
-	return BigInt(big_endian_hex);
+	const bigEndianHex = '0x' + Buffer.from(bytes).toString('hex');
+	return BigInt(bigEndianHex);
 }
 
 /**
