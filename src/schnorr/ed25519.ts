@@ -73,7 +73,7 @@ export class DerivationPath {
 	}
 
 	/**
-	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
+	 * A typescript translation of [ic_ed25519::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L849).
 	 * @param pt The public key to derive the offset from.
 	 * @param chainCode The chain code to derive the offset from.
 	 * @returns A tuple containing the derived public key, the offset, and the chain code.
@@ -86,7 +86,7 @@ export class DerivationPath {
 /**
  * One iteration of the main loop of `DerivationPath.derive_offset`.
  *
- * This should also correspond to the main loop of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168).
+ * This should also correspond to the main loop of [ic_ed25519::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L849).
  * @param pt The public key to derive the offset from.
  * @param sum The sum of the offsets of the previous iterations.
  * @param chain_code The chain code to derive the offset from.
