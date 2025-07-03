@@ -113,8 +113,10 @@ export function derive_one_offset(
     // Hash
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 
+	// Interpret the first 64 bytes of the okm as an ed25519 scalar.
 	let offset = offset_from_okm(okm);
 
+    // Get the outputs
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
 	sum = (sum + offset) % ORDER;
 	chain_code = new ChainCode(okm.subarray(64, 96));
