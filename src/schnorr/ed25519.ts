@@ -104,19 +104,19 @@ export function derive_one_offset(
 	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
+	// Concatenate idx and pt:
 	let pt_bytes = pt.toRawBytes();
 	let ikm = new Uint8Array(pt_bytes.length + idx.length);
 	ikm.set(pt_bytes, 0);
 	ikm.set(idx, pt_bytes.length);
 
+    // Hash
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 
 	let offset = offset_from_okm(okm);
 
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
-	sum = sum + offset;
-	sum = sum % ORDER;
-
+	sum = (sum + offset) % ORDER;
 	chain_code = new ChainCode(okm.subarray(64, 96));
 
 	return [pt, sum, chain_code];
