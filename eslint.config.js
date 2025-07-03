@@ -9,6 +9,7 @@ export default [
 			'node_modules/',
 			'dist/',
 			'target/',
+			'html/',
 			'*.min.js',
 			'*.bundle.js',
 			'coverage/',
