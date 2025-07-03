@@ -125,12 +125,14 @@ export function derive_one_offset(
 	console.error(`derive_offset:offset: ${offset.toString(16)}`);
 
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
-	sum += offset;
 	console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
+	sum = sum + offset;
+	console.error(`derive_offset:sum+offset: 0x${sum.toString(16)}`);
 
 	chain_code = new ChainCode(okm.subarray(64, 96));
+	console.error(`derive_offset:chain_code: ${chain_code.toHex()}`);
 
-	throw new Error('Not implemented');
+	return [pt, sum, chain_code];
 }
 
 export function offset_from_okm(okm: Uint8Array): bigint {
