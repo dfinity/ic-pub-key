@@ -86,10 +86,10 @@ export function bigintFromLittleEndianHex(hex: string): bigint {
 	if (hex.length === 0) {
 		return BigInt(0);
 	}
-	const le_bytes = Buffer.from(hex, 'hex');
-	const be_bytes = le_bytes.reverse();
-	const be_hex = be_bytes.toString('hex');
-	return BigInt('0x' + be_hex);
+	const leBytes = Buffer.from(hex, 'hex');
+	const beBytes = leBytes.reverse();
+	const beHex = beBytes.toString('hex');
+	return BigInt('0x' + beHex);
 }
 
 /**
