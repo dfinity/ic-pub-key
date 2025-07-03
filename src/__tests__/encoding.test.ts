@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
-	arrayAsHex,
 	bigintFromBigEndianBytes,
 	bigintFromLittleEndianHex,
 	blobDecode,
-	blobEncode
+	blobEncode,
+	bytesAsHex
 } from '../encoding';
 
 describe('encoding', () => {
@@ -112,13 +112,13 @@ describe('encoding', () => {
 	describe('arrayAsHex', () => {
 		it('should convert an array of bytes to a hex string', () => {
 			const bytes = new Uint8Array([0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
-			const result = arrayAsHex(bytes);
+			const result = bytesAsHex(bytes);
 			expect(result).toBe('0123456789abcdef');
 		});
 
 		it('should handle empty array', () => {
 			const bytes = new Uint8Array([]);
-			const result = arrayAsHex(bytes);
+			const result = bytesAsHex(bytes);
 			expect(result).toBe('');
 		});
 	});

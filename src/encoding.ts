@@ -97,6 +97,6 @@ export function bigintFromLittleEndianHex(hex: string): bigint {
  * @param array The array to convert.
  * @returns The converted string.
  */
-export function arrayAsHex(array: Uint8Array): string {
+export function bytesAsHex(array: Uint8Array): string {
 	return Buffer.from(array).toString('hex');
 }
