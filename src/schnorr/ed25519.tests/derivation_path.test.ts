@@ -1,7 +1,7 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
-import { bigint_from_little_endian_hex } from '../../encoding';
+import { bigintFromLittleEndianHex } from '../../encoding';
 import { DerivationPath, derive_one_offset, offset_from_okm, PathComponent } from '../ed25519';
 
 interface BlobEncodingTestVector {
@@ -208,7 +208,7 @@ function offset_from_okm_test_vectors(): OffsetFromOkmTestVector[] {
 		return {
 			name,
 			okm,
-			expected_offset: bigint_from_little_endian_hex(expected_offset)
+			expected_offset: bigintFromLittleEndianHex(expected_offset)
 		};
 	});
 }
