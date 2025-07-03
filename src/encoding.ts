@@ -73,3 +73,13 @@ export function bigint_from_big_endian_bytes(bytes: Uint8Array): bigint {
 	let big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
 	return BigInt(big_endian_hex);
 }
+
+/**
+ * Convert little endian hex to a bigint.
+ * @param hex The hex to convert.
+ * @returns The converted number.
+ */
+export function bigint_from_little_endian_hex(hex: string): bigint {
+	let big_endian_hex = '0x' + Buffer.from(hex, 'hex').reverse().toString('hex');
+	return BigInt(big_endian_hex);
+}

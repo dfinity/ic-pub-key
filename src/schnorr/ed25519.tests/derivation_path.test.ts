@@ -1,6 +1,7 @@
 import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
+import { bigint_from_little_endian_hex } from '../../encoding';
 import { DerivationPath, derive_one_offset, offset_from_okm, PathComponent } from '../ed25519';
 
 interface BlobEncodingTestVector {
@@ -204,14 +205,10 @@ function offset_from_okm_test_vectors(): OffsetFromOkmTestVector[] {
 		}
 	];
 	return vectors.map(({ name, okm, expected_offset }) => {
-		// The expected offset is given  in little endian hex; we need a number.  We convert to bytes, reverse the bytes, convert back to hex and then create a number from that.
-		let bytes = Buffer.from(expected_offset, 'hex');
-		let reversed = bytes.reverse();
-		let hex = reversed.toString('hex');
 		return {
 			name,
 			okm,
-			expected_offset: BigInt('0x' + hex)
+			expected_offset: bigint_from_little_endian_hex(expected_offset)
 		};
 	});
 }
