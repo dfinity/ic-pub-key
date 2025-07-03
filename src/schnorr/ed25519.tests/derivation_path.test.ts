@@ -66,9 +66,9 @@ describe('DerivationPath', () => {
 					[test_vector.input.pt, test_vector.input.sum, test_vector.input.chain_code],
 					test_vector.idx
 				);
-				expect(pt).toBe(test_vector.expected_output.pt);
-				expect(sum).toBe(test_vector.expected_output.sum);
-				expect(chain_code).toBe(test_vector.expected_output.chain_code);
+				expect(pt.toHex()).toBe(test_vector.expected_output.pt.toHex());
+				expect(sum.toString(16)).toBe(test_vector.expected_output.sum.toString(16));
+				expect(chain_code.toHex()).toBe(test_vector.expected_output.chain_code.toHex());
 			});
 		}
 	});
@@ -117,9 +117,12 @@ function offset_test_vectors(): OffsetTestVector[] {
 		}
 	];
 	let parsed = steps.map(({ pt, sum, chain_code, idx }) => {
+		// The sum is little endian, so we need to reverse it.
+		let reversed_sum = Buffer.from(sum, 'hex').reverse();
+		let hex_sum = reversed_sum.toString('hex');
 		return {
 			pt: ExtendedPoint.fromHex(pt),
-			sum: BigInt('0x' + sum),
+			sum: BigInt('0x' + hex_sum),
 			chain_code: ChainCode.fromHex(chain_code),
 			idx: Buffer.from(idx, 'hex')
 		};
