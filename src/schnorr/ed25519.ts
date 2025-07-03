@@ -1,6 +1,6 @@
 import * as ed from '@noble/ed25519';
 import { ExtendedPoint } from '@noble/ed25519';
-import { hkdf as noble_hkdf } from '@noble/hashes/hkdf.js';
+import { hkdf as nobleHkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
 import { ChainCode } from '../chain_code.js';
 import { bigintFromBigEndianBytes, blobDecode, blobEncode } from '../encoding.js';
@@ -75,14 +75,11 @@ export class DerivationPath {
 	/**
 	 * A typescript translation of [ic_secp256k1::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/bb6e758c739768ef6713f9f3be2df47884544900/packages/ic-secp256k1/src/lib.rs#L168)
 	 * @param pt The public key to derive the offset from.
-	 * @param chain_code The chain code to derive the offset from.
+	 * @param chainCode The chain code to derive the offset from.
 	 * @returns A tuple containing the derived public key, the offset, and the chain code.
 	 */
-	derive_offset(
-		pt: ed.ExtendedPoint,
-		chain_code: ChainCode
-	): [ed.ExtendedPoint, bigint, ChainCode] {
-		return this.path.reduce(derive_one_offset, [pt, 0n, chain_code]);
+	deriveOffset(pt: ed.ExtendedPoint, chainCode: ChainCode): [ed.ExtendedPoint, bigint, ChainCode] {
+		return this.path.reduce(deriveOneOffset, [pt, 0n, chainCode]);
 	}
 }
 
@@ -96,28 +93,28 @@ export class DerivationPath {
  * @param idx The next component or index of the derivation path.
  * @returns A tuple containing the derived public key, the offset, and the chain code.
  */
-export function derive_one_offset(
-	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
+export function deriveOneOffset(
+	[pt, sum, chainCode]: [ed.ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
 	// Concatenate idx and pt:
-	const pt_bytes = pt.toRawBytes();
-	const ikm = new Uint8Array(pt_bytes.length + idx.length);
-	ikm.set(pt_bytes, 0);
-	ikm.set(idx, pt_bytes.length);
+	const ptBytes = pt.toRawBytes();
+	const ikm = new Uint8Array(ptBytes.length + idx.length);
+	ikm.set(ptBytes, 0);
+	ikm.set(idx, ptBytes.length);
 
 	// Hash
-	const okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
+	const okm = nobleHkdf(sha512, ikm, chainCode.bytes, 'Ed25519', 96);
 
 	// Interpret the first 64 bytes of the okm as an ed25519 scalar.
-	const offset = offset_from_okm(okm);
+	const offset = offsetFromOkm(okm);
 
 	// Get the outputs
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
 	sum = (sum + offset) % ORDER;
-	chain_code = new ChainCode(okm.subarray(64, 96));
+	chainCode = new ChainCode(okm.subarray(64, 96));
 
-	return [pt, sum, chain_code];
+	return [pt, sum, chainCode];
 }
 
 /**
@@ -125,7 +122,7 @@ export function derive_one_offset(
  * @param okm The okm to interpret.
  * @returns The interpreted number.
  */
-export function offset_from_okm(okm: Uint8Array): bigint {
+export function offsetFromOkm(okm: Uint8Array): bigint {
 	const offset_bytes = new Uint8Array(okm.subarray(0, 64));
 	const offset = bigintFromBigEndianBytes(offset_bytes);
 	const reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.

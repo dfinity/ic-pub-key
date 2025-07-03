@@ -2,7 +2,7 @@ import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
 import { bigintFromLittleEndianHex } from '../../encoding';
-import { DerivationPath, derive_one_offset, offset_from_okm, PathComponent } from '../ed25519';
+import { DerivationPath, deriveOneOffset, offsetFromOkm, PathComponent } from '../ed25519';
 
 interface BlobEncodingTestVector {
 	name: string;
@@ -63,7 +63,7 @@ describe('DerivationPath', () => {
 	describe('derive_offset', () => {
 		for (const test_vector of offsetTestVectors()) {
 			it(`the helper should be able to derive one offset for ${test_vector.name}`, () => {
-				const [pt, sum, chain_code] = derive_one_offset(
+				const [pt, sum, chain_code] = deriveOneOffset(
 					[test_vector.input.pt, test_vector.input.sum, test_vector.input.chain_code],
 					test_vector.idx
 				);
@@ -76,7 +76,7 @@ describe('DerivationPath', () => {
 	describe('offset_from_okm', () => {
 		for (const test_vector of offset_from_okm_test_vectors()) {
 			it(`should be able to convert an okm to an offset for ${test_vector.name}`, () => {
-				const offset = offset_from_okm(Buffer.from(test_vector.okm, 'hex'));
+				const offset = offsetFromOkm(Buffer.from(test_vector.okm, 'hex'));
 				expect(offset.toString(16)).toBe(test_vector.expected_offset.toString(16));
 			});
 		}
