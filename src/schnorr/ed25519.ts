@@ -3,7 +3,7 @@ import { ExtendedPoint } from '@noble/ed25519';
 import { hkdf as noble_hkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
 import { ChainCode } from '../chain_code.js';
-import { blobDecode, blobEncode } from '../encoding.js';
+import { bigint_from_big_endian_bytes, blobDecode, blobEncode } from '../encoding.js';
 
 /**
  * The order of ed25519.
@@ -133,14 +133,4 @@ export function offset_from_okm(okm: Uint8Array): bigint {
 	let offset = bigint_from_big_endian_bytes(offset_bytes);
 	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 	return reduced;
-}
-
-/**
- * Convert bytes arranged most significant first to a bigint.
- * @param bytes The bytes to convert.
- * @returns The converted number.
- */
-export function bigint_from_big_endian_bytes(bytes: Uint8Array): bigint {
-	let big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
-	return BigInt(big_endian_hex);
 }
