@@ -135,6 +135,11 @@ export function offset_from_okm(okm: Uint8Array): bigint {
 	return reduced;
 }
 
+/**
+ * Convert bytes arranged most significant first to a bigint.
+ * @param bytes The bytes to convert.
+ * @returns The converted number.
+ */
 export function bigint_from_big_endian_bytes(bytes: Uint8Array): bigint {
 	let big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
 	return BigInt(big_endian_hex);
