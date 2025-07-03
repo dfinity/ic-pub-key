@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { blobDecode, blobEncode } from '../encoding';
+import {
+	arrayAsHex,
+	bigintFromBigEndianBytes,
+	bigintFromLittleEndianHex,
+	blobDecode,
+	blobEncode
+} from '../encoding';
 
 describe('encoding', () => {
 	describe('blobEncode', () => {
@@ -72,6 +78,30 @@ describe('encoding', () => {
 			const encoded = blobEncode(original);
 			const decoded = blobDecode(encoded);
 			expect(decoded).toEqual(original);
+		});
+	});
+
+	describe('bigintFromBigEndianBytes', () => {
+		it('should convert big-endian bytes to a bigint', () => {
+			const bytes = new Uint8Array([0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
+			const result = bigintFromBigEndianBytes(bytes);
+			expect(result).toBe(0x0123456789abcdefn);
+		});
+	});
+
+	describe('bigintFromLittleEndianHex', () => {
+		it('should convert little-endian hex to a bigint', () => {
+			const hex = '0123456789abcdef';
+			const result = bigintFromLittleEndianHex(hex);
+			expect(result).toBe(0xefcdab8967452301n);
+		});
+	});
+
+	describe('arrayAsHex', () => {
+		it('should convert an array of bytes to a hex string', () => {
+			const bytes = new Uint8Array([0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
+			const result = arrayAsHex(bytes);
+			expect(result).toBe('0123456789abcdef');
 		});
 	});
 });
