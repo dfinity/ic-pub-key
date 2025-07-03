@@ -143,6 +143,7 @@ interface OffsetFromOkmTestVector {
 }
 
 function offset_from_okm_test_vectors(): OffsetFromOkmTestVector[] {
+	// Test vectors obtained from the Rust implementation.
 	let vectors = [
 		{
 			name: 'zero',

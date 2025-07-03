@@ -101,16 +101,16 @@ export function derive_one_offset(
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
 	// Concatenate idx and pt:
-	let pt_bytes = pt.toRawBytes();
-	let ikm = new Uint8Array(pt_bytes.length + idx.length);
+	const pt_bytes = pt.toRawBytes();
+	const ikm = new Uint8Array(pt_bytes.length + idx.length);
 	ikm.set(pt_bytes, 0);
 	ikm.set(idx, pt_bytes.length);
 
 	// Hash
-	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
+	const okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 
 	// Interpret the first 64 bytes of the okm as an ed25519 scalar.
-	let offset = offset_from_okm(okm);
+	const offset = offset_from_okm(okm);
 
 	// Get the outputs
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
@@ -126,8 +126,8 @@ export function derive_one_offset(
  * @returns The interpreted number.
  */
 export function offset_from_okm(okm: Uint8Array): bigint {
-	let offset_bytes = new Uint8Array(okm.subarray(0, 64));
-	let offset = bigintFromBigEndianBytes(offset_bytes);
-	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
+	const offset_bytes = new Uint8Array(okm.subarray(0, 64));
+	const offset = bigintFromBigEndianBytes(offset_bytes);
+	const reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 	return reduced;
 }
