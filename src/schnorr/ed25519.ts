@@ -15,6 +15,10 @@ const ORDER = 2n ** 252n + 27742317777372353535851937790883648493n;
  */
 export type PathComponent = Uint8Array;
 
+function pathComponentHex(component: PathComponent): string {
+	return Buffer.from(component).toString('hex');
+}
+
 export class PublicKey {
 	/**
 	 * The length of a public key in bytes.  As hex it is twice this.
@@ -100,8 +104,13 @@ export function derive_one_offset(
 	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
+	console.error(`derive_one_offset:args:`);
+	console.error(`    pt: ${pt.toHex()}`);
+	console.error(`    sum: 0x${sum.toString(16)}`);
+	console.error(`    chain_code: ${chain_code.toHex()}`);
+	console.error(`    idx: ${pathComponentHex(idx)}`);
 	console.error(`derive_offset:32 bytes of public key: ${pt.toHex()}`);
-	let ikm_hex = pt.toHex() + Buffer.from(idx).toString('hex');
+	let ikm_hex = pt.toHex() + pathComponentHex(idx);
 	let ikm = Buffer.from(ikm_hex, 'hex');
 
 	console.error(`derive_offset:ikm: ${ikm_hex}`);
@@ -131,6 +140,6 @@ export function offset_from_okm(okm: Uint8Array): bigint {
 	// Interpret those bytes as a big endian number:
 	let offset = BigInt(big_endian_hex);
 	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
-	console.error(`offset_from_okm:reduced: ${reduced.toString(16)}`);
+	console.error(`offset_from_okm:reduced: 0x${reduced.toString(16)}`);
 	return reduced;
 }
