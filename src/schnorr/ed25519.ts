@@ -122,11 +122,20 @@ export function derive_one_offset(
 	return [pt, sum, chain_code];
 }
 
+/**
+ * Interpret the first 64 bytes of the okm as a big endian number.
+ * @param okm The okm to interpret.
+ * @returns The interpreted number.
+ */
 export function offset_from_okm(okm: Uint8Array): bigint {
-	let offset_bytes = new Uint8Array(okm.subarray(0, 64));
-	let big_endian_hex = '0x' + Buffer.from(offset_bytes).toString('hex');
 	// Interpret those bytes as a big endian number:
-	let offset = BigInt(big_endian_hex);
+	let offset_bytes = new Uint8Array(okm.subarray(0, 64));
+	let offset = bigint_from_big_endian_bytes(offset_bytes);
 	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 	return reduced;
+}
+
+export function bigint_from_big_endian_bytes(bytes: Uint8Array): bigint {
+	let big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
+	return BigInt(big_endian_hex);
 }
