@@ -1,4 +1,3 @@
-import * as ed from '@noble/ed25519';
 import { ExtendedPoint } from '@noble/ed25519';
 import { hkdf as nobleHkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
@@ -78,7 +77,7 @@ export class DerivationPath {
 	 * @param chainCode The chain code to derive the offset from.
 	 * @returns A tuple containing the derived public key, the offset, and the chain code.
 	 */
-	deriveOffset(pt: ed.ExtendedPoint, chainCode: ChainCode): [ed.ExtendedPoint, bigint, ChainCode] {
+	deriveOffset(pt: ExtendedPoint, chainCode: ChainCode): [ExtendedPoint, bigint, ChainCode] {
 		return this.path.reduce(deriveOneOffset, [pt, 0n, chainCode]);
 	}
 }
@@ -94,9 +93,9 @@ export class DerivationPath {
  * @returns A tuple containing the derived public key, the offset, and the chain code.
  */
 export function deriveOneOffset(
-	[pt, sum, chainCode]: [ed.ExtendedPoint, bigint, ChainCode],
+	[pt, sum, chainCode]: [ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
-): [ed.ExtendedPoint, bigint, ChainCode] {
+): [ExtendedPoint, bigint, ChainCode] {
 	// Concatenate idx and pt:
 	const ptBytes = pt.toRawBytes();
 	const ikm = new Uint8Array(ptBytes.length + idx.length);
@@ -110,7 +109,7 @@ export function deriveOneOffset(
 	const offset = offsetFromOkm(okm);
 
 	// Get the outputs
-	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
+	pt = pt.add(ExtendedPoint.BASE.multiply(offset));
 	sum = (sum + offset) % ORDER;
 	chainCode = new ChainCode(okm.subarray(64, 96));
 
