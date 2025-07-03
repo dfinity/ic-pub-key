@@ -104,8 +104,10 @@ export function derive_one_offset(
 	[pt, sum, chain_code]: [ed.ExtendedPoint, bigint, ChainCode],
 	idx: PathComponent
 ): [ed.ExtendedPoint, bigint, ChainCode] {
-	let ikm_hex = pt.toHex() + pathComponentHex(idx);
-	let ikm = Buffer.from(ikm_hex, 'hex');
+	let pt_bytes = pt.toRawBytes();
+	let ikm = new Uint8Array(pt_bytes.length + idx.length);
+	ikm.set(pt_bytes, 0);
+	ikm.set(idx, pt_bytes.length);
 
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
 
