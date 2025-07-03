@@ -108,10 +108,8 @@ export function derive_one_offset(
 	let ikm = Buffer.from(ikm_hex, 'hex');
 
 	let okm = noble_hkdf(sha512, ikm, chain_code.bytes, 'Ed25519', 96);
-	let okm_hex = [...okm].map((c) => c.toString(16).padStart(2, '0')).join('');
 
 	let offset = offset_from_okm(okm);
-	offset = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
 	sum = sum + offset;
@@ -128,7 +126,6 @@ export function derive_one_offset(
  * @returns The interpreted number.
  */
 export function offset_from_okm(okm: Uint8Array): bigint {
-	// Interpret those bytes as a big endian number:
 	let offset_bytes = new Uint8Array(okm.subarray(0, 64));
 	let offset = bigint_from_big_endian_bytes(offset_bytes);
 	let reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
