@@ -70,7 +70,7 @@ function blobEncodeU8(u8: number): string {
  * @returns The converted number.
  */
 export function bigintFromBigEndianBytes(bytes: Uint8Array): bigint {
-	let big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
+	const big_endian_hex = '0x' + Buffer.from(bytes).toString('hex');
 	return BigInt(big_endian_hex);
 }
 
@@ -80,7 +80,7 @@ export function bigintFromBigEndianBytes(bytes: Uint8Array): bigint {
  * @returns The converted number.
  */
 export function bigintFromLittleEndianHex(hex: string): bigint {
-	let big_endian_hex = '0x' + Buffer.from(hex, 'hex').reverse().toString('hex');
+	const big_endian_hex = '0x' + Buffer.from(hex, 'hex').reverse().toString('hex');
 	return BigInt(big_endian_hex);
 }
 

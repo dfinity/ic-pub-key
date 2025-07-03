@@ -97,7 +97,7 @@ interface OffsetTestVector {
 
 function offsetTestVectors(): OffsetTestVector[] {
 	// Sequential states from a derivation, as computed in Rust:
-	let steps = [
+	const steps = [
 		{
 			pt: 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d',
 			sum: '0000000000000000000000000000000000000000000000000000000000000000',
@@ -117,7 +117,7 @@ function offsetTestVectors(): OffsetTestVector[] {
 			idx: '3636363636'
 		}
 	];
-	let parsed = steps.map(({ pt, sum, chain_code, idx }) => {
+	const parsed = steps.map(({ pt, sum, chain_code, idx }) => {
 		// The sum is little endian, so we need to reverse it.
 		return {
 			pt: ExtendedPoint.fromHex(pt),
@@ -144,7 +144,7 @@ interface OffsetFromOkmTestVector {
 
 function offset_from_okm_test_vectors(): OffsetFromOkmTestVector[] {
 	// Test vectors obtained from the Rust implementation.
-	let vectors = [
+	const vectors = [
 		{
 			name: 'zero',
 			okm: '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
