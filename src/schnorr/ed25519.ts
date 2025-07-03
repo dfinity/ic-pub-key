@@ -123,7 +123,7 @@ export function derive_one_offset(
 }
 
 /**
- * Interpret the first 64 bytes of the okm as a big endian number.
+ * Interpret the first 64 bytes of the okm as an ed25519 scalar.
  * @param okm The okm to interpret.
  * @returns The interpreted number.
  */
