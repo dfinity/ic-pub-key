@@ -74,7 +74,7 @@ describe('DerivationPath', () => {
 		}
 	});
 	describe('offset_from_okm', () => {
-		for (const test_vector of offset_from_okm_test_vectors()) {
+		for (const test_vector of offsetFromOkmTestVectors()) {
 			it(`should be able to convert an okm to an offset for ${test_vector.name}`, () => {
 				const offset = offsetFromOkm(Buffer.from(test_vector.okm, 'hex'));
 				expect(offset.toString(16)).toBe(test_vector.expected_offset.toString(16));
@@ -142,7 +142,7 @@ interface OffsetFromOkmTestVector {
 	expected_offset: bigint;
 }
 
-function offset_from_okm_test_vectors(): OffsetFromOkmTestVector[] {
+function offsetFromOkmTestVectors(): OffsetFromOkmTestVector[] {
 	// Test vectors obtained from the Rust implementation.
 	const vectors = [
 		{

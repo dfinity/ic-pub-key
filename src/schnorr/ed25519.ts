@@ -89,7 +89,7 @@ export class DerivationPath {
  * This should also correspond to the main loop of [ic_ed25519::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L849).
  * @param pt The public key to derive the offset from.
  * @param sum The sum of the offsets of the previous iterations.
- * @param chain_code The chain code to derive the offset from.
+ * @param chainCode The chain code to derive the offset from.
  * @param idx The next component or index of the derivation path.
  * @returns A tuple containing the derived public key, the offset, and the chain code.
  */
@@ -123,8 +123,8 @@ export function deriveOneOffset(
  * @returns The interpreted number.
  */
 export function offsetFromOkm(okm: Uint8Array): bigint {
-	const offset_bytes = new Uint8Array(okm.subarray(0, 64));
-	const offset = bigintFromBigEndianBytes(offset_bytes);
+	const offsetBytes = new Uint8Array(okm.subarray(0, 64));
+	const offset = bigintFromBigEndianBytes(offsetBytes);
 	const reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
 	return reduced;
 }
