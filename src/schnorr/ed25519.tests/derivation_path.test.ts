@@ -119,11 +119,9 @@ function offset_test_vectors(): OffsetTestVector[] {
 	];
 	let parsed = steps.map(({ pt, sum, chain_code, idx }) => {
 		// The sum is little endian, so we need to reverse it.
-		let reversed_sum = Buffer.from(sum, 'hex').reverse();
-		let hex_sum = reversed_sum.toString('hex');
 		return {
 			pt: ExtendedPoint.fromHex(pt),
-			sum: BigInt('0x' + hex_sum),
+			sum: bigintFromLittleEndianHex(sum),
 			chain_code: ChainCode.fromHex(chain_code),
 			idx: Buffer.from(idx, 'hex')
 		};
