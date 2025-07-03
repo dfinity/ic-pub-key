@@ -125,6 +125,6 @@ export function deriveOneOffset(
 export function offsetFromOkm(okm: Uint8Array): bigint {
 	const offsetBytes = new Uint8Array(okm.subarray(0, 64));
 	const offset = bigintFromBigEndianBytes(offsetBytes);
-	const reduced = offset % ORDER; // TODO: Maybe use the special `mod` function from noble/ed25519 - it may be faster.
+	const reduced = offset % ORDER;
 	return reduced;
 }
