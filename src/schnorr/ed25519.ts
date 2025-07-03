@@ -127,6 +127,7 @@ export function derive_one_offset(
 	pt = pt.add(ed.ExtendedPoint.BASE.multiply(offset));
 	console.error(`derive_offset:pt plus base: ${pt.toHex()}`);
 	sum = sum + offset;
+	sum = sum % ORDER;
 	console.error(`derive_offset:sum+offset: 0x${sum.toString(16)}`);
 
 	chain_code = new ChainCode(okm.subarray(64, 96));
