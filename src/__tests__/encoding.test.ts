@@ -109,7 +109,7 @@ describe('encoding', () => {
 		});
 	});
 
-	describe('arrayAsHex', () => {
+	describe('bytesAsHex', () => {
 		it('should convert an array of bytes to a hex string', () => {
 			const bytes = new Uint8Array([0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef]);
 			const result = bytesAsHex(bytes);
