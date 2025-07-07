@@ -1,4 +1,5 @@
 import { ExtendedPoint } from '@noble/ed25519';
+import { ChainCode } from '../chain_code.js';
 import { blobDecode, blobEncode } from '../encoding.js';
 
 /**
@@ -19,6 +20,14 @@ export class PublicKey {
 	}
 
 	/**
+	 * Parses a public key from a string in any supported format.
+	 */
+	static fromString(public_key_string: string): PublicKey {
+		// At present only hex is supported, so this is easy:
+		return PublicKey.fromHex(public_key_string);
+	}
+
+	/**
 	 * Creates a new PublicKey from a hex string.
 	 * @param hex The hex string to create the public key from.
 	 * @throws If the hex string has the wrong length for a public key.
@@ -26,7 +35,7 @@ export class PublicKey {
 	 * @returns A new PublicKey.
 	 */
 	static fromHex(hex: string): PublicKey {
-		return new PublicKey(ExtendedPoint.fromHex(hex));
+		return new PublicKey(ExtendedPoint.fromHex(hex, true));
 	}
 
 	/**
@@ -35,6 +44,44 @@ export class PublicKey {
 	 */
 	toHex(): string {
 		return this.key.toHex();
+	}
+}
+
+/**
+ * A public key with its chain code.
+ */
+export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
+	constructor(
+		public readonly public_key: PublicKey,
+		public readonly chain_code: ChainCode
+	) {}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key_hex The public key in hex format.
+	 * @param chain_code_hex The chain code in hex format.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
+		const public_key = PublicKey.fromHex(public_key_hex);
+		const chain_key = ChainCode.fromHex(chain_code_hex);
+		return new PublicKeyWithChainCode(public_key, chain_key);
+	}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two strings.
+	 * @param public_key_string The public key in any format supported by PublicKey.fromString.
+	 * @param chain_code_string The chain code in any format supported by ChainCode.fromString.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromString(public_key_string: string, chain_code_string: string): PublicKeyWithChainCode {
+		const public_key = PublicKey.fromString(public_key_string);
+		const chain_code = ChainCode.fromString(chain_code_string);
+		return new PublicKeyWithChainCode(public_key, chain_code);
 	}
 }
 
