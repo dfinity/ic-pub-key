@@ -11,30 +11,6 @@ export { ChainCode };
 const ORDER = 2n ** 252n + 27742317777372353535851937790883648493n;
 
 /**
- * A public key with its chain code.
- */
-export class PublicKeyWithChainCode {
-	/**
-	 * @param public_key The public key.
-	 * @param chain_code A hash of the derivation path.
-	 */
-	constructor(
-		public readonly public_key: PublicKey,
-		public readonly chain_code: ChainCode
-	) {}
-
-	/**
-	 * Applies the given derivation path to obtain a new public key and chain code.
-	 *
-	 * Corresponds to rust: [`ic_ed25519::PublicKey::derive_public_key_with_chain_code()`](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L774C1-L793C6)
-	 */
-	deriveSubkeyWithChainCode(derivationPath: DerivationPath): PublicKeyWithChainCode {
-		const [pt, _sum, chainCode] = derivationPath.deriveOffset(this.public_key.key, this.chain_code);
-		return new PublicKeyWithChainCode(new PublicKey(pt), chainCode);
-	}
-}
-
-/**
  * One part of a derivation path.
  */
 export type PathComponent = Uint8Array;
@@ -52,6 +28,14 @@ export class PublicKey {
 	}
 
 	/**
+	 * Parses a public key from a string in any supported format.
+	 */
+	static fromString(public_key_string: string): PublicKey {
+		// At present only hex is supported, so this is easy:
+		return PublicKey.fromHex(public_key_string);
+	}
+
+	/**
 	 * Creates a new PublicKey from a hex string.
 	 * @param hex The hex string to create the public key from.
 	 * @throws If the hex string has the wrong length for a public key.
@@ -59,7 +43,7 @@ export class PublicKey {
 	 * @returns A new PublicKey.
 	 */
 	static fromHex(hex: string): PublicKey {
-		return new PublicKey(ExtendedPoint.fromHex(hex));
+		return new PublicKey(ExtendedPoint.fromHex(hex, true));
 	}
 
 	/**
@@ -69,6 +53,54 @@ export class PublicKey {
 	toHex(): string {
 		return this.key.toHex();
 	}
+}
+
+/**
+ * A public key with its chain code.
+ */
+export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
+	constructor(
+		public readonly public_key: PublicKey,
+		public readonly chain_code: ChainCode
+	) {}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two hex strings.
+	 * @param public_key_hex The public key in hex format.
+	 * @param chain_code_hex The chain code in hex format.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
+		const public_key = PublicKey.fromHex(public_key_hex);
+		const chain_key = ChainCode.fromHex(chain_code_hex);
+		return new PublicKeyWithChainCode(public_key, chain_key);
+	}
+
+	/**
+	 * Creates a new PublicKeyWithChainCode from two strings.
+	 * @param public_key_string The public key in any format supported by PublicKey.fromString.
+	 * @param chain_code_string The chain code in any format supported by ChainCode.fromString.
+	 * @returns A new PublicKeyWithChainCode.
+	 */
+	static fromString(public_key_string: string, chain_code_string: string): PublicKeyWithChainCode {
+		const public_key = PublicKey.fromString(public_key_string);
+		const chain_code = ChainCode.fromString(chain_code_string);
+		return new PublicKeyWithChainCode(public_key, chain_code);
+	}
+
+		/**
+	 * Applies the given derivation path to obtain a new public key and chain code.
+	 *
+	 * Corresponds to rust: [`ic_ed25519::PublicKey::derive_public_key_with_chain_code()`](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L774C1-L793C6)
+	 */
+		deriveSubkeyWithChainCode(derivationPath: DerivationPath): PublicKeyWithChainCode {
+			const [pt, _sum, chainCode] = derivationPath.deriveOffset(this.public_key.key, this.chain_code);
+			return new PublicKeyWithChainCode(new PublicKey(pt), chainCode);
+		}	
 }
 
 export class DerivationPath {
