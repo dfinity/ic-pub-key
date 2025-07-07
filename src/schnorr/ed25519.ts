@@ -10,6 +10,30 @@ import { bigintFromBigEndianBytes, blobDecode, blobEncode } from '../encoding.js
 const ORDER = 2n ** 252n + 27742317777372353535851937790883648493n;
 
 /**
+ * A public key with its chain code.
+ */
+export class PublicKeyWithChainCode {
+	/**
+	 * @param public_key The public key.
+	 * @param chain_code A hash of the derivation path.
+	 */
+	constructor(
+		public readonly public_key: PublicKey,
+		public readonly chain_code: ChainCode
+	) {}
+
+	/**
+	 * Applies the given derivation path to obtain a new public key and chain code.
+	 *
+	 * Corresponds to rust: [`ic_ed25519::PublicKey::derive_public_key_with_chain_code()`](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L774C1-L793C6)
+	 */
+	deriveSubkeyWithChainCode(derivationPath: DerivationPath): PublicKeyWithChainCode {
+		const [pt, _sum, chainCode] = derivationPath.deriveOffset(this.public_key.key, this.chain_code);
+		return new PublicKeyWithChainCode(new PublicKey(pt), chainCode);
+	}
+}
+
+/**
  * One part of a derivation path.
  */
 export type PathComponent = Uint8Array;
