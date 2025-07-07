@@ -68,7 +68,7 @@ export class PublicKeyWithChainCode {
 	 */
 	static fromHex(public_key_hex: string, chain_code_hex: string): PublicKeyWithChainCode {
 		const public_key = PublicKey.fromHex(public_key_hex);
-		const chain_key = new ChainCode(new Uint8Array(Buffer.from(chain_code_hex, 'hex')));
+		const chain_key = ChainCode.fromHex(chain_code_hex);
 		return new PublicKeyWithChainCode(public_key, chain_key);
 	}
 
