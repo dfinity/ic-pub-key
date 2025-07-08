@@ -31,4 +31,11 @@ describe('PublicKey', () => {
 			expect(() => PublicKey.fromHex(hex)).toThrow();
 		});
 	});
+	describe('fromString', () => {
+		it('should be able to parse a hex string', () => {
+			const hex = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+			const publicKey = PublicKey.fromString(hex);
+			expect(publicKey).toBeDefined();
+		});
+	});
 });
