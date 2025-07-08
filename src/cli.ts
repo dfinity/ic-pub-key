@@ -75,14 +75,12 @@ schnorr
 	)
 	.addOption(new Option('-d, --derivationpath <string>', 'The derivation path'))
 	.action(({ pubkey, chaincode, derivationpath }) => {
-		const pubkey_or_default = isNullish(pubkey)
+		const pubkey_or_default: string = isNullish(pubkey)
 			? 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
 			: pubkey;
-		const chaincode_or_default = isNullish(chaincode)
+		const chaincode_or_default: string = isNullish(chaincode)
 			? '985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
 			: chaincode;
-		// TODO: Make this call type-safe
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		console.log(schnorr_ed25519_derive(pubkey_or_default, chaincode_or_default, derivationpath));
 	});
 
