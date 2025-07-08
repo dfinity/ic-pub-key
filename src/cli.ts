@@ -9,6 +9,7 @@ import {
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
+import { schnorr_ed25519_derive } from './schnorr/ed25519.js';
 import {
 	BITCOIN_ADDRESS_TYPES,
 	BITCOIN_NETWORKS,
@@ -56,6 +57,34 @@ function ecdsa_secp256k1_derive(pubkey: string, chaincode: string, derivationpat
 	};
 	return JSON.stringify(ans, null, 2);
 }
+
+const schnorr = derive.command('schnorr').description('Derive a Schnorr public key');
+
+schnorr
+	.command('ed25519')
+	.description('Derive a key')
+	.addOption(
+		new Option('-k, --pubkey <pubkey>', 'The public key').default(
+			'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
+		)
+	)
+	.addOption(
+		new Option('-c, --chaincode <chaincode>', 'The chain code').default(
+			'985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
+		)
+	)
+	.addOption(new Option('-d, --derivationpath <derivationpath>', 'The derivation path'))
+	.action(({ pubkey, chaincode, derivationpath }) => {
+		const pubkey_or_default = isNullish(pubkey)
+			? 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
+			: pubkey;
+		const chaincode_or_default = isNullish(chaincode)
+			? '985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
+			: chaincode;
+		// TODO: Make this call type-safe
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		console.log(schnorr_ed25519_derive(pubkey_or_default, chaincode_or_default, derivationpath));
+	});
 
 const signer = program.command('signer').description('Get chain fusion signer token address');
 
