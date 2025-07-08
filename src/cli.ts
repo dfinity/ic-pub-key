@@ -64,16 +64,16 @@ schnorr
 	.command('ed25519')
 	.description('Derive a key')
 	.addOption(
-		new Option('-k, --pubkey <pubkey>', 'The public key').default(
+		new Option('-k, --pubkey <string>', 'The public key').default(
 			'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
 		)
 	)
 	.addOption(
-		new Option('-c, --chaincode <chaincode>', 'The chain code').default(
+		new Option('-c, --chaincode <string>', 'The chain code').default(
 			'985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
 		)
 	)
-	.addOption(new Option('-d, --derivationpath <derivationpath>', 'The derivation path'))
+	.addOption(new Option('-d, --derivationpath <string>', 'The derivation path'))
 	.action(({ pubkey, chaincode, derivationpath }) => {
 		const pubkey_or_default = isNullish(pubkey)
 			? 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
