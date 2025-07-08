@@ -77,11 +77,16 @@ schnorr
 	.action(({ pubkey, chaincode, derivationpath }) => {
 		const pubkey_or_default: string = isNullish(pubkey)
 			? 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
-			: pubkey.toString();
+			: String(pubkey);
 		const chaincode_or_default: string = isNullish(chaincode)
 			? '985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
-			: chaincode.toString();
-		console.log(schnorr_ed25519_derive(pubkey_or_default, chaincode_or_default, derivationpath));
+			: String(chaincode);
+		const derivationpath_or_null: string | null = isNullish(derivationpath)
+			? null
+			: String(derivationpath);
+		console.log(
+			schnorr_ed25519_derive(pubkey_or_default, chaincode_or_default, derivationpath_or_null)
+		);
 	});
 
 const signer = program.command('signer').description('Get chain fusion signer token address');

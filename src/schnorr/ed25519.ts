@@ -212,7 +212,7 @@ export function offsetFromOkm(okm: Uint8Array): bigint {
 export function schnorr_ed25519_derive(
 	pubkey: string,
 	chaincode: string,
-	derivationpath: string
+	derivationpath: string | null
 ): string {
 	const pubkey_with_chain_code = PublicKeyWithChainCode.fromString(pubkey, chaincode);
 	const parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
