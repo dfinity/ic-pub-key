@@ -3,6 +3,7 @@ import { hkdf as nobleHkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
 import { ChainCode } from '../chain_code.js';
 import { bigintFromBigEndianBytes, blobDecode, blobEncode } from '../encoding.js';
+export { ChainCode };
 
 /**
  * The order of ed25519.
@@ -89,6 +90,16 @@ export class PublicKeyWithChainCode {
 		const public_key = PublicKey.fromString(public_key_string);
 		const chain_code = ChainCode.fromString(chain_code_string);
 		return new PublicKeyWithChainCode(public_key, chain_code);
+	}
+
+	/**
+	 * Applies the given derivation path to obtain a new public key and chain code.
+	 *
+	 * Corresponds to rust: [`ic_ed25519::PublicKey::derive_public_key_with_chain_code()`](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L774C1-L793C6)
+	 */
+	deriveSubkeyWithChainCode(derivationPath: DerivationPath): PublicKeyWithChainCode {
+		const [pt, _sum, chainCode] = derivationPath.deriveOffset(this.public_key.key, this.chain_code);
+		return new PublicKeyWithChainCode(new PublicKey(pt), chainCode);
 	}
 }
 

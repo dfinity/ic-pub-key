@@ -1,0 +1,18 @@
+import * as z from 'zod/v4';
+
+const TestVectorSchema = z.object({
+	name: z.string(),
+	public_key: z.string(),
+	chain_code: z.string(),
+	derivation_path: z.union([z.string(), z.null()]),
+	expected_public_key: z.string(),
+	expected_chain_code: z.string()
+});
+
+export const TestVectorsSchema = z.object({
+	schnorr: z.object({
+		ed25519: z.object({
+			test_vectors: z.array(TestVectorSchema)
+		})
+	})
+});
