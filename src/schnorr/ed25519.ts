@@ -209,7 +209,7 @@ export function offsetFromOkm(okm: Uint8Array): bigint {
  * @param derivationpath
  * @returns
  */
-export function schnorr_ed25519_derive(
+export function schnorrEd25519Derive(
 	pubkey: string,
 	chaincode: string,
 	derivationpath: string | null

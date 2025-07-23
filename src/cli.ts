@@ -9,7 +9,7 @@ import {
 	Sec1EncodedPublicKey,
 	PublicKeyWithChainCode as Secp256k1PublicKeyWithChainCode
 } from './ecdsa/secp256k1.js';
-import { schnorr_ed25519_derive } from './schnorr/ed25519.js';
+import { schnorrEd25519Derive } from './schnorr/ed25519.js';
 import {
 	BITCOIN_ADDRESS_TYPES,
 	BITCOIN_NETWORKS,
@@ -102,7 +102,7 @@ FmK8wmdFM72z4vKzzyYWYi7W5sReALBS72BHn6mDDJPh
 			? null
 			: String(derivationpath);
 		console.log(
-			schnorr_ed25519_derive(pubkey_or_default, chaincode_or_default, derivationpath_or_null)
+			schnorrEd25519Derive(pubkey_or_default, chaincode_or_default, derivationpath_or_null)
 		);
 	});
 
