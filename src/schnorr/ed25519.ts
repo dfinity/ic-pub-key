@@ -204,10 +204,10 @@ export function offsetFromOkm(okm: Uint8Array): bigint {
 /**
  * Derives a public key, using only string arguments and responses.
  *
- * @param pubkey
- * @param chaincode
- * @param derivationpath
- * @returns
+ * @param pubkey A hexadecimal string representing the public key. It must be 64 characters long.
+ * @param chaincode A hexadecimal string representing the chain code. It must be 64 characters long.
+ * @param derivationpath A string representing the derivation path in a serialized format, or `null` if no derivation path is provided.
+ * @returns A JSON string containing the derived public key, chain code, and the derivation path used.
  */
 export function schnorrEd25519Derive(
 	pubkey: string,
