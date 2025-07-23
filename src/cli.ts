@@ -62,7 +62,21 @@ const schnorr = derive.command('schnorr').description('Derive a Schnorr public k
 
 schnorr
 	.command('ed25519')
-	.description('Derive a key')
+	.description('Computes the public key of a Schnorr ed25519 threshold key held on ICP.')
+		.addHelpText('after', `
+This is a cheap and fast way of obtaining the public key of a Schnorr ed25519 threshold key held on ICP.
+
+For example, to get the Solana address of an actor golding funds with the chain fusion signer, the command might be:
+
+derive schnorr ed25519 -d "\${CANISTER_PRINCIPAL}/\\fe/\${ACTOR_PRINCIPAL}/SOL/mainnet'
+e.g.:
+derive schnorr ed25519 -d '\\00\\00\\00\\00\\02\\30\\00\\71\\01\\01/\\fe/\\9b\\c6\\c0\\a1\\09\\02\\12\\e2\\a3\\55\\86\\d4\\37\\1b\\a9\\9e\\63\\93\\b0\\1f\\21\\75\\dc\\95\\55\\91\\cd\\0b\\02/SOL/mainnet'
+
+That yields the actor's public key.  Encoding as base58 yields the Solana address:
+
+$ echo db5dae1b737f8d694b8fba6ce2430dc75e1096ccfa33397a6c352252c7e72268 | xxd -r -p | base58  ; echo
+FmK8wmdFM72z4vKzzyYWYi7W5sReALBS72BHn6mDDJPh
+`)
 	.addOption(
 		new Option('-k, --pubkey <string>', 'The public key').default(
 			'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
