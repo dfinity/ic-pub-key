@@ -137,8 +137,8 @@ export class DerivationPath {
 	}
 
 	/**
-	 * Returns the preferred JSON encoding of the public key.
-	 * @returns A 64 character hex string.
+	 * Returns the preferred JSON encoding of the derivation path.
+	 * @returns A blob-encoded string with '/' separating components, or `null` if the path has no components.
 	 */
 	toJSON(): string | null {
 		return this.toBlob();
