@@ -110,7 +110,7 @@ function mapBitcoinNetworkToBitcoinJS(network: BitcoinNetwork): Network {
 }
 
 // TODO: Accept strings as alternative forms.
-export function chain_fusion_signer_btc_address_for(
+export function chainFusionSignerBtcAddressFor(
 	user: Principal,
 	network: BitcoinNetwork,
 	addressType?: BitcoinAddressType,
@@ -129,23 +129,23 @@ export function chain_fusion_signer_btc_address_for(
 	if (chaincode === undefined || chaincode === null) {
 		chaincode = CHAIN_FUSION_SIGNER_CHAINCODE;
 	}
-	const pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
-	const principal_as_bytes = user.toUint8Array();
-	const derivation_path = new DerivationPath([
+	const publicKeyWithChainCode = new PublicKeyWithChainCode(pubkey, chaincode);
+	const principalAsBytes = user.toUint8Array();
+	const derivationPath = new DerivationPath([
 		CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR,
-		principal_as_bytes
+		principalAsBytes
 	]);
-	const btc_pubkey_with_chaincode =
-		pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
-	const btc_pubkey = btc_pubkey_with_chaincode.public_key;
+	const btcPubkeyWithChaincode =
+		publicKeyWithChainCode.deriveSubkeyWithChainCode(derivationPath);
+	const btcPubkey = btcPubkeyWithChaincode.public_key;
 
 	const networkJs = mapBitcoinNetworkToBitcoinJS(network);
 
-	let btc_address: string | undefined;
+	let btcAddress: string | undefined;
 
 	if (addressType === 'p2wpkh') {
-		({ address: btc_address } = payments.p2wpkh({
-			pubkey: btc_pubkey.toBuffer(),
+		({ address: btcAddress } = payments.p2wpkh({
+			pubkey: btcPubkey.toBuffer(),
 			network: networkJs
 		}));
 	} else {
@@ -153,12 +153,12 @@ export function chain_fusion_signer_btc_address_for(
 		throw new Error(`Unsupported Bitcoin address type: ${addressType}`);
 	}
 
-	if (btc_address === undefined) {
+	if (btcAddress === undefined) {
 		throw new Error('Failed to derive Bitcoin address from public key.');
 	}
 
 	return {
 		request: new ChainFusionSignerBtcAddressForRequest(pubkey, chaincode, user, network),
-		response: new ChainFusionSignerBtcAddressForResponse(btc_address, network)
+		response: new ChainFusionSignerBtcAddressForResponse(btcAddress, network)
 	};
 }

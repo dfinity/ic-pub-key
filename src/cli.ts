@@ -13,10 +13,10 @@ import { schnorrEd25519Derive } from './schnorr/ed25519.js';
 import {
 	BITCOIN_ADDRESS_TYPES,
 	BITCOIN_NETWORKS,
-	chain_fusion_signer_btc_address_for,
+	chainFusionSignerBtcAddressFor,
 	DEFAULT_BITCOIN_ADDRESS_TYPE
 } from './signer/btc.js';
-import { chain_fusion_signer_eth_address_for } from './signer/eth.js';
+import { chainFusionSignerEthAddressFor } from './signer/eth.js';
 
 export const program = new Command();
 
@@ -162,7 +162,7 @@ $ dfx canister call signer --with-cycles 1000000000 --ic btc_caller_address '(re
 			const btcNetwork = network as (typeof BITCOIN_NETWORKS)[number];
 			const addressTypeValue = addressType as (typeof BITCOIN_ADDRESS_TYPES)[number];
 
-			const ans = chain_fusion_signer_btc_address_for(
+			const ans = chainFusionSignerBtcAddressFor(
 				userPrincipal,
 				btcNetwork,
 				addressTypeValue,
@@ -210,7 +210,7 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 			const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
 			const userPrincipal = Principal.fromText(user);
 
-			const ans = chain_fusion_signer_eth_address_for(
+			const ans = chainFusionSignerEthAddressFor(
 				userPrincipal,
 				decodedPubkey,
 				decodedChaincode
