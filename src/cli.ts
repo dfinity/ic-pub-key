@@ -210,11 +210,7 @@ $ dfx canister call signer --with-cycles 1000000000 --ic eth_address '(record{ "
 			const decodedChaincode = isNullish(chaincode) ? undefined : ChainCode.fromString(chaincode);
 			const userPrincipal = Principal.fromText(user);
 
-			const ans = chainFusionSignerEthAddressFor(
-				userPrincipal,
-				decodedPubkey,
-				decodedChaincode
-			);
+			const ans = chainFusionSignerEthAddressFor(userPrincipal, decodedPubkey, decodedChaincode);
 			console.log(JSON.stringify(ans, null, 2));
 		}
 	);

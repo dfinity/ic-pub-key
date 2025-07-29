@@ -135,8 +135,7 @@ export function chainFusionSignerBtcAddressFor(
 		CHAIN_FUSION_SIGNER_BTC_DOMAIN_SEPARATOR,
 		principalAsBytes
 	]);
-	const btcPubkeyWithChaincode =
-		publicKeyWithChainCode.deriveSubkeyWithChainCode(derivationPath);
+	const btcPubkeyWithChaincode = publicKeyWithChainCode.deriveSubkeyWithChainCode(derivationPath);
 	const btcPubkey = btcPubkeyWithChaincode.public_key;
 
 	const networkJs = mapBitcoinNetworkToBitcoinJS(network);
