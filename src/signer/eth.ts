@@ -57,7 +57,7 @@ class ChainFusionSignerEthAddressForResponse {
 }
 
 // TODO: Accept strings as alternative forms.
-export function chain_fusion_signer_eth_address_for(
+export function chainFusionSignerEthAddressFor(
 	user: Principal,
 	pubkey?: Sec1EncodedPublicKey,
 	chaincode?: ChainCode
@@ -71,20 +71,19 @@ export function chain_fusion_signer_eth_address_for(
 	if (chaincode === undefined || chaincode === null) {
 		chaincode = CHAIN_FUSION_SIGNER_CHAINCODE;
 	}
-	const pubkey_with_chain_code = new PublicKeyWithChainCode(pubkey, chaincode);
-	const principal_as_bytes = user.toUint8Array();
-	const derivation_path = new DerivationPath([
+	const publicKeyWithChainCode = new PublicKeyWithChainCode(pubkey, chaincode);
+	const principalAsBytes = user.toUint8Array();
+	const derivationPath = new DerivationPath([
 		CHAIN_FUSION_SIGNER_ETH_DOMAIN_SEPARATOR,
-		principal_as_bytes
+		principalAsBytes
 	]);
-	const eth_pubkey_with_chaincode =
-		pubkey_with_chain_code.deriveSubkeyWithChainCode(derivation_path);
-	const eth_pubkey = eth_pubkey_with_chaincode.public_key;
+	const ethPubkeyWithChaincode = publicKeyWithChainCode.deriveSubkeyWithChainCode(derivationPath);
+	const ethPubkey = ethPubkeyWithChaincode.public_key;
 
-	const eth_address = computeAddress('0x' + eth_pubkey.toHex());
+	const ethAddress = computeAddress('0x' + ethPubkey.toHex());
 
 	return {
 		request: new ChainFusionSignerEthAddressForRequest(pubkey, chaincode, user),
-		response: new ChainFusionSignerEthAddressForResponse(eth_address)
+		response: new ChainFusionSignerEthAddressForResponse(ethAddress)
 	};
 }
