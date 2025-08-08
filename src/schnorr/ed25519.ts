@@ -3,6 +3,7 @@ import { hkdf as nobleHkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
 import { ChainCode } from '../chain_code.js';
 import { bigintFromBigEndianBytes, blobDecode, blobEncode } from '../encoding.js';
+
 export { ChainCode };
 
 /**
@@ -206,23 +207,29 @@ export function offsetFromOkm(okm: Uint8Array): bigint {
  *
  * @param pubkey A hexadecimal string representing the public key. It must be 64 characters long.
  * @param chaincode A hexadecimal string representing the chain code. It must be 64 characters long.
- * @param derivationpath A string representing the derivation path in a serialized format, or `null` if no derivation path is provided.
- * @returns A JSON string containing the derived public key, chain code, and the derivation path used.
+ * @param derivationPath A string representing the derivation path in a serialized format, or `null` if no derivation path is provided.
+ * @returns A structured object containing the request and response for the derivation operation.
  */
 export function schnorrEd25519Derive(
 	pubkey: string,
 	chaincode: string,
-	derivationpath: string | null
-): string {
-	const pubkey_with_chain_code = PublicKeyWithChainCode.fromString(pubkey, chaincode);
-	const parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
-	const derived_pubkey = pubkey_with_chain_code.deriveSubkeyWithChainCode(parsed_derivationpath);
-	const ans = {
-		request: {
-			key: pubkey_with_chain_code,
-			derivation_path: parsed_derivationpath
-		},
-		response: derived_pubkey
+	derivationPath: string | null
+): {
+	request: {
+		key: PublicKeyWithChainCode;
+		derivation_path: DerivationPath;
 	};
-	return JSON.stringify(ans, null, 2);
+	response: PublicKeyWithChainCode;
+} {
+	const publicKeyWithChainCode = PublicKeyWithChainCode.fromString(pubkey, chaincode);
+	const parsedDerivationPath = DerivationPath.fromBlob(derivationPath);
+	const derivedPubkey = publicKeyWithChainCode.deriveSubkeyWithChainCode(parsedDerivationPath);
+
+	return {
+		request: {
+			key: publicKeyWithChainCode,
+			derivation_path: parsedDerivationPath
+		},
+		response: derivedPubkey
+	};
 }

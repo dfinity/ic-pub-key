@@ -92,18 +92,18 @@ FmK8wmdFM72z4vKzzyYWYi7W5sReALBS72BHn6mDDJPh
 	)
 	.addOption(new Option('-d, --derivationpath <string>', 'The derivation path'))
 	.action(({ pubkey, chaincode, derivationpath }) => {
-		const pubkey_or_default: string = isNullish(pubkey)
+		const pubkeyOrDefault: string = isNullish(pubkey)
 			? 'da38b16641af7626e372070ff9f844b7c89d1012850d2198393849d79d3d2d5d'
 			: String(pubkey);
-		const chaincode_or_default: string = isNullish(chaincode)
+		const chaincodeOrDefault: string = isNullish(chaincode)
 			? '985be5283a68fc22540930ca02680f86c771419ece571eb838b33eb5604cfbc0'
 			: String(chaincode);
-		const derivationpath_or_null: string | null = isNullish(derivationpath)
+		const derivationPathOrNull: string | null = isNullish(derivationpath)
 			? null
 			: String(derivationpath);
-		console.log(
-			schnorrEd25519Derive(pubkey_or_default, chaincode_or_default, derivationpath_or_null)
-		);
+
+		const ans = schnorrEd25519Derive(pubkeyOrDefault, chaincodeOrDefault, derivationPathOrNull);
+		console.log(JSON.stringify(ans, null, 2));
 	});
 
 const signer = program.command('signer').description('Get chain fusion signer token address');
