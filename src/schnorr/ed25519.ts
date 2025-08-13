@@ -53,6 +53,14 @@ export class PublicKey {
 	toHex(): string {
 		return this.key.toHex();
 	}
+
+	/**
+	 * Returns the preferred JSON encoding of the public key.
+	 * @returns A 64 character hex string.
+	 */
+	toJSON(): string {
+		return this.toHex();
+	}
 }
 
 /**
@@ -129,6 +137,14 @@ export class DerivationPath {
 	}
 
 	/**
+	 * Returns the preferred JSON encoding of the derivation path.
+	 * @returns A blob-encoded string with '/' separating components, or `null` if the path has no components.
+	 */
+	toJSON(): string | null {
+		return this.toBlob();
+	}
+
+	/**
 	 * A typescript translation of [ic_ed25519::DerivationPath::derive_offset](https://github.com/dfinity/ic/blob/e915efecc8af90993ccfc499721ebe826aadba60/packages/ic-ed25519/src/lib.rs#L849).
 	 * @param pt The public key to derive the offset from.
 	 * @param chainCode The chain code to derive the offset from.
@@ -183,4 +199,30 @@ export function offsetFromOkm(okm: Uint8Array): bigint {
 	const offset = bigintFromBigEndianBytes(offsetBytes);
 	const reduced = offset % ORDER;
 	return reduced;
+}
+
+/**
+ * Derives a public key, using only string arguments and responses.
+ *
+ * @param pubkey A hexadecimal string representing the public key. It must be 64 characters long.
+ * @param chaincode A hexadecimal string representing the chain code. It must be 64 characters long.
+ * @param derivationpath A string representing the derivation path in a serialized format, or `null` if no derivation path is provided.
+ * @returns A JSON string containing the derived public key, chain code, and the derivation path used.
+ */
+export function schnorrEd25519Derive(
+	pubkey: string,
+	chaincode: string,
+	derivationpath: string | null
+): string {
+	const pubkey_with_chain_code = PublicKeyWithChainCode.fromString(pubkey, chaincode);
+	const parsed_derivationpath = DerivationPath.fromBlob(derivationpath);
+	const derived_pubkey = pubkey_with_chain_code.deriveSubkeyWithChainCode(parsed_derivationpath);
+	const ans = {
+		request: {
+			key: pubkey_with_chain_code,
+			derivation_path: parsed_derivationpath
+		},
+		response: derived_pubkey
+	};
+	return JSON.stringify(ans, null, 2);
 }
