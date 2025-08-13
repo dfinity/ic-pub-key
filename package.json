@@ -48,7 +48,7 @@
 		"zod": "^4.0.5"
 	},
 	"dependencies": {
-		"@dfinity/principal": "^2.4.1",
+		"@dfinity/principal": "^3.2.0",
 		"@dfinity/utils": "^2.13.1",
 		"@noble/ed25519": "^2.3.0",
 		"@noble/hashes": "^1.8.0",
