@@ -56,14 +56,8 @@ jobs:
       - name: Read .nvmrc
         run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
 
-      - name: Setup Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Prepare
+        uses: ./.github/actions/prepare
 
       - name: Lint typescript
         run: npm run lint
@@ -79,14 +73,8 @@ jobs:
       - name: Read .nvmrc
         run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
 
-      - name: Setup Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Prepare
+        uses: ./.github/actions/prepare
 
       - name: Install rust
         run: ./scripts/setup rust
@@ -105,14 +93,8 @@ jobs:
       - name: Read .nvmrc
         run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
 
-      - name: Setup Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Prepare
+        uses: ./.github/actions/prepare
 
       - name: Type check
         run: npm run build
