@@ -2,10 +2,19 @@
 
 TypeScript library for working with ICP public keys.
 
-This library contains TypeScript translations of the following functions:
+The Internet Computer protcol supports several threshold signature schemes
+including ECDSA, Ed25519, and BIP340 Schnorr. In these schemes, the various user
+public keys are derived from a master key which is split among the nodes in a
+subnet. This derivation can be done online, using the `ecdsa_public_key` and
+`schnorr_public_key` management canister calls, but since no secret is involved
+in the derivation process it can also be performed offline.
 
-- [`ic_secp256k1::PublicKey::derive_subkey_with_chain_code()`](https://docs.rs/ic-secp256k1/0.1.0/ic_secp256k1/struct.PublicKey.html#method.derive_subkey_with_chain_code)
-- COMING: [`ic_ed25519::PublicKey::derive_subkey_with_chain_code()`](https://docs.rs/ic-ed25519/0.2.0/ic_ed25519/struct.PublicKey.html#method.derive_subkey_with_chain_code)
+This library contains TypeScript implementations of this derivation, allowing
+keys to be derived by frontend applications without a call to the IC.
+
+You can find Rust implementations of this same functionality in the
+[`ic_secp256k1`](https://docs.rs/ic-secp256k1/) and [`ic_ed25519`](https://docs.rs/ic-ed25519/)
+crates.
 
 # Usage
 
