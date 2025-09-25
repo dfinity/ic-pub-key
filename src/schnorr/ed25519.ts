@@ -146,8 +146,8 @@ export class DerivationPath {
 	 */
 	static withCanisterPrefix(canisterId: Principal, path: PathComponent[]) {
 		const canisterIdBytes = canisterId.toUint8Array();
-		path.unshift(canisterIdBytes);
-		return new DerivationPath(path);
+		const newPath = [canisterIdBytes, ...path];
+		return new DerivationPath(newPath);
 	}
 
 	/**
