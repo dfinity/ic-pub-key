@@ -408,15 +408,15 @@ dependencies = [
 
 [[package]]
 name = "ic-ed25519"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba67d72c59e6e7a9794054bf991f6d6f397073f36b02d66ca652aa6f4c2117f3"
+checksum = "42596a652c7f0ae12bacf337da33695f53fb3758620271168a390a93aae73719"
 dependencies = [
- "candid",
  "curve25519-dalek",
  "ed25519-dalek",
  "hex-literal",
  "hkdf",
+ "ic_principal",
  "pem",
  "rand",
  "thiserror 2.0.12",
