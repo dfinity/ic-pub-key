@@ -1,3 +1,4 @@
+import { Principal } from '@dfinity/principal';
 import { hmac } from '@noble/hashes/hmac';
 import { sha512 } from '@noble/hashes/sha2';
 import { bytesToHex } from '@noble/hashes/utils';
@@ -23,6 +24,29 @@ export class PublicKeyWithChainCode {
 		public readonly public_key: Sec1EncodedPublicKey,
 		public readonly chain_code: ChainCode
 	) {}
+
+	/**
+	 * Return the master public key used in the production mainnet
+	 */
+	static forMainnetKey(key_id: string): PublicKeyWithChainCode {
+		const chain_key = ChainCode.fromHex(
+			'0000000000000000000000000000000000000000000000000000000000000000'
+		);
+
+		if (key_id == 'key_1') {
+			const public_key = Sec1EncodedPublicKey.fromHex(
+				'02121bc3a5c38f38ca76487c72007ebbfd34bc6c4cb80a671655aa94585bbd0a02'
+			);
+			return new PublicKeyWithChainCode(public_key, chain_key);
+		} else if (key_id == 'test_key_1') {
+			const public_key = Sec1EncodedPublicKey.fromHex(
+				'02f9ac345f6be6db51e1c5612cddb59e72c3d0d493c994d12035cf13257e3b1fa7'
+			);
+			return new PublicKeyWithChainCode(public_key, chain_key);
+		} else {
+			throw new Error('Unknown master public key id');
+		}
+	}
 
 	/**
 	 * Creates a new PublicKeyWithChainCode from two hex strings.
@@ -216,6 +240,17 @@ export class DerivationPath {
 	static readonly ORDER = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 	constructor(public readonly path: PathComponent[]) {}
+
+	/**
+	 * Creates a new DerivationPath from a canister identifier plus other path components
+	 * @param canisterId the id of the canister
+	 * @param path other path components
+	 */
+	static withCanisterPrefix(canisterId: Principal, path: PathComponent[]): DerivationPath {
+		const canisterIdBytes = canisterId.toUint8Array();
+		const newPath = [canisterIdBytes, ...path];
+		return new DerivationPath(newPath);
+	}
 
 	/**
 	 * Creates a new DerivationPath from / separated candid blobs.
