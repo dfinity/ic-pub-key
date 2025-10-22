@@ -33,14 +33,42 @@ export class PublicKeyWithChainCode {
 			'0000000000000000000000000000000000000000000000000000000000000000'
 		);
 
-		if (key_id == 'key_1') {
+		if (key_id === 'key_1') {
 			const public_key = Sec1EncodedPublicKey.fromHex(
 				'02121bc3a5c38f38ca76487c72007ebbfd34bc6c4cb80a671655aa94585bbd0a02'
 			);
 			return new PublicKeyWithChainCode(public_key, chain_key);
-		} else if (key_id == 'test_key_1') {
+		} else if (key_id === 'test_key_1') {
 			const public_key = Sec1EncodedPublicKey.fromHex(
 				'02f9ac345f6be6db51e1c5612cddb59e72c3d0d493c994d12035cf13257e3b1fa7'
+			);
+			return new PublicKeyWithChainCode(public_key, chain_key);
+		} else {
+			throw new Error('Unknown master public key id');
+		}
+	}
+
+	/**
+	 * Return the master public key used by PocketIC for testing
+	 */
+	static forPocketIcKey(key_id: string): PublicKeyWithChainCode {
+		const chain_key = ChainCode.fromHex(
+			'0000000000000000000000000000000000000000000000000000000000000000'
+		);
+
+		if (key_id === 'key_1') {
+			const public_key = Sec1EncodedPublicKey.fromHex(
+				'036ad6e838b46811ad79c37b2f4b854b7a05f406715b2935edc5d3251e7666977b'
+			);
+			return new PublicKeyWithChainCode(public_key, chain_key);
+		} else if (key_id === 'test_key_1') {
+			const public_key = Sec1EncodedPublicKey.fromHex(
+				'03cc365e15cb552589c7175717b2ac63d1050b9bb2e5aed35432b1b1be55d3abcf'
+			);
+			return new PublicKeyWithChainCode(public_key, chain_key);
+		} else if (key_id === 'dfx_test_key') {
+			const public_key = Sec1EncodedPublicKey.fromHex(
+				'03e6f78b1a90e361c5cc9903f73bb8acbe3bc17ad01e82554d25cf0ecd70c67484'
 			);
 			return new PublicKeyWithChainCode(public_key, chain_key);
 		} else {
