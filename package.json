@@ -28,11 +28,11 @@
 		"start": "node dist/main.js"
 	},
 	"keywords": [
-	      "internet computer",
-          "internet-computer",
-          "Internet Computer",
-          "ic",
-          "dfinity",
+		"internet computer",
+		"internet-computer",
+		"Internet Computer",
+		"ic",
+		"dfinity",
 		"cryptography",
 		"library"
 	],
