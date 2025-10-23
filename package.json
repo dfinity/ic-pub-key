@@ -27,10 +27,22 @@
 		"test:coverage:report": "vitest run --coverage --reporter=html",
 		"start": "node dist/main.js"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"internet computer",
+		"internet-computer",
+		"Internet Computer",
+		"ic",
+		"dfinity",
+		"cryptography",
+		"library"
+	],
+	"author": "DFINITY Stiftung",
 	"license": "ISC",
-	"description": "",
+	"description": "Library for deriving public keys for threshold signature schemes used on the Internet Computer",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dfinity/ic-pub-key.git"
+	},
 	"devDependencies": {
 		"@eslint/js": "^9.29.0",
 		"@types/commander": "^2.12.0",
