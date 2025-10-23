@@ -28,10 +28,15 @@
 		"start": "node dist/main.js"
 	},
 	"keywords": [
+	      "internet computer",
+          "internet-computer",
+          "Internet Computer",
+          "ic",
+          "dfinity",
 		"cryptography",
 		"library"
 	],
-	"author": "DFINITY Siftung",
+	"author": "DFINITY Stiftung",
 	"license": "ISC",
 	"description": "Library for deriving public keys for threshold signature schemes used on the Internet Computer",
 	"repository": {
