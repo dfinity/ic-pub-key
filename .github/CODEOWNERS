@@ -12,7 +12,7 @@
 #       If standard maintainers are not available, please contact GIX.
 * @bitdivine @randombit @fspreiss @altkdf @AntonioVentilii
 
-# The codebase is owned by the Governance & Identity Experience team at DFINITY,
+# The codebase is owned by the OISY team at DFINITY,
 # supported by the crypto team.
-# For questions, reach out to: <gix@dfinity.org>
-.github/CODEOWNERS @dfinity/gix @dfinity/crypto-team
+# For questions, reach out to: <oisy-wallet@dfinity.org>
+.github/CODEOWNERS @dfinity/gix @dfinity/oisy @dfinity/crypto-team
