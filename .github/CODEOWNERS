@@ -15,4 +15,4 @@
 # The codebase is owned by the OISY team at DFINITY,
 # supported by the crypto team.
 # For questions, reach out to: <oisy-wallet@dfinity.org>
-.github/CODEOWNERS @dfinity/gix @dfinity/oisy @dfinity/crypto-team
+.github/CODEOWNERS @dfinity/oisy @dfinity/crypto-team
