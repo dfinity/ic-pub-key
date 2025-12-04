@@ -1,17 +1,4 @@
-# IMPORTANT: The last matching entry has the highest precedence.
-
-# The team members who maintain this repo:
-# @bitdivine - original author and to blame for all the bugs.
-# @randombit - please ask him for reviews when changing core cryptography.
-# @fspreiss
-# @AntonioVentilii
-#
-# Note: These users will receive GitHub notifications for PRs.
-#       The list is kept short to avoid spamming the whole team.
-#       If standard maintainers are not available, please contact GIX.
-* @bitdivine @randombit @fspreiss @AntonioVentilii
-
 # The codebase is owned by the OISY team at DFINITY,
 # supported by the consensus team.
 # For questions, reach out to: <oisy-wallet@dfinity.org>
-.github/CODEOWNERS @dfinity/oisy @dfinity/consensus
+* @dfinity/oisy @dfinity/consensus
