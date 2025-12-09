@@ -54,7 +54,7 @@ describe('Signer BTC Address', () => {
 			expect(networkResponse).toBe('mainnet');
 		});
 
-		it('should fallback to default values if pubkey are null', () => {
+		it('should fallback to default values if params are null', () => {
 			const { request, response } = chainFusionSignerBtcAddressFor(
 				user,
 				'mainnet',
