@@ -9,7 +9,6 @@ describe('Signer ETH Address', () => {
 		const principalText = 'nggqm-p5ozz-i5hfv-bejmq-2gtow-4dtqw-vjatn-4b4yw-s5mzs-i46su-6ae';
 		const user = Principal.fromText(principalText);
 
-
 		it('should return the correct address with request and response', () => {
 			const { request, response } = chainFusionSignerEthAddressFor(
 				user,
