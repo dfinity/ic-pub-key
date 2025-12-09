@@ -114,7 +114,7 @@ describe('Signer BTC Address', () => {
 			vi.spyOn(payments, 'p2wpkh').mockReturnValueOnce(undefined);
 
 			expect(() => chainFusionSignerBtcAddressFor(user, 'mainnet')).toThrowError(
-				'Failed to derive Bitcoin address from public key'
+				'Failed to derive Bitcoin address from public key.'
 			);
 		});
 	});
