@@ -1,5 +1,5 @@
 import { Principal } from '@dfinity/principal';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../chain_code';
 import { Sec1EncodedPublicKey } from '../ecdsa/secp256k1';
 import { chainFusionSignerEthAddressFor } from './eth';
