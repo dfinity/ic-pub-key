@@ -111,7 +111,7 @@ describe('Signer BTC Address', () => {
 
 		it('should throw if the derived BTC address is undefined', () => {
 			// @ts-expect-error -- We test this value on purpose
-			vi.spyOn(payments, 'p2wpkh').mockReturnValueOnce(undefined);
+			vi.spyOn(payments, 'p2wpkh').mockResolvedValueOnce(undefined);
 
 			expect(() => chainFusionSignerBtcAddressFor(user, 'mainnet')).toThrowError(
 				'Failed to derive Bitcoin address from public key.'
