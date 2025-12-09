@@ -47,7 +47,7 @@ describe('Signer ETH Address', () => {
 			expect(eth_address).toBe('0xf53e047376e37eAc56d48245B725c47410cf6F1e');
 		});
 
-		it('should fallback to default values if pubkey are null', () => {
+		it('should fallback to default values if params are null', () => {
 			const { request, response } = chainFusionSignerEthAddressFor(
 				user,
 				// @ts-expect-error -- We test this value on purpose
