@@ -37,4 +37,10 @@ describe('Mainnet Derivation', () => {
 			'02735ca28b5c3e380016d7f28bf4703b540a8bbe8e24beffdc021455ca2ab93fe3'
 		);
 	});
+
+	it('should raise an error for any other key', () => {
+		expect(() => PublicKeyWithChainCode.forMainnetKey('another-key')).toThrowError(
+			'Unknown master public key id'
+		);
+	});
 });
