@@ -50,4 +50,10 @@ describe('PocketIC Derivation', () => {
 			'03f005cf69911ae75f622ce0a621ccddba1a30ea1f6c3d67dd56acbbddb88a9374'
 		);
 	});
+
+	it('should raise an error for any other key', () => {
+		expect(() => PublicKeyWithChainCode.forPocketIcKey('another-key')).toThrowError(
+			'Unknown master public key id'
+		);
+	});
 });
