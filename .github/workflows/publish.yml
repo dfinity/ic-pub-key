@@ -21,6 +21,8 @@ run-name: >-
     || (github.event_name == 'workflow_dispatch' && (github.event.inputs.tag == 'next' || github.event.inputs.tag == 'beta')) && format('Publish {0}', github.event.inputs.tag)
     || 'Publish Release' }}
 
+permissions: {}
+
 jobs:
   publish:
     if: github.event_name == 'release' || github.event.inputs.tag == 'release'
@@ -33,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
 
       - name: Prepare
         uses: ./.github/actions/prepare
@@ -54,6 +58,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
 
       - name: Prepare
         uses: ./.github/actions/prepare
@@ -62,4 +68,6 @@ jobs:
         run: ./scripts/package-next
 
       - name: Publish
-        run: npm publish --provenance --tag ${{ inputs.tag }}
+        run: npm publish --provenance --tag $TAG
+        env:
+          TAG: ${{ inputs.tag }}
