@@ -4,6 +4,7 @@ import typescriptParser from '@typescript-eslint/parser';
 
 export default [
 	js.configs.recommended,
+
 	{
 		ignores: [
 			'node_modules/',
@@ -20,14 +21,21 @@ export default [
 			'vitest.config.ts'
 		]
 	},
+
 	{
-		files: ['src/**/*.ts', 'src/**/*.tsx', 'src/__tests__/**/*.ts', 'src/__tests__/**/*.tsx'],
+		files: [
+			'scripts/**/*.ts',
+			'src/**/*.ts',
+			'src/**/*.tsx',
+			'src/__tests__/**/*.ts',
+			'src/__tests__/**/*.tsx'
+		],
 		languageOptions: {
 			parser: typescriptParser,
 			parserOptions: {
 				ecmaVersion: 'latest',
 				sourceType: 'module',
-				project: './tsconfig.json'
+				project: './tsconfig.eslint.json'
 			},
 			globals: {
 				console: 'readonly',
@@ -64,10 +72,18 @@ export default [
 			'no-var': 'error'
 		}
 	},
+
 	{
 		files: ['**/*.test.ts', '**/*.test.js', '**/__tests__/**/*'],
 		rules: {
 			'@typescript-eslint/no-explicit-any': 'off',
+			'no-console': 'off'
+		}
+	},
+
+	{
+		files: ['scripts/**/*.ts'],
+		rules: {
 			'no-console': 'off'
 		}
 	}
