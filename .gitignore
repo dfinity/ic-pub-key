@@ -22,3 +22,7 @@ tarpaulin-report.html
 
 # Intellij IDEA
 .idea
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
