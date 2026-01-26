@@ -8,5 +8,5 @@
 		"strict": true,
 		"esModuleInterop": true
 	},
-	"exclude": ["vitest.config.ts", "node_modules", "dist"]
+	"exclude": ["scripts", "vitest.config.ts", "node_modules", "dist"]
 }
