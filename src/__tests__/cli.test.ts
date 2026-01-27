@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
-import * as z from 'zod/v4';
+import type * as z from 'zod/v4';
 import { program } from '../cli';
 import { loadTestVectors as loadEllipticCurveTestVectors } from '../ecdsa/secp256k1.tests/test_vectors.test';
 import { CliTestVectorsSchema } from './cli_test_vectors.schema';

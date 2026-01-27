@@ -2,7 +2,7 @@ import { ExtendedPoint } from '@noble/ed25519';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../../chain_code';
 import { bigintFromLittleEndianHex } from '../../encoding';
-import { DerivationPath, deriveOneOffset, offsetFromOkm, PathComponent } from '../ed25519';
+import { type PathComponent, DerivationPath, deriveOneOffset, offsetFromOkm } from '../ed25519';
 
 interface BlobEncodingTestVector {
 	name: string;

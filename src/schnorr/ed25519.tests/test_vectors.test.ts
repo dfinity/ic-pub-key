@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
-import * as z from 'zod/v4';
+import type * as z from 'zod/v4';
 import { ChainCode, DerivationPath, PublicKey, PublicKeyWithChainCode } from '../ed25519';
 import { TestVectorsSchema } from './test_vectors.schema';
 

@@ -1,8 +1,8 @@
-import { Principal } from '@dfinity/principal';
+import type { Principal } from '@dfinity/principal';
 import { hmac } from '@noble/hashes/hmac';
 import { sha512 } from '@noble/hashes/sha2';
 import { bytesToHex } from '@noble/hashes/utils';
-import { AffinePoint, ProjectivePoint } from '@noble/secp256k1';
+import { type AffinePoint, ProjectivePoint } from '@noble/secp256k1';
 import { ChainCode } from '../chain_code.js';
 import { blobDecode, blobEncode } from '../encoding.js';
 export { ChainCode };

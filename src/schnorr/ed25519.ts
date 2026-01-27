@@ -1,4 +1,4 @@
-import { Principal } from '@dfinity/principal';
+import type { Principal } from '@dfinity/principal';
 import { ExtendedPoint } from '@noble/ed25519';
 import { hkdf as nobleHkdf } from '@noble/hashes/hkdf.js';
 import { sha512 } from '@noble/hashes/sha2';
