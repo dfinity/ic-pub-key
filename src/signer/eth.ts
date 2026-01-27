@@ -1,4 +1,4 @@
-import { Principal } from '@dfinity/principal';
+import type { Principal } from '@dfinity/principal';
 import { computeAddress } from 'ethers';
 import {
 	ChainCode,

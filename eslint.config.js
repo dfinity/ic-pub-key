@@ -1,6 +1,8 @@
+import { fixupPluginRules } from '@eslint/compat';
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
+import _import from 'eslint-plugin-import';
 
 export default [
 	js.configs.recommended,
@@ -51,11 +53,15 @@ export default [
 			}
 		},
 		plugins: {
-			'@typescript-eslint': typescript
+			'@typescript-eslint': typescript,
+			import: fixupPluginRules(_import)
 		},
 		rules: {
 			...typescript.configs.recommended.rules,
 			...typescript.configs['recommended-requiring-type-checking'].rules,
+
+			'@typescript-eslint/consistent-type-imports': 'error',
+			'@typescript-eslint/no-import-type-side-effects': 'error',
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{
@@ -64,9 +70,10 @@ export default [
 					caughtErrorsIgnorePattern: '^_'
 				}
 			],
-			'@typescript-eslint/explicit-function-return-type': 'off',
-			'@typescript-eslint/explicit-module-boundary-types': 'off',
 			'@typescript-eslint/no-explicit-any': 'warn',
+
+			'import/no-duplicates': ['error', { 'prefer-inline': true }],
+
 			'no-console': 'warn',
 			'prefer-const': 'error',
 			'no-var': 'error'
