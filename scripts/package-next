@@ -5,4 +5,4 @@ set -eux
 npm run build
 
 : Then update the version to SEMANTIC_VERSION-next-DATE e.g. 0.0.1-next-2022-08-05T15:02
-vite-node  ./scripts/update-version.ts
+npm run update-version

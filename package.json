@@ -25,7 +25,8 @@
 		"test:watch": "npm run build && vitest",
 		"test:coverage": "vitest run --coverage",
 		"test:coverage:report": "vitest run --coverage --reporter=html",
-		"start": "node dist/main.js"
+		"start": "node dist/main.js",
+		"update-version": "vite-node ./scripts/update-version.ts"
 	},
 	"keywords": [
 		"internet computer",
