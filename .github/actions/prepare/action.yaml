@@ -7,7 +7,9 @@ runs:
   steps:
     - name: Read .nvmrc
       shell: bash
-      run: echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
+      run: |
+        # zizmor: ignore=github-env
+        echo "NODE_VERSION=$(cat .nvmrc | tr -d 'v')" >> $GITHUB_ENV
 
     - name: Setup Node.js
       uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
