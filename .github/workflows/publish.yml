@@ -1,0 +1,73 @@
+name: Publish Release
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'npm tag to publish under'
+        required: true
+        default: 'next'
+        type: choice
+        options:
+          - next
+          - beta
+          - release
+
+run-name: >-
+  ${{
+    (github.event_name == 'release' || github.event.inputs.tag == 'release') && format('Publish {0}', github.event.release.tag_name)
+    || (github.event_name == 'workflow_dispatch' && (github.event.inputs.tag == 'next' || github.event.inputs.tag == 'beta')) && format('Publish {0}', github.event.inputs.tag)
+    || 'Publish Release' }}
+
+permissions: {}
+
+jobs:
+  publish:
+    if: github.event_name == 'release' || github.event.inputs.tag == 'release'
+    environment: release
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        run: npm publish --provenance --access public
+
+  publish-next:
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.tag == 'next' || github.event.inputs.tag == 'beta')
+    environment: release
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Package next
+        run: ./scripts/package-next
+
+      - name: Publish
+        run: npm publish --provenance --tag $TAG
+        env:
+          TAG: ${{ inputs.tag }}
