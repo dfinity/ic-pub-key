@@ -3,6 +3,7 @@ import { hmac } from '@noble/hashes/hmac';
 import { sha512 } from '@noble/hashes/sha2';
 import { bytesToHex } from '@noble/hashes/utils';
 import { type AffinePoint, ProjectivePoint } from '@noble/secp256k1';
+import { getBytes, hexlify } from 'ethers';
 import { ChainCode } from '../chain_code.js';
 import { blobDecode, blobEncode } from '../encoding.js';
 export { ChainCode };
@@ -216,15 +217,15 @@ export class Sec1EncodedPublicKey {
 				`Invalid PublicKey length: expected ${Sec1EncodedPublicKey.LENGTH * 2} characters, got ${hex.length}`
 			);
 		}
-		const bytes = Buffer.from(hex, 'hex');
-		return new Sec1EncodedPublicKey(new Uint8Array(bytes));
+		const bytes = getBytes(`0x${hex}`);
+		return new Sec1EncodedPublicKey(bytes);
 	}
 
 	/**
 	 * @returns The public key as a 66-character hex string.
 	 */
 	toHex(): string {
-		return this.toBuffer().toString('hex');
+		return hexlify(this.bytes).slice(2);
 	}
 
 	/**

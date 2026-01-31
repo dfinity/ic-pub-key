@@ -1,3 +1,4 @@
+import { getBytes, hexlify } from 'ethers';
 import { blobDecode, blobEncode } from './encoding.js';
 
 /**
@@ -25,8 +26,8 @@ export class ChainCode {
 				`Invalid ChainCode length: expected ${ChainCode.LENGTH * 2} characters, got ${hex_str.length}`
 			);
 		}
-		const bytes = Buffer.from(hex_str, 'hex');
-		return new ChainCode(new Uint8Array(bytes));
+		const bytes = getBytes(`0x${hex_str}`);
+		return new ChainCode(bytes);
 	}
 
 	static fromArray(array: number[]): ChainCode {
@@ -37,7 +38,7 @@ export class ChainCode {
 	 * @returns The chain code as a 64 character hex string.
 	 */
 	toHex(): string {
-		return Buffer.from(this.bytes).toString('hex');
+		return hexlify(this.bytes).slice(2);
 	}
 
 	/**

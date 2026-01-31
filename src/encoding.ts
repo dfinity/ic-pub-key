@@ -3,6 +3,7 @@
  * @param path
  * @returns
  */
+import { getBytes, hexlify } from 'ethers';
 export function blobEncode(bytes: Uint8Array): string {
 	return [...bytes].map((p) => blobEncodeU8(p)).join('');
 }
@@ -73,8 +74,7 @@ export function bigintFromBigEndianBytes(bytes: Uint8Array): bigint {
 	if (bytes.length === 0) {
 		return BigInt(0);
 	}
-	const bigEndianHex = '0x' + Buffer.from(bytes).toString('hex');
-	return BigInt(bigEndianHex);
+	return BigInt(hexlify(bytes));
 }
 
 /**
@@ -86,10 +86,9 @@ export function bigintFromLittleEndianHex(hex: string): bigint {
 	if (hex.length === 0) {
 		return BigInt(0);
 	}
-	const leBytes = Buffer.from(hex, 'hex');
-	const beBytes = leBytes.reverse();
-	const beHex = beBytes.toString('hex');
-	return BigInt('0x' + beHex);
+	const leBytes = getBytes(`0x${hex}`);
+	const beBytes = new Uint8Array(leBytes).reverse();
+	return BigInt(hexlify(beBytes));
 }
 
 /**
@@ -98,5 +97,5 @@ export function bigintFromLittleEndianHex(hex: string): bigint {
  * @returns The converted string.
  */
 export function bytesAsHex(array: Uint8Array): string {
-	return Buffer.from(array).toString('hex');
+	return hexlify(array).slice(2);
 }
