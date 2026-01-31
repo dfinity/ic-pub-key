@@ -3,6 +3,25 @@
 	"version": "1.0.1",
 	"type": "module",
 	"main": "index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./ecdsa": {
+			"types": "./dist/ecdsa/index.d.ts",
+			"import": "./dist/ecdsa/index.js"
+		},
+		"./schnorr": {
+			"types": "./dist/schnorr/index.d.ts",
+			"import": "./dist/schnorr/index.js"
+		},
+		"./signer": {
+			"types": "./dist/signer/index.d.ts",
+			"import": "./dist/signer/index.js"
+		}
+	},
 	"publishConfig": {
 		"access": "public"
 	},
