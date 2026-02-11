@@ -171,3 +171,5 @@ export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' 
 		writeNodeCjsRootEntry();
 	}
 };
+
+build();
