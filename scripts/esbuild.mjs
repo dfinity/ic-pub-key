@@ -144,7 +144,7 @@ const buildNode = ({ multi, format }) => {
 		.catch(() => process.exit(1));
 };
 
-const buildNodeCli = ({  format }) => {
+const buildNodeCli = ({ format }) => {
 	esbuild
 		.build({
 			entryPoints: [cliEntryPoint],
