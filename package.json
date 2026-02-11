@@ -2,30 +2,37 @@
 	"name": "@dfinity/ic-pub-key",
 	"version": "1.0.1",
 	"type": "module",
-	"main": "./dist/index.js",
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"files": [
-		"dist"
-	],
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js",
+			"require": "./dist/index.mjs",
 			"default": "./dist/index.js"
 		},
 		"./ecdsa": {
 			"types": "./dist/ecdsa/index.d.ts",
-			"import": "./dist/ecdsa/index.js"
+			"import": "./dist/ecdsa/index.js",
+			"require": "./dist/ecdsa/index.mjs"
 		},
 		"./schnorr": {
 			"types": "./dist/schnorr/index.d.ts",
-			"import": "./dist/schnorr/index.js"
+			"import": "./dist/schnorr/index.js",
+			"require": "./dist/schnorr/index.mjs"
 		},
 		"./signer": {
 			"types": "./dist/signer/index.d.ts",
-			"import": "./dist/signer/index.js"
+			"import": "./dist/signer/index.js",
+			"require": "./dist/signer/index.mjs"
 		}
 	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
@@ -43,7 +50,9 @@
 		"format:rs:check": "cargo fmt --check",
 		"lint": "eslint . --ext .ts,.js,.tsx,.jsx",
 		"lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix",
-		"build": "tsc && chmod +x dist/main.js",
+		"rmdir": "node ./scripts/rmdir.mjs",
+		"ts-declaration": "tsc --emitDeclarationOnly --outDir dist",
+		"build": "npm run rmdir && mkdir -p dist && node ./scripts/esbuild.mjs && npm run ts-declaration",
 		"test": "npm run build && vitest run",
 		"test:watch": "npm run build && vitest",
 		"test:coverage": "vitest run --coverage",

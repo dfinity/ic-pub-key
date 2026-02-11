@@ -89,7 +89,7 @@ export default [
 	},
 
 	{
-		files: ['scripts/**/*.ts'],
+		files: ['scripts/**/*.{ts,js,mjs,cjs}'],
 		rules: {
 			'no-console': 'off'
 		}
