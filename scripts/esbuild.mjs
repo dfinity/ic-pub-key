@@ -49,6 +49,7 @@ const multiPathsLibEntryPoints = () => {
 		});
 
 	if (paths.length === 0) {
+		// eslint-disable-next-line no-undef
 		console.error('No source files to bundle.');
 		// eslint-disable-next-line no-undef
 		process.exit(1);
@@ -57,7 +58,9 @@ const multiPathsLibEntryPoints = () => {
 	const unknownPaths = paths.filter((path) => !existsSync(path));
 
 	if (unknownPaths.length > 0) {
+		// eslint-disable-next-line no-undef
 		console.error(`Some source files are missing: ${unknownPaths.join(',')}`);
+		// eslint-disable-next-line no-undef
 		process.exit(1);
 	}
 
@@ -78,6 +81,7 @@ const buildBrowser = ({ multi } = { multi: false }) => {
 			...(multi === true
 				? {
 						entryPoints: multiPathsLibEntryPoints(),
+						// eslint-disable-next-line no-undef
 						outdir: process.cwd()
 					}
 				: {
@@ -97,6 +101,7 @@ const buildBrowser = ({ multi } = { multi: false }) => {
 			// to handle the conditional imports in the assets submodule
 			external: [...externalPeerDependencies, 'fs', 'path']
 		})
+		// eslint-disable-next-line no-undef
 		.catch(() => process.exit(1));
 };
 
@@ -106,6 +111,7 @@ const buildNode = ({ multi, format }) => {
 			...(multi === true
 				? {
 						entryPoints: multiPathsLibEntryPoints(),
+						// eslint-disable-next-line no-undef
 						outdir: process.cwd(),
 						outExtension: { '.js': '.mjs' }
 					}
@@ -126,6 +132,7 @@ const buildNode = ({ multi, format }) => {
 			target: ['node20', 'esnext'],
 			external: externalPeerDependencies
 		})
+		// eslint-disable-next-line no-undef
 		.catch(() => process.exit(1));
 };
 
@@ -140,12 +147,16 @@ const writeNodeCjsRootEntry = () => {
  */
 export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' }) => {
 	if (multi === undefined) {
+		// eslint-disable-next-line no-undef
 		console.error("Missing parameter 'multi'");
+		// eslint-disable-next-line no-undef
 		process.exit(1);
 	}
 
 	if (nodeFormat === undefined) {
+		// eslint-disable-next-line no-undef
 		console.error("Missing parameter 'nodeFormat'");
+		// eslint-disable-next-line no-undef
 		process.exit(1);
 	}
 
