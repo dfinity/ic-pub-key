@@ -144,7 +144,7 @@ const buildNode = ({ multi, format }) => {
 		.catch(() => process.exit(1));
 };
 
-const buildNodeCli = () => {
+const buildNodeCli = ({  format }) => {
 	esbuild
 		.build({
 			entryPoints: [cliEntryPoint],
@@ -152,6 +152,12 @@ const buildNodeCli = () => {
 			bundle: true,
 			sourcemap: true,
 			minify: true,
+			...(format === 'esm' && {
+				format,
+				banner: {
+					js: "import { createRequire as topLevelCreateRequire } from 'module';\n const require = topLevelCreateRequire(import.meta.url);"
+				}
+			}),
 			platform: 'node',
 			target: ['node20', 'esnext'],
 			external: externalPeerDependencies
@@ -190,7 +196,7 @@ export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' 
 
 	buildBrowser({ multi });
 	buildNode({ format: nodeFormat, multi });
-	buildNodeCli();
+	buildNodeCli({ format: nodeFormat });
 
 	if (nodeFormat === 'cjs') {
 		writeNodeCjsRootEntry();
