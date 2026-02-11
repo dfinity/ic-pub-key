@@ -75,6 +75,14 @@ const multiPathsLibEntryPoints = () => {
  */
 const singleLibEntryPoint = 'src/index.ts';
 
+/**
+ * For a CLI, the entry point is always `main.ts` since the output file name
+ * does not need to match the entry file name.
+ *
+ * @type {string} The source file for the CLI entry point
+ */
+const cliEntryPoint = 'src/main.ts';
+
 const buildBrowser = ({ multi } = { multi: false }) => {
 	esbuild
 		.build({
@@ -136,6 +144,22 @@ const buildNode = ({ multi, format }) => {
 		.catch(() => process.exit(1));
 };
 
+const buildNodeCli = () => {
+	esbuild
+		.build({
+			entryPoints: [cliEntryPoint],
+			outfile: join(dist, 'main.js'),
+			bundle: true,
+			sourcemap: true,
+			minify: true,
+			platform: 'node',
+			target: ['node20', 'esnext'],
+			external: externalPeerDependencies
+		})
+		// eslint-disable-next-line no-undef
+		.catch(() => process.exit(1));
+};
+
 const writeNodeCjsRootEntry = () => {
 	writeFileSync(join(dist, 'index.cjs.js'), "module.exports = require('./cjs/index.cjs.js');");
 };
@@ -166,6 +190,7 @@ export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' 
 
 	buildBrowser({ multi });
 	buildNode({ format: nodeFormat, multi });
+	buildNodeCli();
 
 	if (nodeFormat === 'cjs') {
 		writeNodeCjsRootEntry();
