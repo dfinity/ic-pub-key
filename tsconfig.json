@@ -6,7 +6,17 @@
 		"outDir": "dist",
 		"rootDir": "src",
 		"strict": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"declaration": true,
+		"declarationMap": true
 	},
-	"exclude": ["scripts", "vitest.config.ts", "node_modules", "dist"]
+	"exclude": [
+		"scripts",
+		"vitest.config.ts",
+		"node_modules",
+		"dist",
+		"src/**/*.test.ts",
+		"src/**/*.tests",
+		"src/__tests__"
+	]
 }
