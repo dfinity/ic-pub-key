@@ -1,4 +1,4 @@
 // Equivalent to the `npx signer btc` commands:
-export * as btc from './btc';
+export * as btc from './btc.js';
 // Equivalent to the `npx signer eth` commands:
-export * as eth from './eth';
+export * as eth from './eth.js';
