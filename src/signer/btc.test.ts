@@ -1,4 +1,4 @@
-import { Principal } from '@dfinity/principal';
+import { Principal } from '@icp-sdk/core/principal';
 import { payments } from 'bitcoinjs-lib';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChainCode } from '../chain_code';

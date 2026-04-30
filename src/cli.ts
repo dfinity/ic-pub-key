@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
-import { Principal } from '@dfinity/principal';
-import { isNullish } from '@dfinity/utils';
+import { Principal } from '@icp-sdk/core/principal';
 import { Command, Option } from 'commander';
 import {
 	ChainCode,
@@ -17,6 +16,11 @@ import {
 	DEFAULT_BITCOIN_ADDRESS_TYPE
 } from './signer/btc.js';
 import { chainFusionSignerEthAddressFor } from './signer/eth.js';
+
+// Inlined from `@dfinity/utils` to avoid depending on the package for a single helper.
+const isNullish = <T>(
+  argument: T | undefined | null,
+): argument is undefined | null => argument === null || argument === undefined;
 
 export const program = new Command();
 

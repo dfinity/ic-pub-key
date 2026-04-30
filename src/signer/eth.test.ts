@@ -1,4 +1,4 @@
-import { Principal } from '@dfinity/principal';
+import { Principal } from '@icp-sdk/core/principal';
 import { describe, expect, it } from 'vitest';
 import { ChainCode } from '../chain_code';
 import { Sec1EncodedPublicKey } from '../ecdsa/secp256k1';
