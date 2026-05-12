@@ -1,4 +1,4 @@
 # The codebase is owned by the OISY team at DFINITY,
-# supported by the consensus team.
+# supported by the core-protocol team.
 # For questions, reach out to: <oisy-wallet@dfinity.org>
-* @dfinity/oisy @dfinity/consensus
+* @dfinity/oisy @dfinity/core-protocol
