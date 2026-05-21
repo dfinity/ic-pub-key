@@ -8,31 +8,27 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
+			"browser": "./dist/index.js",
 			"import": "./dist/index.mjs",
-			"require": "./dist/index.mjs",
-			"default": "./dist/index.mjs",
-			"browser": "./dist/index.js"
+			"require": "./dist/index.mjs"
 		},
 		"./ecdsa": {
 			"types": "./dist/ecdsa/index.d.ts",
-			"import": "./dist/ecdsa/index.mjs",
-			"require": "./dist/ecdsa/index.mjs",
 			"browser": "./dist/ecdsa/index.js",
-			"default": "./dist/ecdsa/index.mjs"
+			"import": "./dist/ecdsa/index.mjs",
+			"require": "./dist/ecdsa/index.mjs"
 		},
 		"./schnorr": {
 			"types": "./dist/schnorr/index.d.ts",
-			"import": "./dist/schnorr/index.mjs",
-			"require": "./dist/schnorr/index.mjs",
 			"browser": "./dist/schnorr/index.js",
-			"default": "./dist/schnorr/index.mjs"
+			"import": "./dist/schnorr/index.mjs",
+			"require": "./dist/schnorr/index.mjs"
 		},
 		"./signer": {
 			"types": "./dist/signer/index.d.ts",
-			"import": "./dist/signer/index.mjs",
-			"require": "./dist/signer/index.mjs",
 			"browser": "./dist/signer/index.js",
-			"default": "./dist/signer/index.mjs"
+			"import": "./dist/signer/index.mjs",
+			"require": "./dist/signer/index.mjs"
 		}
 	},
 	"files": [
