@@ -63,80 +63,68 @@ const libEntryPoints = () => {
  */
 const cliEntryPoint = 'src/main.ts';
 
-const buildBrowser = () => {
-	esbuild
-		.build({
-			entryPoints: libEntryPoints(),
-			outbase: 'src',
-			outdir: dist,
-			bundle: true,
-			sourcemap: true,
-			minify: true,
-			splitting: true,
-			format: 'esm',
-			define: { global: 'window' },
-			target: ['esnext'],
-			platform: 'browser',
-			conditions: ['worker', 'browser'],
-			// TODO: remove the extra external dependencies once we have a better way
-			// to handle the conditional imports in the assets submodule
-			external: [...externalPeerDependencies, 'fs', 'path']
-		})
-		// eslint-disable-next-line no-undef
-		.catch(() => process.exit(1));
-};
+const buildBrowser = () =>
+	esbuild.build({
+		entryPoints: libEntryPoints(),
+		outbase: 'src',
+		outdir: dist,
+		bundle: true,
+		sourcemap: true,
+		minify: true,
+		splitting: true,
+		format: 'esm',
+		define: { global: 'window' },
+		target: ['esnext'],
+		platform: 'browser',
+		conditions: ['worker', 'browser'],
+		// TODO: remove the extra external dependencies once we have a better way
+		// to handle the conditional imports in the assets submodule
+		external: [...externalPeerDependencies, 'buffer', 'fs', 'path']
+	});
 
-const buildNode = ({ format }) => {
-	esbuild
-		.build({
-			entryPoints: libEntryPoints(),
-			outbase: 'src',
-			outdir: dist,
-			outExtension: { '.js': '.mjs' },
-			bundle: true,
-			sourcemap: true,
-			minify: true,
-			...(format === 'esm' && {
-				format,
-				banner: {
-					js: "import { createRequire as topLevelCreateRequire } from 'module';\n const require = topLevelCreateRequire(import.meta.url);"
-				}
-			}),
-			platform: 'node',
-			target: ['node20', 'esnext'],
-			external: externalPeerDependencies
-		})
-		// eslint-disable-next-line no-undef
-		.catch(() => process.exit(1));
-};
+const buildNode = ({ format }) =>
+	esbuild.build({
+		entryPoints: libEntryPoints(),
+		outbase: 'src',
+		outdir: dist,
+		outExtension: { '.js': '.mjs' },
+		bundle: true,
+		sourcemap: true,
+		minify: true,
+		...(format === 'esm' && {
+			format,
+			banner: {
+				js: "import { createRequire as topLevelCreateRequire } from 'module';\n const require = topLevelCreateRequire(import.meta.url);"
+			}
+		}),
+		platform: 'node',
+		target: ['node20', 'esnext'],
+		external: externalPeerDependencies
+	});
 
-const buildNodeCli = ({ format }) => {
-	esbuild
-		.build({
-			entryPoints: [cliEntryPoint],
-			outfile: join(dist, 'main.js'),
-			bundle: true,
-			sourcemap: true,
-			minify: true,
-			...(format === 'esm' && {
-				format,
-				banner: {
-					js: "import { createRequire as topLevelCreateRequire } from 'module';\n const require = topLevelCreateRequire(import.meta.url);"
-				}
-			}),
-			platform: 'node',
-			target: ['node20', 'esnext'],
-			external: externalPeerDependencies
-		})
-		// eslint-disable-next-line no-undef
-		.catch(() => process.exit(1));
-};
+const buildNodeCli = ({ format }) =>
+	esbuild.build({
+		entryPoints: [cliEntryPoint],
+		outfile: join(dist, 'main.js'),
+		bundle: true,
+		sourcemap: true,
+		minify: true,
+		...(format === 'esm' && {
+			format,
+			banner: {
+				js: "import { createRequire as topLevelCreateRequire } from 'module';\n const require = topLevelCreateRequire(import.meta.url);"
+			}
+		}),
+		platform: 'node',
+		target: ['node20', 'esnext'],
+		external: externalPeerDependencies
+	});
 
 /**
  * Build the libraries for the browser and Node.
  * @param nodeFormat Output format for Node.js bundle: esm (default)
  */
-export const build = ({ nodeFormat } = { nodeFormat: 'esm' }) => {
+export const build = async ({ nodeFormat } = { nodeFormat: 'esm' }) => {
 	if (nodeFormat === undefined) {
 		// eslint-disable-next-line no-undef
 		console.error("Missing parameter 'nodeFormat'");
@@ -146,9 +134,11 @@ export const build = ({ nodeFormat } = { nodeFormat: 'esm' }) => {
 
 	createDistFolder();
 
-	buildBrowser();
-	buildNode({ format: nodeFormat });
-	buildNodeCli({ format: nodeFormat });
+	await Promise.all([
+		buildBrowser(),
+		buildNode({ format: nodeFormat }),
+		buildNodeCli({ format: nodeFormat })
+	]);
 };
 
-build();
+await build();
