@@ -31,25 +31,19 @@ const createDistFolder = () => {
  */
 const libEntryPoints = () => {
 	const paths = Object.values(workspaceExports)
-		.map(({ import: i }) => i)
+		.map(({ browser, import: i }) => browser ?? i)
 		.filter((i) => typeof i === 'string')
-		.map((i) => i.replace(/^\.\/dist\//, 'src/').replace(/\.js$/, '.ts'));
+		.map((i) => i.replace(/^\.\/dist\//, 'src/').replace(/\.(mjs|js)$/, '.ts'));
 
 	if (paths.length === 0) {
-		// eslint-disable-next-line no-undef
-		console.error('No source files to bundle.');
-		// eslint-disable-next-line no-undef
-		process.exit(1);
+		throw new Error('No source files to bundle.');
 	}
 
 	const uniquePaths = [...new Set(paths)];
 	const unknownPaths = uniquePaths.filter((path) => !existsSync(path));
 
 	if (unknownPaths.length > 0) {
-		// eslint-disable-next-line no-undef
-		console.error(`Some source files are missing: ${unknownPaths.join(',')}`);
-		// eslint-disable-next-line no-undef
-		process.exit(1);
+		throw new Error(`Some source files are missing: ${unknownPaths.join(',')}`);
 	}
 
 	return uniquePaths;
@@ -126,10 +120,7 @@ const buildNodeCli = ({ format }) =>
  */
 export const build = async ({ nodeFormat } = { nodeFormat: 'esm' }) => {
 	if (nodeFormat === undefined) {
-		// eslint-disable-next-line no-undef
-		console.error("Missing parameter 'nodeFormat'");
-		// eslint-disable-next-line no-undef
-		process.exit(1);
+		throw new Error("Missing parameter 'nodeFormat'");
 	}
 
 	createDistFolder();
