@@ -1,5 +1,5 @@
 import esbuild from 'esbuild';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { readPackageJsonPeerAndExports, rootPeerDependencies } from './build.utils.mjs';
 
@@ -24,29 +24,16 @@ const createDistFolder = () => {
 };
 
 /**
- * When building a subpath-only library, the files to bundle are determined
- * based on the `exports` field in the package.json, which defines what the consumer
- * can access and which bundled files are exposed.
+ * Entry points are derived from package exports so every advertised JavaScript
+ * export has a corresponding built file.
  *
- * It is assumed that the corresponding TypeScript source files share the same
- * names as their related JavaScript output files, which is accurate since
- * esbuild preserves file names when generating outputs.
- *
- * @returns {string[]} Absolute paths to the TypeScript source files to bundle.
+ * @returns {string[]} Relative TypeScript source files to bundle.
  */
-const multiPathsLibEntryPoints = () => {
+const libEntryPoints = () => {
 	const paths = Object.values(workspaceExports)
-		// This guard is useful because a single-entry library uses an object
-		// for the "import" field, unlike a multi-path library, which uses
-		// a string path.
-		.filter(({ import: i }) => typeof i === 'string')
-		.map(({ import: i }) => {
-			// trim leading ./ otherwise join() treat the . as a folder
-			// replace extension js from its corresponding ts file
-			const file = i.replace(/^\.\//, '').replace(/\.js$/, '.ts');
-			// eslint-disable-next-line no-undef
-			return join(process.cwd(), 'src', file);
-		});
+		.map(({ import: i }) => i)
+		.filter((i) => typeof i === 'string')
+		.map((i) => i.replace(/^\.\/dist\//, 'src/').replace(/\.js$/, '.ts'));
 
 	if (paths.length === 0) {
 		// eslint-disable-next-line no-undef
@@ -55,7 +42,8 @@ const multiPathsLibEntryPoints = () => {
 		process.exit(1);
 	}
 
-	const unknownPaths = paths.filter((path) => !existsSync(path));
+	const uniquePaths = [...new Set(paths)];
+	const unknownPaths = uniquePaths.filter((path) => !existsSync(path));
 
 	if (unknownPaths.length > 0) {
 		// eslint-disable-next-line no-undef
@@ -64,16 +52,8 @@ const multiPathsLibEntryPoints = () => {
 		process.exit(1);
 	}
 
-	return paths;
+	return uniquePaths;
 };
-
-/**
- * For a single-entry library, there is only one entry point, which is always
- * defined as `index.ts`.
- *
- * @type {string} The source file
- */
-const singleLibEntryPoint = 'src/index.ts';
 
 /**
  * For a CLI, the entry point is always `main.ts` since the output file name
@@ -83,19 +63,12 @@ const singleLibEntryPoint = 'src/index.ts';
  */
 const cliEntryPoint = 'src/main.ts';
 
-const buildBrowser = ({ multi } = { multi: false }) => {
+const buildBrowser = () => {
 	esbuild
 		.build({
-			...(multi === true
-				? {
-						entryPoints: multiPathsLibEntryPoints(),
-						// eslint-disable-next-line no-undef
-						outdir: process.cwd()
-					}
-				: {
-						entryPoints: [singleLibEntryPoint],
-						outdir: dist
-					}),
+			entryPoints: libEntryPoints(),
+			outbase: 'src',
+			outdir: dist,
 			bundle: true,
 			sourcemap: true,
 			minify: true,
@@ -113,20 +86,13 @@ const buildBrowser = ({ multi } = { multi: false }) => {
 		.catch(() => process.exit(1));
 };
 
-const buildNode = ({ multi, format }) => {
+const buildNode = ({ format }) => {
 	esbuild
 		.build({
-			...(multi === true
-				? {
-						entryPoints: multiPathsLibEntryPoints(),
-						// eslint-disable-next-line no-undef
-						outdir: process.cwd(),
-						outExtension: { '.js': '.mjs' }
-					}
-				: {
-						entryPoints: [singleLibEntryPoint],
-						outfile: format === 'cjs' ? join(dist, 'cjs', 'index.cjs.js') : join(dist, 'index.mjs')
-					}),
+			entryPoints: libEntryPoints(),
+			outbase: 'src',
+			outdir: dist,
+			outExtension: { '.js': '.mjs' },
 			bundle: true,
 			sourcemap: true,
 			minify: true,
@@ -166,23 +132,11 @@ const buildNodeCli = ({ format }) => {
 		.catch(() => process.exit(1));
 };
 
-const writeNodeCjsRootEntry = () => {
-	writeFileSync(join(dist, 'index.cjs.js'), "module.exports = require('./cjs/index.cjs.js');");
-};
-
 /**
  * Build the libraries for the browser and Node.
- * @param multi True to generate a subpath-only import library
- * @param nodeFormat Output format for Node.js bundle: esm (default) or cjs
+ * @param nodeFormat Output format for Node.js bundle: esm (default)
  */
-export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' }) => {
-	if (multi === undefined) {
-		// eslint-disable-next-line no-undef
-		console.error("Missing parameter 'multi'");
-		// eslint-disable-next-line no-undef
-		process.exit(1);
-	}
-
+export const build = ({ nodeFormat } = { nodeFormat: 'esm' }) => {
 	if (nodeFormat === undefined) {
 		// eslint-disable-next-line no-undef
 		console.error("Missing parameter 'nodeFormat'");
@@ -190,17 +144,11 @@ export const build = ({ multi, nodeFormat } = { multi: false, nodeFormat: 'esm' 
 		process.exit(1);
 	}
 
-	if (!multi) {
-		createDistFolder();
-	}
+	createDistFolder();
 
-	buildBrowser({ multi });
-	buildNode({ format: nodeFormat, multi });
+	buildBrowser();
+	buildNode({ format: nodeFormat });
 	buildNodeCli({ format: nodeFormat });
-
-	if (nodeFormat === 'cjs') {
-		writeNodeCjsRootEntry();
-	}
 };
 
 build();
