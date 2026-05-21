@@ -2,10 +2,43 @@
 	"name": "@dfinity/ic-pub-key",
 	"version": "1.0.1",
 	"type": "module",
-	"main": "./dist/index.js",
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.mjs",
+			"default": "./dist/index.mjs",
+			"browser": "./dist/index.js"
+		},
+		"./ecdsa": {
+			"types": "./dist/ecdsa/index.d.ts",
+			"import": "./dist/ecdsa/index.mjs",
+			"require": "./dist/ecdsa/index.mjs",
+			"browser": "./dist/ecdsa/index.js",
+			"default": "./dist/ecdsa/index.mjs"
+		},
+		"./schnorr": {
+			"types": "./dist/schnorr/index.d.ts",
+			"import": "./dist/schnorr/index.mjs",
+			"require": "./dist/schnorr/index.mjs",
+			"browser": "./dist/schnorr/index.js",
+			"default": "./dist/schnorr/index.mjs"
+		},
+		"./signer": {
+			"types": "./dist/signer/index.d.ts",
+			"import": "./dist/signer/index.mjs",
+			"require": "./dist/signer/index.mjs",
+			"browser": "./dist/signer/index.js",
+			"default": "./dist/signer/index.mjs"
+		}
+	},
 	"files": [
-		"dist"
+		"dist",
+		"README.md",
+		"LICENSE"
 	],
 	"publishConfig": {
 		"access": "public"
@@ -24,7 +57,9 @@
 		"format:rs:check": "cargo fmt --check",
 		"lint": "eslint . --ext .ts,.js,.tsx,.jsx",
 		"lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix",
-		"build": "tsc && chmod +x dist/main.js",
+		"rmdir": "node ./scripts/rmdir.mjs",
+		"ts-declaration": "tsc --emitDeclarationOnly --outDir dist",
+		"build": "npm run rmdir && mkdir -p dist && node ./scripts/esbuild.mjs && npm run ts-declaration",
 		"test": "npm run build && vitest run",
 		"test:watch": "npm run build && vitest",
 		"test:coverage": "vitest run --coverage",
@@ -57,6 +92,7 @@
 		"@typescript-eslint/parser": "^8.34.1",
 		"@vitest/coverage-v8": "^3.2.4",
 		"@vitest/ui": "^3.2.4",
+		"esbuild": "^0.28.0",
 		"eslint": "^9.39.1",
 		"eslint-plugin-import": "^2.32.0",
 		"prettier": "^3.6.0",
