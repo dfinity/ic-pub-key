@@ -499,9 +499,9 @@ dependencies = [
 
 [[package]]
 name = "icrc-ledger-types"
-version = "0.1.11"
+version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0a328670dc13ca5d3adadc8befb0882d0608533da4367ddc08280482a280e545"
+checksum = "aafb78e620b2cc2b000cd745c0504dfb23a828acc3dd6f1baef208cd6c471e32"
 dependencies = [
  "base32",
  "candid",
